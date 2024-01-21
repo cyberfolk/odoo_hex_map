@@ -1,0 +1,36 @@
+<odoo>
+    <record id="hex_quad_view_tree" model="ir.ui.view">
+        <field name="name">hex.quad.tree</field>
+        <field name="model">hex.quad</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="index" readonly="1"/>
+                <field name="circle_order"/>
+                <field name="macro_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hex_quad_view_form" model="ir.ui.view">
+        <field name="name">hex.quad.form</field>
+        <field name="model">hex.quad</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code" />
+                        <field name="circle_order"/>
+                        <field name="index" readonly="1"/>
+                        <field name="macro_id"/>
+                        <field name="polygon" readonly="1"/>
+                        <field name="hex_list" readonly="1"/>
+                        <field name="hex_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

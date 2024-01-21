@@ -1,0 +1,11 @@
+<odoo>
+    <!-- MASTER -->
+    <record id="group_hex_map_master" model="res.groups">
+        <field name="name">HEX_MAP - Master</field>
+    </record>
+
+    <!-- GIOCATORE -->
+    <record id="group_hex_map_player" model="res.groups">
+        <field name="name">HEX_MAP - Player</field>
+    </record>
+</odoo>

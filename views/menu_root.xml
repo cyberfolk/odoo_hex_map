@@ -1,0 +1,27 @@
+<odoo>
+    <record id="action_menu_quad" model="ir.actions.act_window">
+        <field name="name">Quadranti</field>
+        <field name="res_model">hex.quad</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_menu_hex" model="ir.actions.act_window">
+        <field name="name">Hex</field>
+        <field name="res_model">hex.hex</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_menu_macro" model="ir.actions.act_window">
+        <field name="name">Macro Area</field>
+        <field name="res_model">hex.macro</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem sequence="0" id="menu_root" name="Hex Map" web_icon="cf_hex_map,static/description/icon.png">
+        <menuitem sequence="0" id="menu_hex_map" name="Mappa" >
+            <menuitem sequence="0" id="menu_macro" name="Macro Area" action="action_menu_macro"/>
+            <menuitem sequence="1" id="menu_quad" name="Quadranti" action="action_menu_quad"/>
+            <menuitem sequence="2" id="menu_hex" name="Esagoni" action="action_menu_hex"/>
+        </menuitem>
+    </menuitem>
+</odoo>
