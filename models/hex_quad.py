@@ -62,7 +62,7 @@ class Quadrant(models.Model):
             record.code = (chr(ord('A') + record.index - 1))
 
     @api.constrains('name')
-    def _check_name(self):
+    def check_name(self):
         for record in self:
             if not record.name:
                 record.name = record.code
@@ -72,12 +72,14 @@ class Quadrant(models.Model):
         quads = super(Quadrant, self).create(vals)
         hex_list = eval(vals[0]['hex_list'])
         for quad in quads:
+            quad.check_name()
+            quad.macro_id = self.env.ref('cf_hex_map.hex_macro_1')
             for index in hex_list:
                 hex_id = self.env['hex.hex'].create({
                     'quad_id': quad.id,
                     'index': index,
                 })
-                hex_id._check_name()
+                hex_id.check_name()
                 quad.hex_ids = [(4, hex_id.id)]
         return quads
 

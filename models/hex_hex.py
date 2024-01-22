@@ -44,7 +44,7 @@ class Hex(models.Model):
                 raise ValidationError("Il valore di 'index' deve essere compreso tra 1 e 19.")
 
     @api.constrains('name')
-    def _check_name(self):
+    def check_name(self):
         for record in self:
             if not record.name:
                 record.name = record.code

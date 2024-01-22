@@ -3,7 +3,7 @@
         <field name="name">hex.quad.tree</field>
         <field name="model">hex.quad</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree edit="0" delete="0" create="0">
                 <field name="name"/>
                 <field name="code"/>
                 <field name="index" readonly="1"/>
@@ -24,7 +24,7 @@
                         <field name="code" />
                         <field name="circle_order"/>
                         <field name="index" readonly="1"/>
-                        <field name="macro_id"/>
+                        <field name="macro_id" readonly="1"/>
                         <field name="polygon" readonly="1"/>
                         <field name="hex_list" readonly="1"/>
                         <field name="hex_ids"/>
