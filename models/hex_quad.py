@@ -44,6 +44,11 @@ class Quadrant(models.Model):
         compute='_compute_circle_order',
     )
 
+    circle_number = fields.Integer(
+        string='Circle Number',
+        compute='_compute_circle_number',
+    )
+
     index = fields.Integer(
         string='Index',
         help="Il valore di 'index' deve essere compreso tra 1 e 19.",
@@ -71,6 +76,7 @@ class Quadrant(models.Model):
     def create(self, vals):
         quads = super(Quadrant, self).create(vals)
         hex_list = eval(vals[0]['hex_list'])
+        hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
         for quad in quads:
             quad.check_name()
             quad.macro_id = self.env.ref('cf_hex_map.hex_macro_1')
@@ -81,6 +87,7 @@ class Quadrant(models.Model):
                 })
                 hex_id.check_name()
                 quad.hex_ids = [(4, hex_id.id)]
+            hex_macro.quadrant_ids = [(4, quad.id)]
         return quads
 
     @api.depends('index')
@@ -94,3 +101,15 @@ class Quadrant(models.Model):
                 record.circle_order = 2
             else:
                 record.circle_order = None
+
+    @api.depends('index')
+    def _compute_circle_number(self):
+        for record in self:
+            if record.index == 1:
+                record.circle_number = 1
+            elif 2 <= record.index <= 7:
+                record.circle_number = record.index - 1
+            elif 8 <= record.index <= 19:
+                record.circle_number = record.index - 7
+            else:
+                record.circle_number = None
