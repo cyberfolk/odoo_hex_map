@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class MacroArea(models.Model):
     _name = "hex.macro"
+    _inherit = ['hex.mixin']
     _description = "Macro-Area, contains Quadrants."
-
-    name = fields.Char(
-        string='Name',
-    )
 
     quadrant_ids = fields.One2many(
         comodel_name='hex.quad',
