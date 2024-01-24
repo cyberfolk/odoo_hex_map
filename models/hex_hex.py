@@ -37,6 +37,10 @@ class Hex(models.Model):
         help="Il valore di 'index' deve essere compreso tra 1 e 19.",
     )
 
+    color = fields.Char(
+        string='Color',
+    )
+
     @api.constrains('index')
     def _check_index(self):
         for record in self:

@@ -9,6 +9,7 @@
                 <field name="index" readonly="1"/>
                 <field name="circle_order"/>
                 <field name="circle_number"/>
+                <field name="color" readonly="1"/>
                 <field name="quad_id"/>
             </tree>
         </field>
@@ -26,6 +27,7 @@
                         <field name="index" readonly="1"/>
                         <field name="circle_order"/>
                         <field name="circle_number"/>
+                        <field name="color" readonly="1"/>
                         <field name="quad_id" readonly="1"/>
                     </group>
                 </sheet>

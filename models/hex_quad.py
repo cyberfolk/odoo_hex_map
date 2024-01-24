@@ -54,6 +54,10 @@ class Quadrant(models.Model):
         help="Il valore di 'index' deve essere compreso tra 1 e 19.",
     )
 
+    color = fields.Char(
+        string='Color',
+    )
+
 
     @api.constrains('index')
     def _check_index(self):
@@ -84,6 +88,7 @@ class Quadrant(models.Model):
                 hex_id = self.env['hex.hex'].create({
                     'quad_id': quad.id,
                     'index': index,
+                    'color': quad.color,
                 })
                 hex_id.check_name()
                 quad.hex_ids = [(4, hex_id.id)]
