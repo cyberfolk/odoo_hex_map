@@ -20,11 +20,15 @@
         "views/hex_quad.xml",
         "data/data.xml",
     ],
-    'depends': [],
+    'depends': ['web'],
     'demo': [],
     'application': True,
     'installable': True,
-    'assets': {},
+    'assets': {
+        'web.assets_backend': [
+            '/cf_hex_map/static/src/scss/style.scss',
+            '/cf_hex_map/static/src/component/float_full_time_widget/float_full_time_field.js',
+            '/cf_hex_map/static/src/component/float_full_time_widget/float_full_time_field.xml',
+        ]
+    },
 }
-
-

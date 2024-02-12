@@ -22,13 +22,19 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="code"/>
-                        <field name="index" readonly="1"/>
-                        <field name="circle_order"/>
-                        <field name="circle_number"/>
-                        <field name="color" readonly="1"/>
-                        <field name="quad_id" readonly="1"/>
+                        <group>
+                            <div class="hex hex_hex_form"></div>
+                            <field name="tmp" widget="float_full_time" options="{'round_off': True}"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="index" readonly="1"/>
+                            <field name="circle_order"/>
+                            <field name="circle_number"/>
+                            <field name="color" readonly="1"/>
+                            <field name="quad_id" readonly="1"/>
+                        </group>
                     </group>
                 </sheet>
             </form>

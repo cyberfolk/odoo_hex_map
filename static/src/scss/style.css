@@ -1,0 +1,15 @@
+/* region DIMENSION .............................. */
+/* endregion DIMENSION .............................. */
+.hex {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  height: 10px;
+  width: 8.5px;
+  background-color: red;
+}
+
+.hex_hex_form {
+  width: 300px;
+  height: 259.807621135px;
+}
+
+/*# sourceMappingURL=style.css.map */

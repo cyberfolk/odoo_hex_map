@@ -1,0 +1,30 @@
+/* region DIMENSION .............................. */
+// $HEIGHT_HEADER: 64px;
+// $HEIGHT_FOOTER: 2rem;
+$HEIGHT_MAIN: 300px;
+$SQRT3: 1.7320508075688772;
+$HEX_WIDTH: ($HEIGHT_MAIN/20) /(0.5 * $SQRT3);
+$HEX_PADDING: 0.1;
+$HEX_REDUCTION: 1 - $HEX_PADDING; // 0.9
+$HEX_HEIGHT: $HEX_WIDTH * 0.5 * $SQRT3;
+$QUAD_HEIGHT: calc($HEX_HEIGHT * 5);
+$QUAD_WIDTH: calc($HEX_WIDTH * 4);
+$MAP_WIDTH: calc($HEX_WIDTH * 16);
+$MAP_HEIGHT: calc($HEX_HEIGHT * 20);
+$HEX_HEIGHT: calc($HEX_HEIGHT * $HEX_REDUCTION); // Add reduction to show hex padding
+$HEX_WIDTH: calc($HEX_WIDTH * $HEX_REDUCTION); // Add reduction to show hex padding
+/* endregion DIMENSION .............................. */
+
+$hex_polygon: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); // horizontal
+
+.hex {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  height: 10px;
+  width: 8.5px;
+  background-color: red;
+}
+
+.hex_hex_form {
+  width: 300px;
+  height: 259.807621135px;
+}
