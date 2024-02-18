@@ -13,6 +13,10 @@ class Hex(models.Model):
         string="Quadrant",
     )
 
+    tmp_str1 = fields.Char(string="tmp_str1", )
+    tmp_str2 = fields.Char(string="tmp_str2", )
+    tmp_flt = fields.Float(string="tmp_flt", )
+
     @api.depends('index')
     def _compute_code(self):
         for record in self:

@@ -10,11 +10,11 @@ import { useNumpadDecimal } from "@web/views/fields/numpad_decimal_hook";
 import { Component } from "@odoo/owl";
 
 export class FloatFullTime extends Component {
-    // PROPS AGGIUNTIVE - OPTIONS WIDGET - usate in formattedValue().
+    // PROPS AGGIUNTIVE - OPTIONS WIDGET
     static defaultProps = {
-        round_off: false,
-        time_only: false,
-        mode: 'readonly',
+        props_extra_1: false,
+        props_extra_2: false,
+        props_extra_3: 'readonly',
     };
     setup() {
         useInputField({
@@ -26,59 +26,13 @@ export class FloatFullTime extends Component {
     }
 
     get formattedValue() {
-       /**
-        * Description:
-        * -> round_off - true: display template without milliseconds (false by default),
-        * -> time_only - true: display template without days (false by default).
-        * -> mode - 'edit', 'readonly', e.t.c., if mode === 'edit',
-        * days are represented in template in any way,
-        * else days are not represented on view (even if time_only !== true).
-        */
-
         var value = this.props.value;
-        var round_off = this.props.round_off;
-        var time_only = this.props.time_only;
-        var mode = this.props.mode;
+        var props_extra_1 = this.props.props_extra_1;
+        var props_extra_2 = this.props.props_extra_2;
+        var props_extra_3 = this.props.props_extra_3;
 
-        var parent_prefix = '';
-        var in_value = value;
-        if (value < 0) {
-            in_value = Math.abs(value);
-            parent_prefix = '-';
-        }
-        var total_sec = Math.floor(in_value);
-        var milliseconds = Math.round(in_value % 1 * 1000);
-        if (milliseconds === 1000) {
-            milliseconds = 0;
-            total_sec += 1;
-        }
-
-        var minutes = Math.floor(total_sec / 60);
-        var seconds = Math.floor(total_sec % 60);
-
-        var hours = Math.floor(minutes / 60);
-        minutes = Math.floor(minutes % 60);
-
-        var days = 0;
-        if (time_only !== true) {
-            days = Math.floor(hours / 24);
-            hours = Math.floor(hours % 24);
-        }
-
-        var pattern = '%2$02d:%3$02d:%4$02d';
-        if (time_only !== true) {
-            if (days !== 0 || mode === 'edit') {
-                pattern = '%1$01d' + _lt('d') + ' ' + pattern;
-            }
-        }
-        if (round_off !== true) {
-            pattern += ',%5$03d';
-        }
-
-        pattern = parent_prefix + pattern;
-
-        return _.str.sprintf(
-            pattern, days, hours, minutes, seconds, milliseconds);
+        this.props.props_extra_3 = 'readonly';
+        return 'value' + value + '!';
     }
 }
 
@@ -87,10 +41,10 @@ FloatFullTime.props = {
     ...standardFieldProps,
     inputType: { type: String, optional: true },
     placeholder: { type: String, optional: true },
-    // PROPS AGGIUNTIVE - OPTIONS WIDGET - usate in formattedValue().
-    round_off: { type: Boolean, optional: true },
-    time_only: { type: Boolean, optional: true },
-    mode: { type: String, optional: true },
+    // PROPS AGGIUNTIVE - OPTIONS WIDGET
+    props_extra_1: { type: Boolean, optional: true },
+    props_extra_2: { type: Boolean, optional: true },
+    props_extra_3: { type: String, optional: true },
 };
 FloatFullTime.defaultProps = {
     inputType: "text",
@@ -104,10 +58,10 @@ FloatFullTime.extractProps = ({ attrs }) => {
     return {
         inputType: attrs.options.type,
         placeholder: attrs.placeholder,
-        // PROPS AGGIUNTIVE - OPTIONS WIDGET - usate in formattedValue().
-        round_off: attrs.options.round_off,
-        time_only: attrs.options.time_only,
-        mode: attrs.options.mode,
+        // PROPS AGGIUNTIVE - OPTIONS WIDGET
+        props_extra_1: attrs.options.props_extra_1,
+        props_extra_2: attrs.options.props_extra_2,
+        props_extra_3: attrs.options.props_extra_3,
     };
 };
 
