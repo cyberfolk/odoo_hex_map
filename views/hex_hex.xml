@@ -24,8 +24,8 @@
                     <group>
                         <group>
                             <!-- <div class="hex hex_hex_form"/>-->
-                            <field name="tmp_str1" widget="code"/>
-                            <field name="tmp_str2" widget="code"/>
+                            <field name="tmp_str1" widget="code" readonly="1"/>
+                            <field name="tmp_str2" widget="code" options="{'bg_color': 'success'}"/>
                             <!-- <field name="tmp_flt" widget="float_full_time" options="{'round_off': True, 'readonly': True}"/>-->
                         </group>
                         <group>
