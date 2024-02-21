@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="web.FloatFullTime" owl="1">
+        <span t-if="props.readonly" t-esc="formattedValue" />
+        <input t-else="" t-att-id="props.id"
+               t-att-type="props.inputType"
+               t-ref="numpadDecimal"
+               t-att-placeholder="props.placeholder"
+               class="o_input" />
+        --------------------
+        <div>formattedValue = <span t-esc="formattedValue"/></div>
+        <div>props.readonly = <span t-esc="props.readonly"/></div>
+        <div>props.id = <span t-esc="props.id"/></div>
+        <div>props.inputType = <span t-esc="props.inputType"/></div>
+        <div>props.numpadDecimal = <span t-esc="numpadDecimal"/></div>
+        <div>props.placeholder = <span t-esc="props.placeholder"/></div>
+        <div>props.props_extra_1 = <span t-esc="props.props_extra_1"/></div>
+        <div>props.props_extra_2 = <span t-esc="props.props_extra_2"/></div>
+        <div>props.props_extra_3 = <span t-esc="props.props_extra_3"/></div>
+    </t>
+
+</templates>

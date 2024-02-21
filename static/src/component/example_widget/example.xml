@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="example_template" owl="1">
+        <t t-if="props.readonly">
+            <pre t-esc="props.value" t-attf-class="bg-#{props.bgColor} text-white p-3 rounded"/>
+            <div class="badge text-bg-warning">Questo campo è settato readonly</div>
+        </t>
+        <t t-else="">
+            <textarea t-att-value="props.value" t-attf-class="bg-#{props.bgColor} text-white p-3 rounded"/>
+            <div class="badge text-bg-success">Questo campo NON è settato readonly</div>
+        </t>
+    </t>
+</templates>

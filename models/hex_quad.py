@@ -26,6 +26,8 @@ class Quadrant(models.Model):
         string='Polygon'
     )
 
+    tmp = fields.Char(string="tmp", )
+
     @api.model_create_multi
     def create(self, vals):
         quads = super(Quadrant, self).create(vals)
