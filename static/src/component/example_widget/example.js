@@ -1,5 +1,5 @@
 /** @odoo-module **/ // <-- Commento necessario
-// Definisco e registro un widget personalizzato CodeField.
+// Definisco e registro un widget personalizzato ExampleField.
 
 // IMPORTAZIONI
 const { xml, Component } = owl;
@@ -10,8 +10,8 @@ import { standardFieldProps } from "@web/views/fields/standard_field_props";
 // registry -----------> registro dei vari componenti, azioni, servizi, ecc.
 // xml ----------------> è usato per definire i template dei componenti.
 
-// DEFINISCO CodeField ESTENDENDO Component.
-export class CodeField extends Component {
+// DEFINISCO ExampleField ESTENDENDO Component.
+export class ExampleField extends Component {
     // Sovrascrivo il metodo setup(). Metodo fondamentale per gestire la logica del ciclo di vita dei componenti OWL.
     setup() {
         this.props.value = "Default vaulue inserito da javascript."
@@ -46,27 +46,27 @@ export class CodeField extends Component {
 
 // DEFINIRE TEMPLATE
 // OPZIONE-1: TEMPLATE ESTERNO
-CodeField.template = "cf.CodeField";
+ExampleField.template = "example_template";
 // OPZIONE-2: TEMPLATE LITERAL
-// CodeField.template = xml`<pre t-esc="props.value" class="bg-primary text-white p-3 rounded"/>`;
+// ExampleField.template = xml`<pre t-esc="props.value" class="bg-primary text-white p-3 rounded"/>`;
 
 // CREO LE PROPS CUSTOM DI DEFAULT
-CodeField.defaultProps = { bgColor: "primary", };
+ExampleField.defaultProps = { bgColor: "primary", };
 
 // DEFINISCO LE PROPS
 // OPZIONE-1: Eredito props base + Aggiungo props custom.
-CodeField.props = {
+ExampleField.props = {
     ...standardFieldProps, // spreddo standardFieldProps ereditanto le sue props
     bgColor: { type: String, optional: true },  // definisco la mia props custom
 };
 // OPZIONE-2: Eredito props base
-// CodeField.props = standardFieldProps;
+// ExampleField.props = standardFieldProps;
 
 // Estraggo le opzioni dal widget e le passo alle relative props
-CodeField.extractProps = ({ attrs, field }) => {
+ExampleField.extractProps = ({ attrs, field }) => {
     return { bgColor: attrs.options.bg_color, };
 };
 
-// Registra il componente CodeField nel registro di Odoo sotto la categoria "fields" con il nome "code".
+// Registra il componente ExampleField nel registro di Odoo sotto la categoria "fields" con il nome "code".
 // Questo consente al componente di essere riconosciuto e utilizzato all'interno dell'ecosistema Odoo come un tipo di campo personalizzato.
-registry.category("fields").add("code", CodeField);
+registry.category("fields").add("example", ExampleField);

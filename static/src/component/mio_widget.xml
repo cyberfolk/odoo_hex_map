@@ -1,8 +1,0 @@
-<templates>
-    <t t-name="template_dinamico">
-        <div>
-            Nome: <t t-esc="dato.name"/>
-            Cognome: <t t-esc="dato.color"/>
-        </div>
-    </t>
-</templates>
