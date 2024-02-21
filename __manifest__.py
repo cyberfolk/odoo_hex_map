@@ -29,6 +29,8 @@
             '/cf_hex_map/static/src/scss/style.scss',
             '/cf_hex_map/static/src/component/code_field.js',
             '/cf_hex_map/static/src/component/code_field.xml',
+            '/cf_hex_map/static/src/component/quad/quad.js',
+            '/cf_hex_map/static/src/component/quad/quad.xml',
             # '/cf_hex_map/static/src/component/float_full_time_widget/float_full_time_field.js',
             # '/cf_hex_map/static/src/component/float_full_time_widget/float_full_time_field.xml',
         ]

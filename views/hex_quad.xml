@@ -23,12 +23,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <!-- Inserire il componente OWL utilizzando la direttiva t-component -->
-                            <field name="name" position="after">
-                                <div class="o_field_widget">
-                                    <t t-component="mio_modulo.NomeComponente"/>
-                                </div>
-                            </field>
+                            <field name="tmp" widget="quad" nolabel="1"/>
                         </group>
                         <group>
                             <field name="name"/>

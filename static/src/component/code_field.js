@@ -23,6 +23,7 @@ export class CodeField extends Component {
         // this.props.data   = ???
         // this.props.value  = Valore del campo su cui applico il widget
         // this.props.record = Oggetto definito in odoo/addons/web/static/src/views/basic_relational_model.js contiene molte info sul record corrente visualizzato nella vista.
+        // this.props.record.data         = trovo i campi del modello e il relativo valore.
         // this.props.record.mode         = edit o read-only.
         // this.props.record.model        = L'attuale classe js con tutti i suoi meedtodi
         // this.props.record.fields       = Archivio key-value di tutti gli altri suoi campi.

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="quad_template" owl="1">
+        <style>
+        .quad_dim{
+            width: 400px;
+            height: 433.33px;
+        }
+        .hex_dim{
+            width: 100px;
+            height: 86.66px;
+        }
+    </style>
+        <div class="quad_dim bg-dark" t-attf-style="clip-path: #{props.record.data.polygon};">
+        </div>
+    </t>
+</templates>
