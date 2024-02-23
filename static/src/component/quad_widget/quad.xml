@@ -2,16 +2,49 @@
 <templates id="template" xml:space="preserve">
     <t t-name="quad_template" owl="1">
         <style>
-        .quad_dim{
-            width: 400px;
-            height: 433.33px;
-        }
-        .hex_dim{
-            width: 100px;
-            height: 86.66px;
-        }
-    </style>
-        <div class="quad_dim bg-dark" t-attf-style="clip-path: #{props.record.data.polygon};">
+            /* HF-... -> Relativo al HEX-FORM*/
+/* QF-... -> Relativo al QUAD-FORM*/
+/* ...-HW -> Hex Width */
+/* ...-HH -> Hex Width */
+/* ...-QW -> Quad Width */
+/* ...-QH -> Quad Height */
+.hv-center {
+  /*Centra il contenuto del HEX*/
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.hex {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.HF-hex_dim {
+  width: 300px;
+  height: 259.8px;
+}
+.QF-hex_dim {
+  /* Dimensioni iniziale: W=100px H=86.6px */
+  /* Cost di Proporzione sqrt(3)/2 = 0.866 */
+  /* Ridotti del 10% per creare il padding */
+  width: QF-HW;
+  height: QF-HH;
+}
+.QF-quad_dim {
+  /* W-quad = 4 * W-hex iniziale  */
+  /* H-quad = 5 * H-hex iniziale  */
+  width: QF-QW;
+  height: QF-QH;
+  position: relative;
+}
+
+        </style>
+        <!-- <button t-on-click="anyFunction">Clicca qui</button>-->
+        <div class="QF-quad_dim bg-dark" t-attf-style="clip-path: #{props.record.data.polygon};">
+            <t t-foreach="props.record.data.hex_ids.records" t-as="hex" t-key="hex.id">
+                <div class="hex QF-hex_dim hv-center" t-esc="hex.data.name" t-att-style="getHexStyle(hex.data)"/>
+            </t>
         </div>
     </t>
 </templates>

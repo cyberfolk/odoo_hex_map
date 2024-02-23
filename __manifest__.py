@@ -26,11 +26,14 @@
     'installable': True,
     'assets': {
         'web.assets_backend': [
-            '/cf_hex_map/static/src/scss/style.scss',
+            '/cf_hex_map/static/src/scss/style.css',
             '/cf_hex_map/static/src/component/quad_widget/quad.js',
             '/cf_hex_map/static/src/component/quad_widget/quad.xml',
             '/cf_hex_map/static/src/component/example_widget/example.js',
             '/cf_hex_map/static/src/component/example_widget/example.xml',
+        ],
+        'web.assets_frontend': [
+            '/cf_hex_map/static/src/scss/style.css',
         ]
     },
 }
