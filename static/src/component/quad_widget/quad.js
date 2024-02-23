@@ -7,17 +7,12 @@ import { standardFieldProps } from "@web/views/fields/standard_field_props";
 export class QuadField extends Component {
     setup() {
         super.setup();
-        console.log(this.props.record.data.hex_ids)
     }
 
     static POSITION = {
         "X": [0, 0, 18.75, 18.75, 0, -18.75, -18.75, 0, 18.75, 37.5, 37.5, 37.5, 18.75, 0, -18.75, -37.5, -37.5, -37.5, -18.75],
         "Y": [0, -20, -10, 10, 20, 10, -10, -40, -30, -20, 0, 20, 30, 40, 30, 20, 0, -20, -30]
     };
-
-    anyFunction() {
-        console.log(QuadField.POSITION);
-    }
 
     getAxes(index) {
         const REDUCTION = 0.95;

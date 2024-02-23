@@ -1,58 +1,70 @@
+//Costanti matematiche 
 $SQRT3: 1.732;
-$K_RATEO: $SQRT3/2;
-$PADDING: 0.1;
+$K_RATEO: $SQRT3 / 2; // Rapporto tra Height e Width in un esagono 
+$PADDING: 0.1; // Padding come percentuale
 
-$hex_polygon: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); // horizontal
+// Clip-path per esagono orizzontale 
+$hex_polygon: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 
-/* HF-... -> Relativo al HEX-FORM*/
-/* QF-... -> Relativo al QUAD-FORM*/
-/* ...-HW -> Hex Width */
-/* ...-HH -> Hex Width */
-/* ...-QW -> Quad Width */
-/* ...-QH -> Quad Height */
+/* Prefissi:         */
+/*  HF-: Hex Form    */
+/*  QF-: Quad Form   */
+
+/* Suffissi:         */
+/*  -HW: Hex Width   */
+/*  -HH: Hex Height  */
+/*  -QW: Quad Width  */
+/*  -QH: Quad Height */
+
+// Dimensioni iniziali arbitrariamente scelte
 $HF-HW_ARBITRARIA: 300px;
+$QF-HW_INIZIALE_ARBITRARIA: 100px; // Iniziale perchè non ho ancora applicato il padding 
+
+// Dimensioni (Hex) - nel Hex Form
 $HF-HW: $HF-HW_ARBITRARIA;
-$HF-HH: $HF-HW_ARBITRARIA * $K_RATEO;
-$QF-HW_INIZIALE_ARBITRARIA: 100px;
+$HF-HH: $HF-HW * $K_RATEO;
+
+// Dimensioni (Hex Iniziali) nel (Quad Form)
 $QF-HW_INIZIALE: $QF-HW_INIZIALE_ARBITRARIA;
-$QF-HH_INIZIALE: $QF-HW_INIZIALE_ARBITRARIA * $K_RATEO;
+$QF-HH_INIZIALE: $QF-HW_INIZIALE * $K_RATEO;
+
+// Dimensioni (Hex con padding) nel (Quad Form)
 $QF-HW: $QF-HW_INIZIALE * (1 - $PADDING);
 $QF-HH: $QF-HH_INIZIALE * (1 - $PADDING);
+
+// Dimensioni (Quad) nel (Quad Form)
 $QF-QW: $QF-HW_INIZIALE * 4;
 $QF-QH: $QF-HH_INIZIALE * 5;
 
+/* Dimensioni (Hex) nel (Hex Form) */
+.HF-hex_dim {
+    width: $HF-HW;
+    height: $HF-HH;
+}
 
+/* Dimensioni (Hex) nel (Quad Form) */
+.QF-hex_dim {
+    width: $QF-HW;
+    height: $QF-HH;
+}
+
+/* Dimensioni (Quad) nel (Quad Form) */
+.QF-quad_dim {
+    width: $QF-QW;
+    height: $QF-QH;
+    position: relative;
+}
+
+/* Centra il contenuto */
 .hv-center {
-    /*Centra il contenuto del HEX*/
     text-align: center;
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    align-items: center;
 }
 
 .hex {
     clip-path: $hex_polygon;
     position: absolute;
     transform: translate(-50%, -50%);
-}
-
-.HF-hex_dim {
-    width: $HF-HW;
-    height: $HF-HH;
-}
-
-.QF-hex_dim {
-    /* Dimensioni iniziale: W=100px H=86.6px */
-    /* Cost di Proporzione sqrt(3)/2 = 0.866 */
-    /* Ridotti del 10% per creare il padding */
-    width: $QF-HW;
-    height: $QF-HH;
-}
-
-.QF-quad_dim {
-    /* W-quad = 4 * W-hex iniziale  */
-    /* H-quad = 5 * H-hex iniziale  */
-    width: $QF-QW;
-    height: $QF-QH;
-    position: relative;
 }

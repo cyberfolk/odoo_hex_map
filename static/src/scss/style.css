@@ -1,36 +1,36 @@
-/* HF-... -> Relativo al HEX-FORM*/
-/* QF-... -> Relativo al QUAD-FORM*/
-/* ...-HW -> Hex Width */
-/* ...-HH -> Hex Width */
-/* ...-QW -> Quad Width */
-/* ...-QH -> Quad Height */
+/* Prefissi:         */
+/*  HF-: Hex Form    */
+/*  QF-: Quad Form   */
+/* Suffissi:         */
+/*  -HW: Hex Width   */
+/*  -HH: Hex Height  */
+/*  -QW: Quad Width  */
+/*  -QH: Quad Height */
+/* Dimensioni (Hex) nel (Hex Form) */
+.HF-hex_dim {
+  width: 300px;
+  height: 259.8px;
+}
+/* Dimensioni (Hex) nel (Quad Form) */
+.QF-hex_dim {
+  width: 90px;
+  height: 77.94px;
+}
+/* Dimensioni (Quad) nel (Quad Form) */
+.QF-quad_dim {
+  width: 400px;
+  height: 433px;
+  position: relative;
+}
+/* Centra il contenuto */
 .hv-center {
-  /*Centra il contenuto del HEX*/
   text-align: center;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  align-items: center;
 }
 .hex {
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   position: absolute;
   transform: translate(-50%, -50%);
-}
-.HF-hex_dim {
-  width: 300px;
-  height: 259.8px;
-}
-.QF-hex_dim {
-  /* Dimensioni iniziale: W=100px H=86.6px */
-  /* Cost di Proporzione sqrt(3)/2 = 0.866 */
-  /* Ridotti del 10% per creare il padding */
-  width: 90px;
-  height: 77.94px;
-}
-.QF-quad_dim {
-  /* W-quad = 4 * W-hex iniziale  */
-  /* H-quad = 5 * H-hex iniziale  */
-  width: 400px;
-  height: 433px;
-  position: relative;
 }
