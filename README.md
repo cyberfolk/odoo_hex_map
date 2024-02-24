@@ -7,4 +7,3 @@
 In questa app vengono introdotti gli elementi base della Hex Map: ovvero Macro-area, Quadranti ed Esagoni.
 
 <img src="./static/description/icon.png" width="250"/>
-
