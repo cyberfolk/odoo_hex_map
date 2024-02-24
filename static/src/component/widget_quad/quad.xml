@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="quad_template" owl="1">
+        <div class="quad_form">
+            <div class="quad_dim bg-dark" t-attf-style="clip-path: #{props.record.data.polygon};">
+                <t t-foreach="props.record.data.hex_ids.records" t-as="hex" t-key="hex.id">
+                    <a t-attf-href="http://localhost:8069/web#id=#{hex.data.id}&amp;cids=1&amp;menu_id=70&amp;action=87&amp;model=hex.hex&amp;view_type=form">
+                        <div class="hex hex_dim hv-center" t-esc="hex.data.name" t-att-style="getHexStyle(hex.data)"/>
+                    </a>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

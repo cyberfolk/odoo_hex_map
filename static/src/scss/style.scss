@@ -36,23 +36,23 @@ $QF-HH: $QF-HH_INIZIALE * (1 - $PADDING);
 $QF-QW: $QF-HW_INIZIALE * 4;
 $QF-QH: $QF-HH_INIZIALE * 5;
 
-/* Dimensioni (Hex) nel (Hex Form) */
-.HF-hex_dim {
-    width: $HF-HW;
-    height: $HF-HH;
+.hex_form{
+    .hex_dim {
+        width: $HF-HW;
+        height: $HF-HH;
+    }
 }
 
-/* Dimensioni (Hex) nel (Quad Form) */
-.QF-hex_dim {
-    width: $QF-HW;
-    height: $QF-HH;
-}
-
-/* Dimensioni (Quad) nel (Quad Form) */
-.QF-quad_dim {
-    width: $QF-QW;
-    height: $QF-QH;
-    position: relative;
+.quad_form{
+    .hex_dim {
+        width: $QF-HW;
+        height: $QF-HH;
+    }
+    .quad_dim {
+        width: $QF-QW;
+        height: $QF-QH;
+        position: relative;
+    }
 }
 
 /* Centra il contenuto */
