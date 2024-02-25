@@ -11,6 +11,8 @@
                 <field name="circle_number"/>
                 <field name="color" readonly="1"/>
                 <field name="macro_id"/>
+                <field name="polygon" invisible="1" /> <!-- INFO-: Fondamentale per il Widget macro, altrimenti crolla tutto. -->
+                <field name="hex_ids" invisible="1" /> <!-- INFO-: Fondamentale per il Widget macro, altrimenti crolla tutto. -->
             </tree>
         </field>
     </record>

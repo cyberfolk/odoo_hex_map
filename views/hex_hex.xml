@@ -23,8 +23,8 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="tmp_str1" widget="example" readonly="1"/>
-                            <field name="tmp_str2" widget="example" options="{'bg_color': 'success'}"/>
+                            <field name="tmp" widget="example" readonly="1"/>
+                            <field name="tmp" widget="example" options="{'bg_color': 'success'}"/>
                         </group>
                         <group>
                             <field name="name"/>

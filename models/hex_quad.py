@@ -26,7 +26,10 @@ class Quadrant(models.Model):
         string='Polygon'
     )
 
-    tmp = fields.Char(string="tmp", )
+    tmp = fields.Char(
+        string="tmp",
+        help="Usato temporaneamente per agganciare il widget"
+    )
 
     @api.model_create_multi
     def create(self, vals):

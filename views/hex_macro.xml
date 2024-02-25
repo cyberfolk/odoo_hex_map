@@ -15,10 +15,8 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="quadrant_ids"/>
-                    </group>
+                    <field name="tmp" widget="macro" nolabel="1"/>
+                    <field name="quadrant_ids" /> <!-- INFO-: Fondamentale per il Widget macro, altrimenti crolla tutto. -->
                 </sheet>
             </form>
         </field>

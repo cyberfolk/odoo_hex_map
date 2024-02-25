@@ -12,3 +12,8 @@ class MacroArea(models.Model):
         string="Quadrants",
         inverse_name='macro_id',
     )
+
+    tmp = fields.Char(
+        string="tmp",
+        help="Usato temporaneamente per agganciare il widget"
+    )
