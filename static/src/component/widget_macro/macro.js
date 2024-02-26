@@ -1,16 +1,32 @@
 /** @odoo-module **/
 
-const { xml, Component } = owl;
+const { xml, Component, onMounted, useState } = owl;
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
+import { useService } from "@web/core/utils/hooks";
 
 export class MacroField extends Component {
     setup() {
+        this.rpc = useService("rpc");
+        this.orm = useService('orm');
+        this.wip_orm_search_read();
+        const stato = useState({
+          dati: null,
+        });
+
+//        console.log(this.props.record.data.quadrant_ids.records)
+//        console.log(this.props.record.data.quadrant_ids.records[0].data.hex_ids.records)
+//        console.log(this.props.record.data.quadrant_ids.records[0].data.hex_ids.records[0].data)
         super.setup();
-        console.log(this.props.record.data.quadrant_ids.records)
-        console.log(this.props.record.data.quadrant_ids.records[0].data.hex_ids.records)
-        console.log(this.props.record.data.quadrant_ids.records[0].data.hex_ids.records[0].data)
     }
+
+    wip_orm_search_read() {
+        this.orm.call("hex.macro", "search_read", [], {}).then(
+            function (result){
+                console.log(result)
+            }
+        );
+    };
 
     static POSITION = {
         "X": [0, 0, 18.75, 18.75, 0, -18.75, -18.75, 0, 18.75, 37.5, 37.5, 37.5, 18.75, 0, -18.75, -37.5, -37.5, -37.5, -18.75],
