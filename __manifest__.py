@@ -27,12 +27,8 @@
     'assets': {
         'web.assets_backend': [
             '/cf_hex_map/static/src/scss/style.scss',
-            '/cf_hex_map/static/src/component/widget_quad/quad.js',
-            '/cf_hex_map/static/src/component/widget_quad/quad.xml',
-            '/cf_hex_map/static/src/component/widget_macro/macro.js',
-            '/cf_hex_map/static/src/component/widget_macro/macro.xml',
-            '/cf_hex_map/static/src/component/widget_example/example.js',
-            '/cf_hex_map/static/src/component/widget_example/example.xml',
+            '/cf_hex_map/static/src/component/widget_quad/*',
+            '/cf_hex_map/static/src/component/widget_macro/*',
         ],
         'web.assets_frontend': [
             '/cf_hex_map/static/src/scss/style.scss',

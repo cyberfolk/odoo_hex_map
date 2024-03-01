@@ -1,18 +1,33 @@
 /** @odoo-module **/
 
-const { xml, Component } = owl;
+import { xml, Component, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
+import { useService } from "@web/core/utils/hooks";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
+const fieldRegistry = registry.category("fields");
 
 export class QuadField extends Component {
-    setup() {
-        super.setup();
-    }
-
+    static components = { };
+    static template = "quad_template";
     static POSITION = {
         "X": [0, 0, 18.75, 18.75, 0, -18.75, -18.75, 0, 18.75, 37.5, 37.5, 37.5, 18.75, 0, -18.75, -37.5, -37.5, -37.5, -18.75],
         "Y": [0, -20, -10, 10, 20, 10, -10, -40, -30, -20, 0, 20, 30, 40, 30, 20, 0, -20, -30]
     };
+    static props = {
+        ...standardFieldProps,
+    };
+    setup() {
+        super.setup();
+        this.orm = useService("orm");
+
+        // TODO-: Sostituire printHelloWorld con una funzione che passi i dati che servono al javascript
+        this.orm.call("hex.quad", "printHelloWorld", [], {}).then(
+            function (result) {
+                console.log(result)
+            }
+        )
+        //this.state = useState({ value: this.props.value, });
+    }
 
     getAxes(index) {
         const REDUCTION = 0.95;
@@ -26,9 +41,10 @@ export class QuadField extends Component {
     getHexStyle(hex) {
         return `${this.getAxes(hex.index)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
     }
-
 }
 
-QuadField.template = "quad_template";
-QuadField.props = { ...standardFieldProps, };
-registry.category("fields").add("quad", QuadField);
+export const quadField = {
+    component: QuadField,
+};
+
+fieldRegistry.add("quad", quadField);

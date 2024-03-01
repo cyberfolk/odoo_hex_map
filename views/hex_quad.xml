@@ -11,8 +11,6 @@
                 <field name="circle_number"/>
                 <field name="color" readonly="1"/>
                 <field name="macro_id"/>
-                <field name="polygon" invisible="1" /> <!-- INFO-: Fondamentale per il Widget macro, altrimenti crolla tutto. -->
-                <field name="hex_ids" invisible="1" /> <!-- INFO-: Fondamentale per il Widget macro, altrimenti crolla tutto. -->
             </tree>
         </field>
     </record>
@@ -35,8 +33,6 @@
                             <field name="circle_number"/>
                             <field name="color" readonly="1"/>
                             <field name="macro_id" readonly="1"/>
-                            <field name="polygon" readonly="1" />
-                            <field name="hex_list" readonly="1" />
                         </group>
                     </group>
                     <group colspan="1" string="Hexes" name="quad_hex_ids">

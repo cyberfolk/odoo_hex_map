@@ -31,6 +31,10 @@ class Quadrant(models.Model):
         help="Usato temporaneamente per agganciare il widget"
     )
 
+    @api.model
+    def printHelloWorld(self):
+        return "AGGIUNGERE QUI I DATI DA PASSARE ALLA RPC"
+
     @api.model_create_multi
     def create(self, vals):
         quads = super(Quadrant, self).create(vals)
