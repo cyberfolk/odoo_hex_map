@@ -34,11 +34,11 @@ class Quadrant(models.Model):
     )
 
     @api.model
-    def get_json_quad(self, code):
+    def get_json_quad(self, name):
         """Metodo richiamato dal orm di quad.js
-            :param code: codice quadrante.
+            :param name: codice quadrante.
             :return: Json del quadrante."""
-        self_quad = self.env['hex.quad'].search([('code', '=', code)], limit=1)[0]
+        self_quad = self.env['hex.quad'].search([('name', '=', name)], limit=1)[0]
         json_quad = obj_odoo_to_json(self_quad)
         return json_quad
 

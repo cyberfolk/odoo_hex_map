@@ -20,9 +20,9 @@ export class QuadField extends Component {
         super.setup();
         this.orm = useService("orm");
 
-        console.log(this.props.record.data.code)
+        console.log(this.props.record.data)
         const kwargs = {
-            code: this.props.record.data.code
+            name: this.props.record.data.name
         }
 
         this.orm.call("hex.quad", "get_json_quad", [], kwargs).then(
