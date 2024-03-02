@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+import json
 
+from odoo import api, fields, models
+from ..utility.odoo_to_json import obj_odoo_to_json
 
 class Quadrant(models.Model):
     _name = "hex.quad"
@@ -32,8 +34,13 @@ class Quadrant(models.Model):
     )
 
     @api.model
-    def printHelloWorld(self):
-        return "AGGIUNGERE QUI I DATI DA PASSARE ALLA RPC"
+    def get_json_quad(self, code):
+        """Metodo richiamato dal orm di quad.js
+            :param code: codice quadrante.
+            :return: Json del quadrante."""
+        self_quad = self.env['hex.quad'].search([('code', '=', code)], limit=1)[0]
+        json_quad = obj_odoo_to_json(self_quad)
+        return json_quad
 
     @api.model_create_multi
     def create(self, vals):

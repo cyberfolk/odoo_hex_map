@@ -20,13 +20,17 @@ export class QuadField extends Component {
         super.setup();
         this.orm = useService("orm");
 
-        // TODO-: Sostituire printHelloWorld con una funzione che passi i dati che servono al javascript
-        this.orm.call("hex.quad", "printHelloWorld", [], {}).then(
+        console.log(this.props.record.data.code)
+        const kwargs = {
+            code: this.props.record.data.code
+        }
+
+        this.orm.call("hex.quad", "get_json_quad", [], kwargs).then(
             function (result) {
-                console.log(result)
+                const obj_quad = JSON.parse(result)
+                console.log(obj_quad)
             }
         )
-        //this.state = useState({ value: this.props.value, });
     }
 
     getAxes(index) {
