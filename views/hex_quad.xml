@@ -19,7 +19,7 @@
         <field name="name">hex.quad.form</field>
         <field name="model">hex.quad</field>
         <field name="arch" type="xml">
-            <form>
+            <form js_class="quad_form">
                 <sheet>
                     <group>
                         <group>
