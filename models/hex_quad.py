@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import json
 
 from odoo import api, fields, models
 from ..utility.odoo_to_json import obj_odoo_to_json
+
 
 class Quadrant(models.Model):
     _name = "hex.quad"
