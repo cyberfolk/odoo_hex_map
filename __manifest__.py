@@ -26,7 +26,7 @@
     'assets': {
         'web.assets_backend': [
             '/cf_hex_map/static/src/scss/style.scss',
-            '/cf_hex_map/static/src/component/widget_quad/*',
+            '/cf_hex_map/static/src/widget_quad/*',
             # '/cf_hex_map/static/src/QuadFormController/*', # WIP
             '/cf_hex_map/static/src/view_macro/*',
         ],

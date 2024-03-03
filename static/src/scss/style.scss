@@ -16,42 +16,32 @@ $hex_polygon: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 /*  -QW: Quad Width  */
 /*  -QH: Quad Height */
 
-// Dimensioni iniziali arbitrariamente scelte
-$HF-HW_ARBITRARIA: 300px;
-$QF-HW_INIZIALE_ARBITRARIA: 100px; // Iniziale perchè non ho ancora applicato il padding
-$MF-HW_INIZIALE_ARBITRARIA: 40px; // Iniziale perchè non ho ancora applicato il padding
 
-// Dimensioni (Hex) - nel Hex Form
-$HF-HW: $HF-HW_ARBITRARIA;
-$HF-HH: $HF-HW * $K_RATEO;
+// DIMENSIONI NEL -> [HEX FORM]
+$HF-HW_ARBITRARIA: 300px;   // Hex Width Arbitraria
+$HF-HW: $HF-HW_ARBITRARIA;  // Hex Width
+$HF-HH: $HF-HW * $K_RATEO;  // Hex Height
 
-// Dimensioni (Hex Iniziali) nel (Quad Form)
-$QF-HW_INIZIALE: $QF-HW_INIZIALE_ARBITRARIA;
-$QF-HH_INIZIALE: $QF-HW_INIZIALE * $K_RATEO;
+// DIMENSIONI NEL -> [QUAD FORM]
+$QF-HW_ARBITRARIA: 100px;                       // Hex Width Arbitraria
+$QF-HW_INIZIALE: $QF-HW_ARBITRARIA;             // Hex Width Iniziale - Senza padding
+$QF-HH_INIZIALE: $QF-HW_INIZIALE * $K_RATEO;    // Hex Height Iniziale - Senza padding
+$QF-HW: $QF-HW_INIZIALE * (1 - $PADDING);       // Hex Width con padding
+$QF-HH: $QF-HH_INIZIALE * (1 - $PADDING);       // Hex Height con padding
+$QF-QW: $QF-HW_INIZIALE * 4;                    // Quad Width
+$QF-QH: $QF-HH_INIZIALE * 5;                    // Quad Height
 
-// Dimensioni (Hex Iniziali) nel (Macro Form)
-$MF-HW_INIZIALE: $MF-HW_INIZIALE_ARBITRARIA;
-$MF-HH_INIZIALE: $MF-HW_INIZIALE * $K_RATEO;
+// DIMENSIONI NEL -> [MACRO FORM]
+$MF-HW_ARBITRARIA: 40px;                        // Hex Width Arbitraria
+$MF-HW_INIZIALE: $MF-HW_ARBITRARIA;             // Hex Width Iniziale - Senza padding
+$MF-HH_INIZIALE: $MF-HW_INIZIALE * $K_RATEO;    // Hex Height Iniziale - Senza padding
+$MF-HW: $MF-HW_INIZIALE * (1 - $PADDING);       // Hex Width con padding
+$MF-HH: $MF-HH_INIZIALE * (1 - $PADDING);       // Hex Height con padding
+$MF-QW: $MF-HW_INIZIALE * 4;                    // Quad Width
+$MF-QH: $MF-HH_INIZIALE * 5;                    // Quad Height
+$MF-MW: $MF-HW_INIZIALE * 16;                   // Macro Width
+$MF-MH: $MF-HH_INIZIALE * 20;                   // Macro Height
 
-// Dimensioni (Hex con padding) nel (Quad Form)
-$QF-HW: $QF-HW_INIZIALE * (1 - $PADDING);
-$QF-HH: $QF-HH_INIZIALE * (1 - $PADDING);
-
-// Dimensioni (Quad) nel (Quad Form)
-$QF-QW: $QF-HW_INIZIALE * 4;
-$QF-QH: $QF-HH_INIZIALE * 5;
-
-// Dimensioni (Hex con padding) nel (Macro Form)
-$MF-HW: $MF-HW_INIZIALE * (1 - $PADDING);
-$MF-HH: $MF-HH_INIZIALE * (1 - $PADDING);
-
-// Dimensioni (Quad) nel (Macro Form)
-$MF-QW: $MF-HW_INIZIALE * 4;
-$MF-QH: $MF-HH_INIZIALE * 5;
-
-// Dimensioni (Macro) nel (Macro Form)
-$MF-MW: $MF-HW_INIZIALE * 16;
-$MF-MH: $MF-HH_INIZIALE * 20;
 
 .macro_form {
     .macro_dim {

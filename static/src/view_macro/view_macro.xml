@@ -2,13 +2,14 @@
     <div class="container hv-center">
         <div class="macro_form">
             <div class="macro_dim">
-<!--                <div class="h-100 w-100 bg-dark"></div>-->
                 <t t-foreach="macro.quadrant_ids" t-as="quad" t-key="quad.id">
-                    <div class="quad_dim bg-dark" t-att-style="getQuadStyle(quad)">
-                        <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
-                            <div class="hex hex_dim hv-center" t-esc="hex.name" t-att-style="getHexStyle(hex)"/>
-                        </t>
-                    </div>
+                    <a t-attf-href="http://localhost:8069/web#id=#{quad.id}&amp;cids=1&amp;menu_id=73&amp;action=87&amp;model=hex.quad&amp;view_type=form">
+                        <div class="quad_dim bg-dark" t-att-style="getQuadStyle(quad)">
+                            <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
+                                <div class="hex hex_dim hv-center" t-esc="hex.name" t-att-style="getHexStyle(hex)"/>
+                            </t>
+                        </div>
+                    </a>
                 </t>
             </div>
         </div>
