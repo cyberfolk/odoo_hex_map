@@ -11,10 +11,9 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="action_menu_macro" model="ir.actions.act_window">
+    <record id="action_menu_macro" model="ir.actions.client">
         <field name="name">Macro Area</field>
-        <field name="res_model">hex.macro</field>
-        <field name="view_mode">tree,form</field>
+        <field name="tag">view_macro</field>
     </record>
 
     <menuitem sequence="0" id="menu_root" name="Hex Map" web_icon="cf_hex_map,static/description/icon.png">

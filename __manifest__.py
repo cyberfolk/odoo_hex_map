@@ -16,7 +16,6 @@
         "security/ir.model.access.csv",
         "views/menu_root.xml",
         "views/hex_hex.xml",
-        "views/hex_macro.xml",
         "views/hex_quad.xml",
         "data/data.xml",
     ],
@@ -28,8 +27,8 @@
         'web.assets_backend': [
             '/cf_hex_map/static/src/scss/style.scss',
             '/cf_hex_map/static/src/component/widget_quad/*',
-            '/cf_hex_map/static/src/component/widget_macro/*',
             # '/cf_hex_map/static/src/QuadFormController/*', # WIP
+            '/cf_hex_map/static/src/view_macro/*',
         ],
         'web.assets_frontend': [
             '/cf_hex_map/static/src/scss/style.scss',
