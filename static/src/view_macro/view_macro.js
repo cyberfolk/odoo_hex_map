@@ -25,8 +25,7 @@ class ViewMacro extends Component {
         })
     }
 
-    getAxes(index) {
-        const REDUCTION = 0.95;
+    getAxes(index, REDUCTION) {
         // REDUCTION is a constant used to bring the HEX closer to the center of the QUADRANT.
         // In this way we have the perception that the padding of the QUADRANTS increases
         const asse_y = 50 + ViewMacro.POSITION.Y[index - 1] * REDUCTION + "%";
@@ -35,11 +34,11 @@ class ViewMacro extends Component {
     }
 
     getHexStyle(hex) {
-        return `${this.getAxes(hex.index)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
+        return `${this.getAxes(hex.index, 0.95)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
     }
 
     getQuadStyle(quad) {
-        return `z-index: ${20 - quad.index}; ${this.getAxes(quad.index)}; clip-path: ${quad.polygon};`
+        return `z-index: ${20 - quad.index}; ${this.getAxes(quad.index, 0.97)}; clip-path: ${quad.polygon};`
     }
 }
 

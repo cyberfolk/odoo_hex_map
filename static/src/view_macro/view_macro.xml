@@ -1,5 +1,5 @@
 <t t-name="ViewMacro">
-    <div class="container hv-center">
+    <div class="container hv-center p-3">
         <div class="macro_form">
             <div class="macro_dim">
                 <t t-foreach="macro.quadrant_ids" t-as="quad" t-key="quad.id">
