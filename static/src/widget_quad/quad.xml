@@ -5,7 +5,9 @@
             <div class="quad_dim" t-attf-style="clip-path: #{props.record.data.polygon};">
                 <t t-foreach="props.record.data.hex_ids.records" t-as="hex" t-key="hex.id">
                     <a t-attf-href="http://localhost:8069/web#id=#{hex.data.id}&amp;cids=1&amp;menu_id=74&amp;action=88&amp;model=hex.hex&amp;view_type=form">
-                        <div class="hex hex_dim hv-center fw-bold text-white" t-esc="hex.data.name" t-att-style="getHexStyle(hex.data)"/>
+                        <div class="hex hex_dim hv-center fw-bold text-white" t-att-style="getHexStyle(hex.data)">
+                            <div class="label_code" t-esc="hex.data.name" /> 
+                        </div>
                     </a>
                 </t>
             </div>
