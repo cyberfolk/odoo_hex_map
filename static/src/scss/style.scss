@@ -83,7 +83,7 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
     }
 
     .label_code {
-        font-size: 0.5rem;
+        font-size: 0.6rem;
     }
 }
 
@@ -91,6 +91,8 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 *  QUAD FORM - CLASSI          *
 ********************************/
 .quad_form {
+    margin-left: 5rem;
+    margin-top: 5rem;
     .hex_dim {
         width: $QF-HW;
         height: $QF-HH;
@@ -107,7 +109,8 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
     }
 
     .label_code {
-        font-size: 1rem;
+        font-size: 0.8rem;
+        align-self: end;
     }
 }
 
@@ -136,5 +139,30 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 
 .label_code {
     color: white;
-    align-self: end;
+    font-weight: bold;
+}
+
+.label_quad {
+    position: absolute;
+    z-index: 1;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 500;
+    font-size: 80px;
+    color: white;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+/********************************
+*  FIX SCROLL ACTION.CLIENT      *
+********************************/
+html .o_web_client {
+    overflow: auto !important;
+}
+.o_action_manager {
+    overflow: auto !important;
+}
+html .o_web_client > .o_action_manager{
+    overflow: auto !important;
 }
