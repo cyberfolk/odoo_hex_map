@@ -28,17 +28,17 @@ class Quadrant(models.Model):
         string='Polygon'
     )
 
-    tmp = fields.Char(
-        string="tmp",
-        help="Usato temporaneamente per agganciare il widget"
+    hook_widget = fields.Char(
+        string="hook_widget",
+        help="Usato solamente per agganciare il widget del quadrante."
     )
 
     @api.model
-    def get_json_quad(self, name):
+    def get_json_quad(self, quad_id):
         """Metodo richiamato dal orm di quad.js
-            :param name: codice quadrante.
+            :param quad_id: Id quadrante.
             :return: Json del quadrante."""
-        self_quad = self.env['hex.quad'].search([('name', '=', name)], limit=1)[0]
+        self_quad = self.env['hex.quad'].browse(quad_id)[0]
         json_quad = obj_odoo_to_json(self_quad)
         return json_quad
 

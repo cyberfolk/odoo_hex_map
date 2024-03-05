@@ -2,13 +2,19 @@
 <templates id="template" xml:space="preserve">
     <t t-name="quad_template" owl="1">
         <div class="quad_form">
-            <div class="quad_dim" t-attf-style="clip-path: #{props.record.data.polygon};">
-                <t t-foreach="props.record.data.hex_ids.records" t-as="hex" t-key="hex.id">
-                    <a t-attf-href="http://localhost:8069/web#id=#{hex.data.id}&amp;cids=1&amp;menu_id=74&amp;action=88&amp;model=hex.hex&amp;view_type=form">
-                        <div class="hex hex_dim hv-center fw-bold text-white" t-att-style="getHexStyle(hex.data)">
-                            <div class="label_code" t-esc="hex.data.name" /> 
+            <div class="quad_dim m-5" t-attf-style="clip-path: #{props.record.data.polygon};">
+                <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
+                    <a t-attf-href="http://localhost:8069/web#id=#{hex.id}&amp;cids=1&amp;menu_id=74&amp;action=88&amp;model=hex.hex&amp;view_type=form">
+                        <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">
+                            <div class="label_code" t-esc="hex.code"/>
                         </div>
                     </a>
+                </t>
+                <t t-set="list" t-value="[20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]"/>
+                <t t-foreach="list" t-as="i" t-key="i">
+                    <div class="hex hex_dim hv-center fw-bold text-white" t-att-style="getOtherHexStyle(i)">
+                        <div class="label_code">---</div>
+                    </div>
                 </t>
             </div>
         </div>

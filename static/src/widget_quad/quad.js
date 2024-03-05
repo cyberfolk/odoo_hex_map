@@ -1,6 +1,5 @@
 /** @odoo-module **/
-
-import { xml, Component, useState } from "@odoo/owl";
+import { xml, Component, onWillStart, useState, onWillUpdateProps} from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
@@ -10,27 +9,28 @@ export class QuadField extends Component {
     static components = { };
     static template = "quad_template";
     static POSITION = {
-        "X": [0, 0, 18.75, 18.75, 0, -18.75, -18.75, 0, 18.75, 37.5, 37.5, 37.5, 18.75, 0, -18.75, -37.5, -37.5, -37.5, -18.75],
-        "Y": [0, -20, -10, 10, 20, 10, -10, -40, -30, -20, 0, 20, 30, 40, 30, 20, 0, -20, -30]
-    };
-    static props = {
-        ...standardFieldProps,
+        "X": [0,   0, 18.75, 18.75,  0, -18.75, -18.75,   0, 18.75, 37.5, 37.5, 37.5, 18.75,  0, -18.75, -37.5, -37.5, -37.5, -18.75,0,	18.75,	37.5,	56.25,	56.25,	56.25,	56.25,	37.5,	18.75,	0,	-18.75,	-37.5,	-56.25,	-56.25,	-56.25,	-56.25,	-37.5,	-18.75],
+        "Y": [0, -20,   -10,    10, 20,     10,    -10, -40,   -30,  -20,    0,   20,    30, 40,     30,    20,     0,   -20,    -30, -60,	-50,	-40,	-30,	-10,	10,	30,	40,	50,	60,	50,	40,	30,	10,	-10,	-30,	-40,	-50,]
     };
     setup() {
         super.setup();
         this.orm = useService("orm");
+        let quad_id = this.props.record.resId
 
-        console.log(this.props.record.data)
-        const kwargs = {
-            name: this.props.record.data.name
-        }
+        onWillStart(async () => {
+            this.quad = await this.get_json_quad(quad_id)
+        });
 
-        this.orm.call("hex.quad", "get_json_quad", [], kwargs).then(
-            function (result) {
-                const obj_quad = JSON.parse(result)
-                console.log(obj_quad)
-            }
-        )
+        onWillUpdateProps(async (nextProps) => {
+            let quad_id = nextProps.record.resId
+            this.quad = await this.get_json_quad(quad_id)
+        });
+    }
+
+    get_json_quad(quad_id){
+        const quad = this.orm.call("hex.quad", "get_json_quad", [], {'quad_id': quad_id})
+        .then((result) => { return JSON.parse(result) })
+        return quad
     }
 
     getAxes(index) {
@@ -43,7 +43,11 @@ export class QuadField extends Component {
     }
 
     getHexStyle(hex) {
-        return `${this.getAxes(hex.index)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
+        return `${this.getAxes(hex.index)}; background-color: ${hex.color}; filter: brightness(${100 - (1 + hex.circle_order) * hex.circle_number}%);`
+    }
+
+    getOtherHexStyle(num) {
+        return `${this.getAxes(num)}; background-color: #eeeeee;`
     }
 }
 

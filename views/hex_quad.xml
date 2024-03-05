@@ -22,21 +22,44 @@
             <form js_class="quad_form">
                 <sheet>
                     <group>
-                        <group>
-                            <field name="tmp" widget="quad" nolabel="1"/>
+                        <group col="1">
+                            <group col="4">
+                                <group colspan="2">
+                                    <field class="fw-bold h1" colspan="2" nolabel="1" readonly="1" name="name"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="hook_widget" widget="quad" nolabel="1"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="name"/>
-                            <field name="code"/>
-                            <field name="index" readonly="1"/>
-                            <field name="circle_order"/>
-                            <field name="circle_number"/>
-                            <field name="color" readonly="1"/>
-                            <field name="macro_id" readonly="1"/>
+                        <group col="1">
+                            <group col="4" string="Info Quad" name="info_quad">
+                                <group>
+                                    <field name="code"/>
+                                </group>
+                                <group>
+                                    <field name="index"/>
+                                </group>
+                                <group>
+                                    <field name="circle_number"/>
+                                </group>
+                                <group>
+                                    <field name="circle_number"/>
+                                </group>
+                            </group>
+                            <group string="Hexes" name="quad_hex_ids">
+                                <field colspan="2" nolabel="1" name="hex_ids">
+                                    <tree edit="0" delete="0" create="0">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="index" readonly="1"/>
+                                        <field name="circle_order"/>
+                                        <field name="circle_number"/>
+                                        <field name="id"/>
+                                    </tree>
+                                </field>
+                            </group>
                         </group>
-                    </group>
-                    <group colspan="1" string="Hexes" name="quad_hex_ids">
-                        <field colspan="2" nolabel="1" name="hex_ids"/>
                     </group>
                 </sheet>
             </form>
