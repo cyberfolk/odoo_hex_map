@@ -4,11 +4,10 @@
             <div class="macro_dim">
                 <t t-foreach="macro.quadrant_ids" t-as="quad" t-key="quad.id">
                     <a t-attf-href="http://localhost:8069/web#id=#{quad.id}&amp;cids=1&amp;menu_id=73&amp;action=87&amp;model=hex.quad&amp;view_type=form">
-                        <div class="quad quad_dim bg-dark" t-att-style="getQuadStyle(quad)">
+                        <div class="quad quad_dim bg-dark " t-att-style="getQuadStyle(quad)">
+                            <div class="label_quad" t-esc="quad.code"/>
                             <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
-                                <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">
-                                    <span class="label_code" t-esc="hex.code"/>
-                                </div>
+                                <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)"/>
                             </t>
                         </div>
                     </a>
