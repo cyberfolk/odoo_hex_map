@@ -6,7 +6,8 @@
                 <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
                     <a t-attf-href="http://localhost:8069/web#id=#{hex.id}&amp;cids=1&amp;menu_id=74&amp;action=88&amp;model=hex.hex&amp;view_type=form">
                         <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">
-                            <div class="text-white fw-bold fs-1" t-esc="hex.index"/>
+                            <!-- <div class="text-white fw-bold fs-1" t-esc="hex.index"/>-->
+                            <div class="label_code" t-esc="hex.code"/>
                         </div>
                     </a>
                 </t>

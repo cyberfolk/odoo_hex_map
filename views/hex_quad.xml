@@ -56,12 +56,18 @@
                             <group string="Hexes" name="quad_hex_ids">
                                 <field colspan="2" nolabel="1" name="hex_ids">
                                     <tree edit="0" delete="0" create="0">
-                                        <field name="name"/>
+                                        <!-- <field name="name"/>-->
                                         <field name="code"/>
+                                        <!-- <field name="circle_order" string="Order"/>-->
+                                        <!-- <field name="circle_number" string="Number"/>-->
+                                        <field name="border_N"/>
+                                        <field name="border_NE"/>
+                                        <field name="border_SE"/>
+                                        <field name="border_S"/>
+                                        <field name="border_SW"/>
+                                        <field name="border_NW"/>
+                                        <!-- <field name="id"/>-->
                                         <field name="index" readonly="1"/>
-                                        <field name="circle_order"/>
-                                        <field name="circle_number"/>
-                                        <field name="id"/>
                                     </tree>
                                 </field>
                             </group>

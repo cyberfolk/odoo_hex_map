@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models
 from ..utility.odoo_to_json import obj_odoo_to_json
+from ..utility.costant import BORDERS_MAP
 
 
 class Quadrant(models.Model):
@@ -96,3 +97,16 @@ class Quadrant(models.Model):
                 quad.hex_ids = [(4, hex_id.id)]
             hex_macro.quadrant_ids = [(4, quad.id)]
         return quads
+
+    def set_hexs_borders(self):
+        """Metodo per impostare i bordi degli Esagoni. Gestire casistiche:
+             1 - Esagoni mancanti,
+             2 - Esagoni di confine """
+        for hex in self.hex_ids:
+            borders = BORDERS_MAP[hex.index]
+            hex.border_N = next((x for x in self.hex_ids if x['index'] == borders[0]), None)
+            hex.border_NE = next((x for x in self.hex_ids if x['index'] == borders[1]), None)
+            hex.border_SE = next((x for x in self.hex_ids if x['index'] == borders[2]), None)
+            hex.border_S = next((x for x in self.hex_ids if x['index'] == borders[3]), None)
+            hex.border_SW = next((x for x in self.hex_ids if x['index'] == borders[4]), None)
+            hex.border_NW = next((x for x in self.hex_ids if x['index'] == borders[5]), None)
