@@ -24,8 +24,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="tmp" widget="example" readonly="1"/>
-                            <field name="tmp" widget="example" options="{'bg_color': 'success'}"/>
+                            <button name="tmp_debug" type="object" string="debug"/>
                         </group>
                         <group>
                             <field name="name"/>

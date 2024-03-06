@@ -13,11 +13,6 @@ class Hex(models.Model):
         string="Quadrant",
     )
 
-    tmp = fields.Char(
-        string="tmp",
-        help="Usato temporaneamente per agganciare il widget"
-    )
-
     @api.depends('index')
     def _compute_code(self):
         for record in self:
@@ -25,3 +20,7 @@ class Hex(models.Model):
             code += f".{str(record.circle_order).zfill(2)}"
             code += f".{str(record.circle_number).zfill(2)}"
             record.code = code
+
+    @staticmethod
+    def tmp_debug():
+        stop = 0

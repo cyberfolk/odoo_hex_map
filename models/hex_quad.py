@@ -33,6 +33,42 @@ class Quadrant(models.Model):
         help="Usato solamente per agganciare il widget del quadrante."
     )
 
+    border_N = fields.Many2one(
+        comodel_name='hex.quad',
+        string="N",
+        help="Confine Nord"
+    )
+
+    border_NE = fields.Many2one(
+        comodel_name='hex.quad',
+        string="NE",
+        help="Confine Nord-Est"
+    )
+
+    border_SE = fields.Many2one(
+        comodel_name='hex.quad',
+        string="SE",
+        help="Confine Sud-Est"
+    )
+
+    border_S = fields.Many2one(
+        comodel_name='hex.quad',
+        string="S",
+        help="Confine Sud"
+    )
+
+    border_SW = fields.Many2one(
+        comodel_name='hex.quad',
+        string="SW",
+        help="Confine Sud-Ovest"
+    )
+
+    border_NW = fields.Many2one(
+        comodel_name='hex.quad',
+        string="NW",
+        help="Confine Nord-Ovest"
+    )
+
     @api.model
     def get_json_quad(self, quad_id):
         """Metodo richiamato dal orm di quad.js

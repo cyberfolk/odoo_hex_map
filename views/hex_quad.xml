@@ -11,6 +11,12 @@
                 <field name="circle_number"/>
                 <field name="color" readonly="1"/>
                 <field name="macro_id"/>
+                <field name="border_N"/>
+                <field name="border_NE"/>
+                <field name="border_SE"/>
+                <field name="border_S"/>
+                <field name="border_SW"/>
+                <field name="border_NW"/>
             </tree>
         </field>
     </record>

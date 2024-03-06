@@ -23,6 +23,7 @@
     'demo': [],
     'application': True,
     'installable': True,
+    'post_init_hook': 'post_init_hook_hex_map',
     'assets': {
         'web.assets_backend': [
             '/cf_hex_map/static/src/scss/style.scss',

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api
+from ..utility.costant import BORDERS_MAP
 from ..utility.odoo_to_json import obj_odoo_to_json
 
 
@@ -26,3 +27,15 @@ class MacroArea(models.Model):
         self_macro = self.env['hex.macro'].browse(1)
         json_macro = obj_odoo_to_json(self_macro)
         return json_macro
+
+    def set_quad_borders(self):
+        """Metodo per impostare i bordi dei quadranti. Gestita la casistica dei lati dei quadranti del secondo cerchio
+         che non confinano con nulla. Il border che non confina con nulla rimane settato a nulla"""
+        for quad in self.quadrant_ids:
+            borders = BORDERS_MAP[quad.index]
+            quad.border_N = quad.search([('index', '=', [borders[0]])])
+            quad.border_NE = quad.search([('index', '=', [borders[1]])])
+            quad.border_SE = quad.search([('index', '=', [borders[2]])])
+            quad.border_S = quad.search([('index', '=', [borders[3]])])
+            quad.border_SW = quad.search([('index', '=', [borders[4]])])
+            quad.border_NW = quad.search([('index', '=', [borders[5]])])
