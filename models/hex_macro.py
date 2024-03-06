@@ -28,7 +28,7 @@ class MacroArea(models.Model):
         json_macro = obj_odoo_to_json(self_macro)
         return json_macro
 
-    def set_quad_borders(self):
+    def set_quads_borders(self):
         """Metodo per impostare i bordi dei quadranti. Gestita la casistica dei lati dei quadranti del secondo cerchio
          che non confinano con nulla. Il border che non confina con nulla rimane settato a nulla"""
         for quad in self.quadrant_ids:
