@@ -3,6 +3,7 @@
 from odoo import api, fields, models
 from ..utility.odoo_to_json import obj_odoo_to_json
 from ..utility.costant import BORDERS_MAP
+from ..utility.costant import EXTERNAL_BORDERS_MAP
 
 
 class Quadrant(models.Model):
@@ -110,3 +111,17 @@ class Quadrant(models.Model):
             hex.border_S = next((x for x in self.hex_ids if x['index'] == borders[3]), None)
             hex.border_SW = next((x for x in self.hex_ids if x['index'] == borders[4]), None)
             hex.border_NW = next((x for x in self.hex_ids if x['index'] == borders[5]), None)
+
+    def set_external_borders(self):
+        """Metodo per impostare i bordi vuoti degli Esagoni di confine."""
+        filtered_hex_ids = self.hex_ids.filtered(lambda r: r.index != 1)
+        for hex in filtered_hex_ids:
+            hex_external_borders = EXTERNAL_BORDERS_MAP[hex.index]
+            for border_key, border_value in hex_external_borders.items():
+                quad_border_field, hex_border_index = border_value
+                quad_border = self[quad_border_field]
+                hex_border = quad_border.hex_ids.filtered(lambda x: x.index == hex_border_index)
+                A_check = (hex.name, border_key, hex_border.name)
+                if not hex[border_key]:
+                    hex[border_key] = hex_border
+

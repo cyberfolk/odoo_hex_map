@@ -19,3 +19,60 @@ BORDERS_MAP = {
     18: [0, 19, 7, 17, 0, 0],
     19: [0, 8, 2, 7, 18, 0],
 }
+
+EXTERNAL_BORDERS_MAP = {
+    2: {
+        "border_N": ("border_N", 14)},
+    3: {
+        "border_NE": ("border_NE", 16)},
+    4: {
+        "border_SE": ("border_SE", 18)},
+    5: {
+        "border_S": ("border_S", 8)},
+    6: {
+        "border_SW": ("border_SW", 10)},
+    7: {
+        "border_NW": ("border_NW", 12)},
+    8: {
+        "border_N": ("border_N", 5),
+        "border_NE": ("border_N", 13),
+        "border_NW": ("border_N", 15)},
+    9: {
+        "border_N": ("border_N", 13),
+        "border_NE": ("border_NE", 17)},
+    10: {
+        "border_N": ("border_NE", 17),
+        "border_NE": ("border_NE", 6),
+        "border_SE": ("border_NE", 15)},
+    11: {
+        "border_NE": ("border_NE", 15),
+        "border_SE": ("border_SE", 19)},
+    12: {
+        "border_NE": ("border_SE", 19),
+        "border_SE": ("border_SE", 7),
+        "border_S": ("border_SE", 17)},
+    13: {
+        "border_SE": ("border_SE", 17),
+        "border_S": ("border_S", 9)},
+    14: {
+        "border_SE": ("border_S", 9),
+        "border_S": ("border_S", 2),
+        "border_SW": ("border_S", 19)},
+    15: {
+        "border_S": ("border_S", 19),
+        "border_SW": ("border_SW", 11)},
+    16: {
+        "border_S": ("border_SW", 11),
+        "border_SW": ("border_SW", 3),
+        "border_NW": ("border_SW", 9)},
+    17: {
+        "border_SW": ("border_SW", 9),
+        "border_NW": ("border_NW", 13)},
+    18: {
+        "border_N": ("border_NW", 11),
+        "border_SW": ("border_NW", 13),
+        "border_NW": ("border_NW", 4)},
+    19: {
+        "border_N": ("border_N", 15),
+        "border_NW": ("border_NW", 11)},
+}
