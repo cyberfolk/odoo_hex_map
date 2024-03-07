@@ -100,9 +100,7 @@ class Quadrant(models.Model):
         return quads
 
     def set_hexs_borders(self):
-        """Metodo per impostare i bordi degli Esagoni. Gestire casistiche:
-             1 - Esagoni mancanti,
-             2 - Esagoni di confine """
+        """Metodo per impostare i bordi degli Esagoni. Lascia a None i bordi degli esagoni esterni."""
         for hex in self.hex_ids:
             borders = BORDERS_MAP[hex.index]
             hex.border_N = next((x for x in self.hex_ids if x['index'] == borders[0]), None)
@@ -112,8 +110,8 @@ class Quadrant(models.Model):
             hex.border_SW = next((x for x in self.hex_ids if x['index'] == borders[4]), None)
             hex.border_NW = next((x for x in self.hex_ids if x['index'] == borders[5]), None)
 
-    def set_external_borders(self):
-        """Metodo per impostare i bordi vuoti degli Esagoni di confine."""
+    def set_hexs_external_borders(self):
+        """Metodo per impostare i bordi degli Esagoni esterni."""
         filtered_hex_ids = self.hex_ids.filtered(lambda r: r.index != 1)
         for hex in filtered_hex_ids:
             hex_external_borders = EXTERNAL_BORDERS_MAP[hex.index]
@@ -124,4 +122,3 @@ class Quadrant(models.Model):
                 A_check = (hex.name, border_key, hex_border.name)
                 if not hex[border_key]:
                     hex[border_key] = hex_border
-
