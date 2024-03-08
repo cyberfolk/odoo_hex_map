@@ -13,6 +13,11 @@ class Hex(models.Model):
         string="Quadrant",
     )
 
+    external_id = fields.Many2one(
+        comodel_name='hex.quad',
+        string="Quadrant Esterno",
+    )
+
     border_N = fields.Many2one(
         comodel_name='hex.hex',
         string="N",
@@ -64,4 +69,4 @@ class Hex(models.Model):
 
     def tmp_debug(self):
         stop = 0
-        self.quad_id.set_hexs_borders()
+        self.quad_id.set_external_ids()

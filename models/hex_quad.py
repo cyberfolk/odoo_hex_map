@@ -26,6 +26,12 @@ class Quadrant(models.Model):
         inverse_name='quad_id',
     )
 
+    external_ids = fields.One2many(
+        comodel_name='hex.hex',
+        string="External Hexes",
+        inverse_name='external_id',
+    )
+
     polygon = fields.Char(
         string='Polygon'
     )
@@ -122,3 +128,38 @@ class Quadrant(models.Model):
                 A_check = (hex.name, border_key, hex_border.name)
                 if not hex[border_key]:
                     hex[border_key] = hex_border
+
+    def set_external_ids(self):
+        hex_00_01 = self.hex_ids.filtered(lambda x: x.index == 1)
+        hex_02_01 = hex_00_01.border_N.border_N
+        hex_02_03 = hex_02_01.border_SE.border_SE
+        hex_02_05 = hex_02_03.border_S.border_S
+        hex_02_07 = hex_02_05.border_SW.border_SW
+        hex_02_09 = hex_02_07.border_NW.border_NW
+        hex_02_11 = hex_02_09.border_N.border_N
+
+        self.external_ids = [(4, hex_02_01.border_NW.id)]
+        self.external_ids = [(4, hex_02_01.border_N.id)]
+        self.external_ids = [(4, hex_02_01.border_NE.id)]
+
+        self.external_ids = [(4, hex_02_03.border_N.id)]
+        self.external_ids = [(4, hex_02_03.border_NE.id)]
+        self.external_ids = [(4, hex_02_03.border_SE.id)]
+
+        self.external_ids = [(4, hex_02_05.border_NE.id)]
+        self.external_ids = [(4, hex_02_05.border_SE.id)]
+        self.external_ids = [(4, hex_02_05.border_S.id)]
+
+        self.external_ids = [(4, hex_02_07.border_SE.id)]
+        self.external_ids = [(4, hex_02_07.border_S.id)]
+        self.external_ids = [(4, hex_02_07.border_SW.id)]
+
+        self.external_ids = [(4, hex_02_09.border_S.id)]
+        self.external_ids = [(4, hex_02_09.border_SW.id)]
+        self.external_ids = [(4, hex_02_09.border_NW.id)]
+
+        self.external_ids = [(4, hex_02_11.border_SW.id)]
+        self.external_ids = [(4, hex_02_11.border_NW.id)]
+        self.external_ids = [(4, hex_02_11.border_N.id)]
+
+        stop=0
