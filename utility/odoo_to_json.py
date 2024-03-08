@@ -26,7 +26,7 @@ def process_obj(obj):
 def expand(obj_dict, obj_odoo):
     """Funzione ricorsiva che espande i campi che finiscono con '_id' o '_ids'. """
     for field_name in obj_dict.keys():
-        if field_name.endswith('_id'):
+        if field_name.endswith('_id') and obj_dict[field_name]:
             obj_dict[field_name] = obj_dict[field_name][0]
         if field_name.endswith('_ids'):  # Assumo che ogni campo che finisce per '_ids' corrisponda a una lista id.
             dict_ids = obj_odoo[field_name].read()
