@@ -57,7 +57,7 @@ class Hex(models.Model):
     @api.depends('index')
     def _compute_code(self):
         for record in self:
-            code = f"{record.quad_id.code}"
+            code = f"{record.quad_id.code if record.quad_id else '0'}"
             code += f".{str(record.circle_order).zfill(2)}"
             code += f".{str(record.circle_number).zfill(2)}"
             record.code = code

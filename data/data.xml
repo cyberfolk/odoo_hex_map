@@ -4,6 +4,14 @@
             <field name="name">Macro Area 1</field>
         </record>
 
+        <record id="hex_quad_void" model="hex.quad">
+            <field name="name">void</field>
+        </record>
+
+        <record id="hex_hex_void" model="hex.hex">
+            <field name="name">void</field>
+        </record>
+
         <record id="hex_quad_A" model="hex.quad">
             <field name="index">1</field>
             <field name="color">#ff0000</field>

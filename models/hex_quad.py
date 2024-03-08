@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
-from ..utility.odoo_to_json import obj_odoo_to_json
 from ..utility.costant import BORDERS_MAP
 from ..utility.costant import EXTERNAL_BORDERS_MAP
+from ..utility.odoo_to_json import obj_odoo_to_json
 
 
 class Quadrant(models.Model):
@@ -89,17 +89,19 @@ class Quadrant(models.Model):
     @api.model_create_multi
     def create(self, vals):
         quads = super(Quadrant, self).create(vals)
-        hex_list = eval(vals[0]['hex_list'])
+        hex_list_str = vals[0].get('hex_list')  # Controllo aggiunto per evitare problemi con il quad Void
+        hex_list = eval(hex_list_str) if hex_list_str else []
         hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
         for quad in quads:
             quad.check_name()
-            quad.macro_id = self.env.ref('cf_hex_map.hex_macro_1')
+            quad.macro_id = hex_macro
             for index in hex_list:
-                hex_id = self.env['hex.hex'].create({
+                hex_vals = {
                     'quad_id': quad.id,
                     'index': index,
                     'color': quad.color,
-                })
+                }
+                hex_id = self.env['hex.hex'].create(hex_vals)
                 hex_id.check_name()
                 quad.hex_ids = [(4, hex_id.id)]
             hex_macro.quadrant_ids = [(4, quad.id)]
@@ -162,4 +164,4 @@ class Quadrant(models.Model):
         self.external_ids = [(4, hex_02_11.border_NW.id)]
         self.external_ids = [(4, hex_02_11.border_N.id)]
 
-        stop=0
+        stop = 0

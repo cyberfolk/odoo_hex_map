@@ -22,6 +22,7 @@ class ViewMacro extends Component {
                 .then((result) => {
                     return JSON.parse(result)
                 })
+            this.macro.quadrant_ids = this.macro.quadrant_ids.filter(quad => quad.name !== 'void');
         })
     }
 
