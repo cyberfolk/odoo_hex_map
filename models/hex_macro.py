@@ -31,11 +31,12 @@ class MacroArea(models.Model):
     def set_quads_borders(self):
         """Metodo per impostare i bordi dei quadranti. Gestita la casistica dei lati dei quadranti del secondo cerchio
          che non confinano con nulla. Il border che non confina con nulla rimane settato a nulla"""
+        quad_void = self.env.ref('cf_hex_map.hex_quad_void')
         for quad in self.quadrant_ids:
             borders = BORDERS_MAP[quad.index]
-            quad.border_N = quad.search([('index', '=', [borders[0]])])
-            quad.border_NE = quad.search([('index', '=', [borders[1]])])
-            quad.border_SE = quad.search([('index', '=', [borders[2]])])
-            quad.border_S = quad.search([('index', '=', [borders[3]])])
-            quad.border_SW = quad.search([('index', '=', [borders[4]])])
-            quad.border_NW = quad.search([('index', '=', [borders[5]])])
+            quad.border_N = quad.search([('index', '=', [borders[0]])]) or quad_void
+            quad.border_NE = quad.search([('index', '=', [borders[1]])]) or quad_void
+            quad.border_SE = quad.search([('index', '=', [borders[2]])]) or quad_void
+            quad.border_S = quad.search([('index', '=', [borders[3]])]) or quad_void
+            quad.border_SW = quad.search([('index', '=', [borders[4]])]) or quad_void
+            quad.border_NW = quad.search([('index', '=', [borders[5]])]) or quad_void

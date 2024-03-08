@@ -88,11 +88,10 @@ class Quadrant(models.Model):
 
     @api.model_create_multi
     def create(self, vals):
-        quads = super(Quadrant, self).create(vals)
-        hex_list_str = vals[0].get('hex_list')  # Controllo aggiunto per evitare problemi con il quad Void
-        hex_list = eval(hex_list_str) if hex_list_str else []
-        hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
-        for quad in quads:
+        quad = super(Quadrant, self).create(vals)
+        if quad.name != 'void':
+            hex_list = eval(vals[0].get('hex_list'))
+            hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
             quad.check_name()
             quad.macro_id = hex_macro
             for index in hex_list:
@@ -105,18 +104,19 @@ class Quadrant(models.Model):
                 hex_id.check_name()
                 quad.hex_ids = [(4, hex_id.id)]
             hex_macro.quadrant_ids = [(4, quad.id)]
-        return quads
+        return quad
 
     def set_hexs_borders(self):
         """Metodo per impostare i bordi degli Esagoni. Lascia a None i bordi degli esagoni esterni."""
+        index_to_hex = {x.index: x for x in self.hex_ids}  # Crea un dizionario per mappare gli index agli esagoni
         for hex in self.hex_ids:
             borders = BORDERS_MAP[hex.index]
-            hex.border_N = next((x for x in self.hex_ids if x['index'] == borders[0]), None)
-            hex.border_NE = next((x for x in self.hex_ids if x['index'] == borders[1]), None)
-            hex.border_SE = next((x for x in self.hex_ids if x['index'] == borders[2]), None)
-            hex.border_S = next((x for x in self.hex_ids if x['index'] == borders[3]), None)
-            hex.border_SW = next((x for x in self.hex_ids if x['index'] == borders[4]), None)
-            hex.border_NW = next((x for x in self.hex_ids if x['index'] == borders[5]), None)
+            hex.border_N  = index_to_hex.get(borders[0])
+            hex.border_NE = index_to_hex.get(borders[1])
+            hex.border_SE = index_to_hex.get(borders[2])
+            hex.border_S  = index_to_hex.get(borders[3])
+            hex.border_SW = index_to_hex.get(borders[4])
+            hex.border_NW = index_to_hex.get(borders[5])
 
     def set_hexs_external_borders(self):
         """Metodo per impostare i bordi degli Esagoni esterni."""
