@@ -8,6 +8,9 @@
                             <div class="label_quad" t-esc="quad.code"/>
                             <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
                                 <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)"/>
+                                <!-- <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">-->
+                                <!--     <div class="text-white" t-esc="hex.code"/>-->
+                                <!-- </div>-->
                             </t>
                         </div>
                     </a>
