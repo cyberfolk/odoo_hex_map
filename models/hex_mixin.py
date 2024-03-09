@@ -38,23 +38,6 @@ class HexMixin(models.AbstractModel):
         for rec in self:
             rec.display_name = rec.code
 
-    @api.constrains('index')
-    def _check_index(self):
-        for record in self:
-            if record.index < 1 or record.index > 19:
-                raise ValidationError("Il valore di 'index' deve essere compreso tra 1 e 19.")
-
-    @api.constrains('name')
-    def check_name(self):
-        for record in self:
-            if not record.name:
-                record.name = record.code
-
-    @api.depends('index')
-    def _compute_code(self):
-        for record in self:
-            record.code = (chr(ord('A') + record.index - 1))
-
     @api.depends('index')
     def _compute_circle_order(self):
         for record in self:
@@ -78,3 +61,17 @@ class HexMixin(models.AbstractModel):
                 record.circle_number = record.index - 7
             else:
                 record.circle_number = None
+
+    # Ideati per altri Hex, Quad e Macro con le Form View
+    # Ma avendole bloccate -> valutare di togliere questi metodi
+    @api.constrains('index')
+    def _check_index(self):
+        for record in self:
+            if record.index < 1 or record.index > 19:
+                raise ValidationError("Il valore di 'index' deve essere compreso tra 1 e 19.")
+
+    @api.constrains('name')
+    def check_name(self):
+        for record in self:
+            if not record.name:
+                record.name = record.code

@@ -80,11 +80,10 @@ class Quadrant(models.Model):
     @api.depends('index')
     def _compute_code(self):
         for record in self:
-            if record == self.env.ref('cf_hex_map.hex_quad_void'):
-                code = 'void'
+            if record.index:
+                record.code = (chr(ord('A') + record.index - 1))
             else:
-                code = (chr(ord('A') + record.index - 1))
-            record.code = code
+                record.code = 'void'
 
     @api.model
     def get_json_quad(self, quad_id):
@@ -98,11 +97,11 @@ class Quadrant(models.Model):
     @api.model_create_multi
     def create(self, vals):
         quad = super(Quadrant, self).create(vals)
-        if quad.name != 'void':
+        quad.name = f"Quadrante {quad.code}"
+        if quad.code == 'void':
+            return quad
+        else:
             hex_list = eval(vals[0].get('hex_list'))
-            hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
-            quad.name = f"Quadrante {quad.code}"
-            quad.macro_id = hex_macro
             for index in hex_list:
                 hex_vals = {
                     'quad_id': quad.id,
@@ -110,9 +109,11 @@ class Quadrant(models.Model):
                     'color': quad.color,
                 }
                 hex_id = self.env['hex.hex'].create(hex_vals)
-                hex_id.check_name()
+                hex_id.name = hex_id.code
                 quad.hex_ids = [(4, hex_id.id)]
+            hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
             hex_macro.quad_ids = [(4, quad.id)]
+            quad.macro_id = hex_macro
         return quad
 
     def set_hexs_borders(self):

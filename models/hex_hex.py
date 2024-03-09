@@ -57,12 +57,12 @@ class Hex(models.Model):
     @api.depends('index')
     def _compute_code(self):
         for record in self:
-            if record.id == self.env.ref('cf_hex_map.hex_macro_1').id:
-                code = 'void'
-            else:
+            if record.index:
                 code = f"{record.quad_id.code}"
                 code += f".{str(record.circle_order).zfill(2)}"
                 code += f".{str(record.circle_number).zfill(2)}"
+            else:
+                code = 'void'
             record.code = code
 
     def tmp_debug(self):
