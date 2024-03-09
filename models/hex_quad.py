@@ -3,6 +3,7 @@
 from odoo import api, fields, models
 from ..utility.costant import BORDERS_MAP
 from ..utility.costant import EXTERNAL_BORDERS_MAP
+from ..utility.costant import HEX_MISSING_INDEX
 from ..utility.odoo_to_json import obj_odoo_to_json
 
 
@@ -30,6 +31,12 @@ class Quadrant(models.Model):
         comodel_name='hex.hex',
         string="External Hexes",
         inverse_name='external_id',
+    )
+
+    missing_ids = fields.One2many(
+        comodel_name='hex.hex',
+        string="Missing Hexes",
+        inverse_name='missing_id',
     )
 
     polygon = fields.Char(
@@ -138,7 +145,7 @@ class Quadrant(models.Model):
                 quad_border_field, hex_border_index = border_value
                 quad_border = self[quad_border_field]
                 hex_border = quad_border.hex_ids.filtered(lambda x: x.index == hex_border_index)
-                A_check = (hex.name, border_key, hex_border.name)
+                # A_check = (hex.name, border_key, hex_border.name)
                 if not hex[border_key]:
                     hex[border_key] = hex_border
 
@@ -175,4 +182,11 @@ class Quadrant(models.Model):
         self.external_ids = [(4, hex_02_11.border_NW.id)]
         self.external_ids = [(4, hex_02_11.border_N.id)]
 
-        stop = 0
+    def set_missing_ids(self):
+        all_index = list(range(1, 20))
+        missing_index_list = list(set(all_index) - set(self.hex_ids.mapped('index')))
+        for missing_index in missing_index_list:
+            border_quad, target_index = HEX_MISSING_INDEX[missing_index]
+            missing_hex = self[border_quad].hex_ids.filtered(lambda x: x.index == target_index)
+            self.missing_ids = [(4, missing_hex.id)]
+            #A_check = {"missing_index": missing_index, "map": (border_quad, target_index), "find": (missing_hex.quad_id.code, missing_hex.index)}

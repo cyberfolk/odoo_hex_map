@@ -76,3 +76,12 @@ EXTERNAL_BORDERS_MAP = {
         "border_N": ("border_N", 15),
         "border_NW": ("border_NW", 11)},
 }
+
+HEX_MISSING_INDEX ={
+    8: ("border_N", 14),
+    10: ("border_NE", 16),
+    12: ("border_SE", 18),
+    14: ("border_S", 8),
+    16: ("border_SW", 10),
+    18: ("border_NW", 12),
+}
