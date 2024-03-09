@@ -23,7 +23,7 @@ class ViewMacro extends Component {
                     return JSON.parse(result)
                 })
             // Rimuovo il quadrante void dalla vista per eliminare errori nel DOM
-            this.macro.quadrant_ids = this.macro.quadrant_ids.filter(quad => quad.name !== 'void');
+            this.macro.quad_ids = this.macro.quad_ids.filter(quad => quad.name !== 'void');
         })
     }
 

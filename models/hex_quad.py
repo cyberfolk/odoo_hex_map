@@ -103,7 +103,7 @@ class Quadrant(models.Model):
                 hex_id = self.env['hex.hex'].create(hex_vals)
                 hex_id.check_name()
                 quad.hex_ids = [(4, hex_id.id)]
-            hex_macro.quadrant_ids = [(4, quad.id)]
+            hex_macro.quad_ids = [(4, quad.id)]
         return quad
 
     def set_hexs_borders(self):

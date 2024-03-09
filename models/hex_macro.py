@@ -9,7 +9,7 @@ class MacroArea(models.Model):
     _inherit = ['hex.mixin']
     _description = "Macro-Area, contains Quadrants."
 
-    quadrant_ids = fields.One2many(
+    quad_ids = fields.One2many(
         comodel_name='hex.quad',
         string="Quadrants",
         inverse_name='macro_id',
@@ -32,8 +32,8 @@ class MacroArea(models.Model):
         """Metodo per impostare i bordi dei quadranti. Gestita la casistica dei lati dei quadranti del secondo cerchio
          che non confinano con nulla. Il border che non confina con nulla rimane settato a nulla"""
         quad_void = self.env.ref('cf_hex_map.hex_quad_void')
-        index_to_quad = {x.index: x for x in self.quadrant_ids}  # Crea un dizionario per mappare gli index agli esagoni
-        for quad in self.quadrant_ids:
+        index_to_quad = {x.index: x for x in self.quad_ids}  # Crea un dizionario per mappare gli index agli esagoni
+        for quad in self.quad_ids:
             borders = BORDERS_MAP[quad.index]
             quad.border_N = index_to_quad.get(borders[0]) or quad_void
             quad.border_NE = index_to_quad.get(borders[1]) or quad_void

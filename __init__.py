@@ -11,5 +11,5 @@ def post_init_hook_hex_map(env):
     """
     hex_macro = env.ref('cf_hex_map.hex_macro_1')
     hex_macro.set_quads_borders()
-    [quad.set_hexs_borders() for quad in hex_macro.quadrant_ids]
-    [quad.set_hexs_external_borders() for quad in hex_macro.quadrant_ids]
+    [quad.set_hexs_borders() for quad in hex_macro.quad_ids]
+    [quad.set_hexs_external_borders() for quad in hex_macro.quad_ids]
