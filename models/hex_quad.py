@@ -77,6 +77,15 @@ class Quadrant(models.Model):
         help="Confine Nord-Ovest"
     )
 
+    @api.depends('index')
+    def _compute_code(self):
+        for record in self:
+            if record == self.env.ref('cf_hex_map.hex_quad_void'):
+                code = 'void'
+            else:
+                code = (chr(ord('A') + record.index - 1))
+            record.code = code
+
     @api.model
     def get_json_quad(self, quad_id):
         """Metodo richiamato dal orm di quad.js
@@ -92,7 +101,7 @@ class Quadrant(models.Model):
         if quad.name != 'void':
             hex_list = eval(vals[0].get('hex_list'))
             hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
-            quad.check_name()
+            quad.name = f"Quadrante {quad.code}"
             quad.macro_id = hex_macro
             for index in hex_list:
                 hex_vals = {

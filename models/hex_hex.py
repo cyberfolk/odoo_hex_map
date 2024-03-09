@@ -65,11 +65,6 @@ class Hex(models.Model):
                 code += f".{str(record.circle_number).zfill(2)}"
             record.code = code
 
-    @api.depends('code')
-    def _compute_display_name(self):
-        for rec in self:
-            rec.display_name = rec.code
-
     def tmp_debug(self):
         stop = 0
         self.quad_id.set_external_ids()

@@ -33,6 +33,11 @@ class HexMixin(models.AbstractModel):
         string='Color',
     )
 
+    @api.depends('code')
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = rec.code
+
     @api.constrains('index')
     def _check_index(self):
         for record in self:
