@@ -108,15 +108,16 @@ class Quadrant(models.Model):
 
     def set_hexs_borders(self):
         """Metodo per impostare i bordi degli Esagoni. Lascia a None i bordi degli esagoni esterni."""
+        hex_void = self.env.ref('cf_hex_map.hex_hex_void')
         index_to_hex = {x.index: x for x in self.hex_ids}  # Crea un dizionario per mappare gli index agli esagoni
         for hex in self.hex_ids:
             borders = BORDERS_MAP[hex.index]
-            hex.border_N  = index_to_hex.get(borders[0])
-            hex.border_NE = index_to_hex.get(borders[1])
-            hex.border_SE = index_to_hex.get(borders[2])
-            hex.border_S  = index_to_hex.get(borders[3])
-            hex.border_SW = index_to_hex.get(borders[4])
-            hex.border_NW = index_to_hex.get(borders[5])
+            hex.border_N  = index_to_hex.get(borders[0]) or hex_void
+            hex.border_NE = index_to_hex.get(borders[1]) or hex_void
+            hex.border_SE = index_to_hex.get(borders[2]) or hex_void
+            hex.border_S  = index_to_hex.get(borders[3]) or hex_void
+            hex.border_SW = index_to_hex.get(borders[4]) or hex_void
+            hex.border_NW = index_to_hex.get(borders[5]) or hex_void
 
     def set_hexs_external_borders(self):
         """Metodo per impostare i bordi degli Esagoni esterni."""
