@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from odoo import fields, models, api
 from ..utility.costant import BORDERS_MAP
 from ..utility.odoo_to_json import obj_odoo_to_json
@@ -34,10 +33,11 @@ class MacroArea(models.Model):
             record.code = (chr(ord('A') + record.index - 1))
 
     def set_quads_borders(self):
-        """Metodo per impostare i bordi dei quadranti. Gestita la casistica dei lati dei quadranti del secondo cerchio
-         che non confinano con nulla. Il border che non confina con nulla rimane settato a nulla"""
+        """Impostare i bordi dei quadranti. Dal secondo cerchio in poi ci potrebbero essere bordi che non
+        confinano con nulla, in quel caso quei bordi verranno settati a void."""
         quad_void = self.env.ref('cf_hex_map.hex_quad_void')
         index_to_quad = {x.index: x for x in self.quad_ids}  # Crea un dizionario per mappare gli index agli esagoni
+        A_debug = ""
         for quad in self.quad_ids:
             borders = BORDERS_MAP[quad.index]
             quad.border_N = index_to_quad.get(borders[0]) or quad_void
@@ -46,3 +46,8 @@ class MacroArea(models.Model):
             quad.border_S = index_to_quad.get(borders[3]) or quad_void
             quad.border_SW = index_to_quad.get(borders[4]) or quad_void
             quad.border_NW = index_to_quad.get(borders[5]) or quad_void
+
+            # SCOMMENTARE PER DEBUG
+            # A_debug += (f"Borders {quad.code}: {quad.border_N.code} {quad.border_NE.code} {quad.border_SE.code}"
+            #             f"{quad.border_S.code} {quad.border_SW.code} {quad.border_NW.code}\n")
+        return A_debug

@@ -12,7 +12,7 @@ BORDERS_MAP = {
     11: [10, 0, 0, 12, 4, 3],
     12: [11, 0, 0, 0, 13, 4],
     13: [4, 12, 0, 0, 14, 5],
-    14: [1, 2, 3, 4, 5, 6],
+    14: [5, 13, 0, 0, 0, 15],
     15: [6, 5, 14, 0, 0, 16],
     16: [17, 6, 15, 0, 0, 0],
     17: [18, 7, 6, 16, 0, 0],
@@ -77,11 +77,20 @@ EXTERNAL_BORDERS_MAP = {
         "border_NW": ("border_NW", 11)},
 }
 
-HEX_MISSING_INDEX ={
-    8: ("border_N", 14),
-    10: ("border_NE", 16),
-    12: ("border_SE", 18),
-    14: ("border_S", 8),
-    16: ("border_SW", 10),
-    18: ("border_NW", 12),
+HEX_MISSING_INDEX = {
+    8:  ("border_N",  14, {"border_SE":  9, "border_S": 2,  "border_SW":  19}),
+    10: ("border_NE", 16, {"border_S":  11, "border_SW": 3,  "border_NW":  9}),
+    12: ("border_SE", 18, {"border_N":  11, "border_SW": 13, "border_NW":  4}),
+    14: ("border_S",   8, {"border_N":   5, "border_NE": 13, "border_NW": 15}),
+    16: ("border_SW", 10, {"border_N":  17, "border_NE": 6,  "border_SE": 15}),
+    18: ("border_NW", 12, {"border_NE": 19, "border_SE": 7,  "border_S":  17}),
+}
+
+SPECULAR_BORDERS_MAP = {
+    "border_N":  "border_S",
+    "border_NE": "border_SW",
+    "border_SE": "border_NW",
+    "border_S":  "border_N",
+    "border_SW": "border_NE",
+    "border_NW": "border_SE",
 }

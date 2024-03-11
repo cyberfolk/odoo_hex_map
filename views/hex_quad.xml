@@ -29,13 +29,17 @@
                 <sheet>
                     <group>
                         <group col="1">
-                            <group col="4">
-                                <group colspan="2">
-                                    <field class="fw-bold h1" colspan="2" nolabel="1" readonly="1" name="name"/>
-                                </group>
+                            <group>
+                                <field class="fw-bold h1" colspan="2" nolabel="1" readonly="1" name="name"/>
                             </group>
                             <group>
                                 <field name="hook_widget" widget="quad" nolabel="1"/>
+                            </group>
+                            <group string="External Hexes" name="quad_external_ids">
+                                <field readonly="1" colspan="2" nolabel="1" name="external_ids" widget='many2many_tags'/>
+                            </group>
+                            <group string="Missing Hexes" name="quad_missing_ids">
+                                <field readonly="1" colspan="2" nolabel="1" name="missing_ids" widget='many2many_tags' />
                             </group>
                         </group>
                         <group col="1">
@@ -53,9 +57,9 @@
                                     <field name="circle_number"/>
                                 </group>
                             </group>
-                            <group string="Hexes" name="quad_hex_ids">
-                                <field colspan="2" nolabel="1" name="hex_ids">
-                                    <tree edit="0" delete="0" create="0">
+                            <group string="Internal Hexes" name="quad_hex_ids">
+                                <field readonly="1" colspan="2" nolabel="1" name="hex_ids">
+                                    <tree>
                                         <!-- <field name="name"/>-->
                                         <field name="code"/>
                                         <!-- <field name="circle_order" string="Order"/>-->

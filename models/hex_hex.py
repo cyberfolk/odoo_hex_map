@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoo import api, fields, models
 
 
@@ -11,11 +9,6 @@ class Hex(models.Model):
     quad_id = fields.Many2one(
         comodel_name='hex.quad',
         string="Quadrant",
-    )
-
-    external_id = fields.Many2one(
-        comodel_name='hex.quad',
-        string="Quadrant Esterno",
     )
 
     border_N = fields.Many2one(
@@ -67,4 +60,3 @@ class Hex(models.Model):
 
     def tmp_debug(self):
         stop = 0
-        self.quad_id.set_external_ids()
