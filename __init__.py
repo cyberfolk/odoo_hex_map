@@ -16,7 +16,6 @@ def post_init_hook_hex_map(env):
     A_debug = [quad.set_hexs_borders() for quad in hex_macro.quad_ids]
     B_debug = [quad.set_hexs_external_borders() for quad in hex_macro.quad_ids]
     C_debug = [quad.set_missing_ids() for quad in hex_macro.quad_ids]
-    D_debug = [quad.set_external_ids() for quad in hex_macro.quad_ids]
 
     # SCOMMENTARE PER DEBUG
     # with open('.\custom\cf_hex_map\log\set_hexs_borders.txt', 'w') as file:
@@ -25,5 +24,3 @@ def post_init_hook_hex_map(env):
     # #   file.write(''.join(C_debug))
     # with open('.\custom\cf_hex_map\log\set_hexs_external_borders.txt', 'w') as file:
     #     file.write(''.join(B_debug))
-    # with open('.\custom\cf_hex_map\log\set_external_ids.txt', 'w') as file:
-    #     file.write(''.join(D_debug))

@@ -11,10 +11,15 @@
                         </div>
                     </a>
                 </t>
-                <t t-set="list" t-value="[20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]"/>
+                <t t-set="list" t-value="[37, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]"/>
                 <t t-foreach="list" t-as="i" t-key="i">
-                    <div class="hex hex_dim hv-center fw-bold text-white" t-att-style="getOtherHexStyle(i)">
-                        <div class="label_code">---</div>
+                    <div class="hex hex_dim hv-center fw-bold text-white" t-att-style="getMissingHexStyle(i)">
+                        <div class="label_code" t-esc="external_hexs[i_index].code"/>
+                    </div>
+                </t>
+                <t t-foreach="quad.missing_ids" t-as="hex" t-key="hex.id">
+                    <div class="hex hex_dim hv-center fw-bold text-white" t-att-style="getHexMissingStyle(hex)">
+                        <div class="label_code" t-esc="hex.code"/>
                     </div>
                 </t>
             </div>

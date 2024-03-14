@@ -35,9 +35,6 @@
                             <group>
                                 <field name="hook_widget" widget="quad" nolabel="1"/>
                             </group>
-                            <group string="External Hexes" name="quad_external_ids">
-                                <field readonly="1" colspan="2" nolabel="1" name="external_ids" widget='many2many_tags'/>
-                            </group>
                             <group string="Missing Hexes" name="quad_missing_ids">
                                 <field readonly="1" colspan="2" nolabel="1" name="missing_ids" widget='many2many_tags' />
                             </group>

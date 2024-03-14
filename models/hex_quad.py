@@ -1,9 +1,10 @@
-from odoo import api, fields, models, Command
+from odoo import api, fields, models
 from ..utility.costant import BORDERS_MAP
 from ..utility.costant import EXTERNAL_BORDERS_MAP
 from ..utility.costant import HEX_MISSING_INDEX
 from ..utility.costant import SPECULAR_BORDERS_MAP
 from ..utility.odoo_to_json import obj_odoo_to_json
+import json
 
 
 class Quadrant(models.Model):
@@ -30,12 +31,6 @@ class Quadrant(models.Model):
         comodel_name='hex.hex',
         relation='quad_hex_missing_rel',
         string="Missing IDs"
-    )
-
-    external_ids = fields.Many2many(
-        comodel_name='hex.hex',
-        relation='quad_hex_external_rel',
-        string="External IDs"
     )
 
     polygon = fields.Char(
@@ -129,10 +124,10 @@ class Quadrant(models.Model):
         A_debug = ""
         for hex in self.hex_ids:
             borders = BORDERS_MAP[hex.index]
-            hex.border_N  = index_to_hex.get(borders[0]) or hex_void
+            hex.border_N = index_to_hex.get(borders[0]) or hex_void
             hex.border_NE = index_to_hex.get(borders[1]) or hex_void
             hex.border_SE = index_to_hex.get(borders[2]) or hex_void
-            hex.border_S  = index_to_hex.get(borders[3]) or hex_void
+            hex.border_S = index_to_hex.get(borders[3]) or hex_void
             hex.border_SW = index_to_hex.get(borders[4]) or hex_void
             hex.border_NW = index_to_hex.get(borders[5]) or hex_void
 
@@ -162,9 +157,13 @@ class Quadrant(models.Model):
         # A_debug += f"\n"
         return A_debug
 
-    def set_external_ids(self):
-        """Popola il campo che contiene gli esagoni esterni."""
-        hex_00_01 = self.hex_ids.filtered(lambda x: x.index == 1)
+    @api.model
+    def get_json_external_hexs(self, quad_id):
+        """Metodo richiamato dal orm di quad.js
+            :param quad_id: Id quadrante.
+            :return: Json degli esagoni esterni."""
+        self_quad = self.env['hex.quad'].browse(quad_id)[0]
+        hex_00_01 = self_quad.hex_ids.filtered(lambda x: x.index == 1)
         hex_02_01 = hex_00_01.border_N.border_N
         hex_02_03 = hex_02_01.border_SE.border_SE
         hex_02_05 = hex_02_03.border_S.border_S
@@ -172,16 +171,15 @@ class Quadrant(models.Model):
         hex_02_09 = hex_02_07.border_NW.border_NW
         hex_02_11 = hex_02_09.border_N.border_N
         hex_list = [
-            hex_02_01.border_NW.id, hex_02_01.border_N.id, hex_02_01.border_NE.id,
-            hex_02_03.border_N.id, hex_02_03.border_NE.id, hex_02_03.border_SE.id,
-            hex_02_05.border_NE.id, hex_02_05.border_SE.id, hex_02_05.border_S.id,
-            hex_02_07.border_SE.id, hex_02_07.border_S.id, hex_02_07.border_SW.id,
-            hex_02_09.border_S.id, hex_02_09.border_SW.id, hex_02_09.border_NW.id,
-            hex_02_11.border_SW.id, hex_02_11.border_NW.id, hex_02_11.border_N.id
+            hex_02_01.border_NW, hex_02_01.border_N,  hex_02_01.border_NE,
+            hex_02_03.border_N,  hex_02_03.border_NE, hex_02_03.border_SE,
+            hex_02_05.border_NE, hex_02_05.border_SE, hex_02_05.border_S,
+            hex_02_07.border_SE, hex_02_07.border_S,  hex_02_07.border_SW,
+            hex_02_09.border_S,  hex_02_09.border_SW, hex_02_09.border_NW,
+            hex_02_11.border_SW, hex_02_11.border_NW, hex_02_11.border_N
         ]
-        self.write({'external_ids': [Command.set(hex_list)]})
-
-        return f"{[x.name for x in self.external_ids]}\n"
+        json_hex_list = obj_odoo_to_json(hex_list)
+        return json_hex_list
 
     def set_missing_ids(self):
         """Popola il campo che contiene gli esagoni mancanti."""

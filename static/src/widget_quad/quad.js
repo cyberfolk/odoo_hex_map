@@ -19,11 +19,14 @@ export class QuadField extends Component {
 
         onWillStart(async () => {
             this.quad = await this.get_json_quad(quad_id)
+            console.log(quad_id)
+            this.external_hexs = await this.get_json_external_hexs(quad_id)
         });
 
         onWillUpdateProps(async (nextProps) => {
             let quad_id = nextProps.record.resId
             this.quad = await this.get_json_quad(quad_id)
+            this.external_hexs = await this.get_json_external_hexs(quad_id)
         });
     }
 
@@ -31,6 +34,12 @@ export class QuadField extends Component {
         const quad = this.orm.call("hex.quad", "get_json_quad", [], {'quad_id': quad_id})
         .then((result) => { return JSON.parse(result) })
         return quad
+    }
+
+    get_json_external_hexs(quad_id){
+        const external_hexs = this.orm.call("hex.quad", "get_json_external_hexs", [], {'quad_id': quad_id})
+        .then((result) => { return JSON.parse(result) })
+        return external_hexs
     }
 
     getAxes(index) {
@@ -46,8 +55,15 @@ export class QuadField extends Component {
         return `${this.getAxes(hex.index)}; background-color: ${hex.color}; filter: brightness(${100 - (1 + hex.circle_order) * hex.circle_number}%);`
     }
 
-    getOtherHexStyle(num) {
-        return `${this.getAxes(num)}; background-color: #eeeeee;`
+    getHexMissingStyle(hex) {
+        let index = hex.index + 6 ;
+        index = index > 19 ? (hex.index - 6) : index;
+        return `${this.getAxes(index)}; background-color: #eeeeee;`
+    }
+
+    getMissingHexStyle(index) {
+        //console.log(this.quad.external_hexs)
+        return `${this.getAxes(index)}; background-color: #eeeeee;`
     }
 }
 
