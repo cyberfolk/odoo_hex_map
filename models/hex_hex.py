@@ -57,6 +57,3 @@ class Hex(models.Model):
             else:
                 code = 'void'
             record.code = code
-
-    def tmp_debug(self):
-        stop = 0

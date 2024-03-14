@@ -4,7 +4,6 @@ from ..utility.costant import EXTERNAL_BORDERS_MAP
 from ..utility.costant import HEX_MISSING_INDEX
 from ..utility.costant import SPECULAR_BORDERS_MAP
 from ..utility.odoo_to_json import obj_odoo_to_json
-import json
 
 
 class Quadrant(models.Model):
@@ -121,7 +120,6 @@ class Quadrant(models.Model):
         """Impostare i bordi degli Esagoni. Setta a void i bordi degli esagoni esterni."""
         hex_void = self.env.ref('cf_hex_map.hex_hex_void')
         index_to_hex = {x.index: x for x in self.hex_ids}  # Crea un dizionario per mappare gli index agli esagoni
-        A_debug = ""
         for hex in self.hex_ids:
             borders = BORDERS_MAP[hex.index]
             hex.border_N = index_to_hex.get(borders[0]) or hex_void
@@ -131,31 +129,17 @@ class Quadrant(models.Model):
             hex.border_SW = index_to_hex.get(borders[4]) or hex_void
             hex.border_NW = index_to_hex.get(borders[5]) or hex_void
 
-        # SCOMMENTARE PER DEBUG
-        #     A_debug += (f"Bordsrs {hex.code}: {hex.border_N.code:7} {hex.border_NE.code:7} {hex.border_SE.code:7} "
-        #                 f"{hex.border_S.code:7} {hex.border_SW.code:7} {hex.border_NW.code:7}\n")
-        # A_debug += f"\n"
-        return A_debug
-
     def set_hexs_external_borders(self):
         """Impostare i bordi degli Esagoni esterni."""
         filtered_hex_ids = self.hex_ids.filtered(lambda r: r.index != 1)
-        A_debug = ""
         for hex in filtered_hex_ids:
             hex_external_borders = EXTERNAL_BORDERS_MAP[hex.index]
             for border_key, border_value in hex_external_borders.items():
                 quad_border_field, hex_border_index = border_value
                 quad_border = self[quad_border_field]
                 hex_border = quad_border.hex_ids.filtered(lambda x: x.index == hex_border_index)
-                # A_debug += f"{(hex.quad_id.code, hex.index)} - {border_key:9} -> {hex[border_key].code}"
                 if hex[border_key].code == 'void' and hex_border:
                     hex[border_key] = hex_border
-        # SCOMMENTARE PER DEBUG
-        #             A_debug += f" <- Replace {hex[border_key].code}\n"
-        #         else:
-        #             A_debug += f"\n"
-        # A_debug += f"\n"
-        return A_debug
 
     @api.model
     def get_json_external_hexs(self, quad_id):
@@ -171,11 +155,11 @@ class Quadrant(models.Model):
         hex_02_09 = hex_02_07.border_NW.border_NW
         hex_02_11 = hex_02_09.border_N.border_N
         hex_list = [
-            hex_02_01.border_NW, hex_02_01.border_N,  hex_02_01.border_NE,
-            hex_02_03.border_N,  hex_02_03.border_NE, hex_02_03.border_SE,
+            hex_02_01.border_NW, hex_02_01.border_N, hex_02_01.border_NE,
+            hex_02_03.border_N, hex_02_03.border_NE, hex_02_03.border_SE,
             hex_02_05.border_NE, hex_02_05.border_SE, hex_02_05.border_S,
-            hex_02_07.border_SE, hex_02_07.border_S,  hex_02_07.border_SW,
-            hex_02_09.border_S,  hex_02_09.border_SW, hex_02_09.border_NW,
+            hex_02_07.border_SE, hex_02_07.border_S, hex_02_07.border_SW,
+            hex_02_09.border_S, hex_02_09.border_SW, hex_02_09.border_NW,
             hex_02_11.border_SW, hex_02_11.border_NW, hex_02_11.border_N
         ]
         json_hex_list = obj_odoo_to_json(hex_list)
@@ -185,12 +169,10 @@ class Quadrant(models.Model):
         """Popola il campo che contiene gli esagoni mancanti."""
         all_index = list(range(1, 20))
         missing_index_list = list(set(all_index) - set(self.hex_ids.mapped('index')))
-        A_debug = ""
         for missing_index in missing_index_list:
             border_quad, target_index, borders = HEX_MISSING_INDEX[missing_index]
             missing_hex = self[border_quad].hex_ids.filtered(lambda x: x.index == target_index)
             self.missing_ids = [(4, missing_hex.id)]
-            # A_debug += f"Missing: {(self.code, missing_index)} -> Search {(border_quad, target_index)} -> Found {(missing_hex.quad_id.code, missing_hex.index)}\n"
 
             for border_key, border_idex in borders.items():
                 target_hex = self.hex_ids.filtered(lambda x: x.index == border_idex)
@@ -198,9 +180,3 @@ class Quadrant(models.Model):
                 specular_borders_key = SPECULAR_BORDERS_MAP[border_key]
                 target_hex[specular_borders_key] = missing_hex
 
-        # SCOMMENTARE PER DEBUG
-        #         A_debug += f"Find: {(missing_hex.quad_id.code, missing_hex.index)} confina ({border_key}) con {(target_hex.quad_id.code, target_hex.index)}\n"
-        #         A_debug += f"Conf: {(target_hex.quad_id.code, target_hex.index)} confina ({specular_borders_key}) con {(missing_hex.quad_id.code, missing_hex.index)}\n"
-        #     A_debug += f"\n"
-        # A_debug += f"\n"
-        return A_debug

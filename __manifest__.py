@@ -29,6 +29,7 @@
             '/cf_hex_map/static/src/scss/style.scss',
             '/cf_hex_map/static/src/widget_quad/*',
             '/cf_hex_map/static/src/view_macro/*',
+            '/cf_hex_map/static/src/utility/utils.js',
         ],
         'web.assets_frontend': [
             '/cf_hex_map/static/src/scss/style.scss',

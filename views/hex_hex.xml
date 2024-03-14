@@ -24,9 +24,6 @@
                 <sheet>
                     <group>
                         <group>
-                            <button name="tmp_debug" type="object" string="debug"/>
-                        </group>
-                        <group>
                             <field name="name"/>
                             <field name="code"/>
                             <field name="index" readonly="1"/>
