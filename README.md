@@ -1,4 +1,4 @@
-# CF | Hex Map
+# Odoo | Hex Map
 **Initial commit**: 21/01/24
 
 **Technologies**: Odoo, Python, XML, HTML, SCSS e Bootstrap.
