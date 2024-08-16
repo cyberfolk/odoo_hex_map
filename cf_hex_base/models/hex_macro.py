@@ -35,7 +35,7 @@ class MacroArea(models.Model):
     def set_quads_borders(self):
         """Impostare i bordi dei quadranti. Dal secondo cerchio in poi ci potrebbero essere bordi che non
         confinano con nulla, in quel caso quei bordi verranno settati a void."""
-        quad_void = self.env.ref('cf_hex_map.hex_quad_void')
+        quad_void = self.env.ref('cf_hex_base.hex_quad_void')
         index_to_quad = {x.index: x for x in self.quad_ids}  # Crea un dizionario per mappare gli index agli esagoni
         A_debug = ""
         for quad in self.quad_ids:

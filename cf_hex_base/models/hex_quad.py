@@ -111,14 +111,14 @@ class Quadrant(models.Model):
                 hex_id = self.env['hex.hex'].create(hex_vals)
                 hex_id.name = hex_id.code
                 quad.hex_ids = [(4, hex_id.id)]
-            hex_macro = self.env.ref('cf_hex_map.hex_macro_1')
+            hex_macro = self.env.ref('cf_hex_base.hex_macro_1')
             hex_macro.quad_ids = [(4, quad.id)]
             quad.macro_id = hex_macro
         return quad
 
     def set_hexs_borders(self):
         """Impostare i bordi degli Esagoni. Setta a void i bordi degli esagoni esterni."""
-        hex_void = self.env.ref('cf_hex_map.hex_hex_void')
+        hex_void = self.env.ref('cf_hex_base.hex_hex_void')
         index_to_hex = {x.index: x for x in self.hex_ids}  # Crea un dizionario per mappare gli index agli esagoni
         for hex in self.hex_ids:
             borders = BORDERS_MAP[hex.index]

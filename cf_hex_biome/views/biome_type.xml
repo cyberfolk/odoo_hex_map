@@ -1,0 +1,37 @@
+<odoo>
+    <record id="biome_type_view_tree" model="ir.ui.view">
+        <field name="name">biome.type.tree</field>
+        <field name="model">biome.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="speed_of_travel"/>
+                <field name="cd_food"/>
+                <field name="cd_water"/>
+                <field name="cd_navigation"/>
+                <field name="color" widget="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biome_type_view_form" model="ir.ui.view">
+        <field name="name">biome.type.form</field>
+        <field name="model">biome.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="speed_of_travel"/>
+                            <field name="cd_food"/>
+                            <field name="cd_water"/>
+                            <field name="cd_navigation"/>
+                            <field name="color" widget="color"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

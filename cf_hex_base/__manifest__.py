@@ -2,8 +2,8 @@
 # Powered by cyberfolk
 
 {
-    'name': "Cyberfolk | Hex Map",
-    'icon': '/cf_hex_map/static/description/icon.png',
+    'name': "Cyberfolk | Hex Base",
+    'icon': '/cf_hex_base/static/description/icon.png',
     'sequence': -100,
     'version': '0.0.1',
     'category': 'Map',
@@ -17,7 +17,7 @@
         "views/menu_root.xml",
         "views/hex_hex.xml",
         "views/hex_quad.xml",
-        "data/data.xml",
+        "data/hex.xml",
     ],
     'depends': ['base', 'web'],
     'demo': [],
@@ -26,13 +26,13 @@
     'post_init_hook': 'post_init_hook_hex_map',
     'assets': {
         'web.assets_backend': [
-            '/cf_hex_map/static/src/scss/style.scss',
-            '/cf_hex_map/static/src/widget_quad/*',
-            '/cf_hex_map/static/src/view_macro/*',
-            '/cf_hex_map/static/src/utility/utils.js',
+            '/cf_hex_base/static/src/scss/style.scss',
+            '/cf_hex_base/static/src/widget_quad/*',
+            '/cf_hex_base/static/src/view_macro/*',
+            '/cf_hex_base/static/src/utility/utils.js',
         ],
         'web.assets_frontend': [
-            '/cf_hex_map/static/src/scss/style.scss',
+            '/cf_hex_base/static/src/scss/style.scss',
         ]
     },
 }

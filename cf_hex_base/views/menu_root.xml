@@ -16,7 +16,7 @@
         <field name="tag">view_macro</field>
     </record>
 
-    <menuitem sequence="0" id="menu_root" name="Hex Map" web_icon="cf_hex_map,static/description/icon.png">
+    <menuitem sequence="0" id="menu_root" name="Hex Map" web_icon="cf_hex_base,static/description/icon.png">
         <menuitem sequence="0" id="menu_hex_map" name="Mappa" >
             <menuitem sequence="0" id="menu_macro" name="Macro Area" action="action_menu_macro"/>
             <menuitem sequence="1" id="menu_quad" name="Quadranti" action="action_menu_quad"/>

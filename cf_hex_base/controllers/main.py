@@ -16,6 +16,6 @@ class HexMapController(http.Controller):
         """End point che ritorna in formato json l' hex_macro, gli hex_quad e gli hex_hex opportunamente incapsulati."""
 
         _logger.info("RUN fetch_hex_macro")
-        hex_macro = request.env.ref('cf_hex_map.hex_macro_1').sudo()
+        hex_macro = request.env.ref('cf_hex_base.hex_macro_1').sudo()
         hex_macro_json = obj_odoo_to_json(hex_macro)
         return http.Response(hex_macro_json, content_type='application/json', status=200)

@@ -1,0 +1,11 @@
+<odoo>
+    <record id="action_menu_biome_type" model="ir.actions.act_window">
+        <field name="name">Tipi di Biomi</field>
+        <field name="res_model">biome.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem sequence="1" id="menu_biome" name="Biomi" parent="cf_hex_base.menu_root">
+        <menuitem sequence="0" id="menu_biome_type" name="Tipi di Biomi" action="action_menu_biome_type"/>
+    </menuitem>
+</odoo>
