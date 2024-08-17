@@ -1,0 +1,16 @@
+<odoo>
+    <record id="cf_view_module_filter_apps_inherit" model="ir.ui.view">
+        <field name="name">CF Search Data Modules</field>
+        <field name="model">ir.module.module</field>
+        <field name="inherit_id" ref="base.view_module_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="/search" position="inside">
+                <filter name="cyberfolk" string="cyberfolk" domain="[('author', '=', 'cyberfolk')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="base.open_module_tree" model="ir.actions.act_window">
+        <field name="context">{'search_default_cyberfolk':1}</field>
+    </record>
+</odoo>
