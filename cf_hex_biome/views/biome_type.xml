@@ -10,6 +10,20 @@
                 <field name="cd_water"/>
                 <field name="cd_navigation"/>
                 <field name="color" widget="color"/>
+                <field name="structure_ids"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'future'"
+                       decoration-muted="state == 'doubtful'"
+                       decoration-info="state == 'upcoming'"/>
+                <field name="good_evil_axis" widget="badge"
+                       decoration-info="good_evil_axis == 'good'"
+                       decoration-danger="good_evil_axis == 'evil'"
+                       decoration-muted="good_evil_axis == 'neutral'"/>
+                <field name="cosmology" widget="badge"
+                       decoration-info="cosmology == 'external'"
+                       decoration-primary="cosmology == 'mirror'"
+                       decoration-warning="cosmology == 'elemental'"/>
             </tree>
         </field>
     </record>
@@ -28,6 +42,10 @@
                             <field name="cd_water"/>
                             <field name="cd_navigation"/>
                             <field name="color" widget="color"/>
+                            <field name="structure_ids" widget='many2many_tags'/>
+                            <field name="state" />
+                            <field name="good_evil_axis"/>
+                            <field name="cosmology"/>
                         </group>
                     </group>
                 </sheet>

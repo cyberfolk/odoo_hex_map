@@ -1,8 +1,8 @@
 from odoo import api, fields, models
-from ..utility.costant import BORDERS_MAP
-from ..utility.costant import EXTERNAL_BORDERS_MAP
-from ..utility.costant import HEX_MISSING_INDEX
-from ..utility.costant import SPECULAR_BORDERS_MAP
+from ..utility.constant import BORDERS_MAP
+from ..utility.constant import EXTERNAL_BORDERS_MAP
+from ..utility.constant import HEX_MISSING_INDEX
+from ..utility.constant import SPECULAR_BORDERS_MAP
 from ..utility.odoo_to_json import obj_odoo_to_json
 
 

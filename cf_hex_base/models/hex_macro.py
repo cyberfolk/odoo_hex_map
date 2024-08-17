@@ -1,5 +1,5 @@
 from odoo import fields, models, api
-from ..utility.costant import BORDERS_MAP
+from ..utility.constant import BORDERS_MAP
 from ..utility.odoo_to_json import obj_odoo_to_json
 
 

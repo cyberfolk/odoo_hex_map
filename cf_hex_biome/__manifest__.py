@@ -16,10 +16,14 @@
         "security/ir.model.access.csv",
         "views/menu_root.xml",
         "views/biome_type.xml",
-        "data/biome.xml",
+        "views/structure_structure.xml",
+        "data/biome_type.xml",
+        "data/structure_structure.xml",
     ],
     'depends': ['cf_hex_base', 'base', 'web'],
     'demo': [],
     'application': False,
     'installable': True,
+    'post_init_hook': 'post_init_hook_cf_hex_biome',
+
 }

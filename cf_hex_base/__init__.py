@@ -1,9 +1,9 @@
 from . import controllers
 from . import models
-from .utility.costant import BORDERS_MAP
+from .utility.constant import BORDERS_MAP
 
 
-def post_init_hook_hex_map(env):
+def post_init_hook_cf_hex_base(env):
     """Viene eseguito dopo l'installazione del modulo. Serve per settare:
         - I confini dei Quadranti,
         - I confini interni degli Esagoni
