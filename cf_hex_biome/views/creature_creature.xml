@@ -1,0 +1,39 @@
+<odoo>
+    <record id="creature_creature_view_tree" model="ir.ui.view">
+        <field name="name">creature.creature.tree</field>
+        <field name="model">creature.creature</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="skip" decoration-bf="cool" decoration-success="cool and not skip" >
+                <field name="name"/>
+                <field name="link_5et" widget="url"/>
+                <field name="cr"/>
+                <field name="type_id"/>
+                <field name="skip"/>
+                <field name="cool"/>
+                <field name="tag_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="creature_creature_view_form" model="ir.ui.view">
+        <field name="name">creature.creature.form</field>
+        <field name="model">creature.creature</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="link_5et" widget="url"/>
+                            <field name="cr"/>
+                            <field name="type_id"/>
+                            <field name="skip"/>
+                            <field name="cool"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

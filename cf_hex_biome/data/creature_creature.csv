@@ -1,4 +1,4 @@
-Skip,Cool,Tipo,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6,Tag7,Creature,Link,CR,Dungeon,Foresta,Coste,Aquatico,Deserto,Prateria,Colline,Montagne,Palude,Artico,A Dolce,Giungla,Savana,Cimitero,Far Realms ,Space,Astrale,Etereo,Vulcano,Limbo,Feywild,Shadowfell,Bene,Male,Inferno,Abisso,Carceri,Distese Grige ,Gehenna,Acqua,Aria,Fuoco,Terra,Underdark,Urban,Mechanus
+skip,cool,type,tag1,tag2,tag3,tag4,tag5,tag6,tag7,name,link,cr,Dungeon,Foresta,Coste,Aquatico,Deserto,Prateria,Colline,Montagne,Palude,Artico,A Dolce,Giungla,Savana,Cimitero,Far Realms ,Space,Astrale,Etereo,Vulcano,Limbo,Feywild,Shadowfell,Bene,Male,Inferno,Abisso,Carceri,Distese Grige ,Gehenna,Acqua,Aria,Fuoco,Terra,Underdark,Urban,Mechanus
 ,,Aberrazione,Aboleth,,Servitore,,,,Endemico,Chuul,https://5e.tools/bestiary.html#chuul_mm,4,alta,,alta,bassa,,,,,,,bassa,,,,,,,,,,,,,,,,,,,,,,,alta,,
 ,TRUE,Aberrazione,Aboleth,,,,,,Boss,Aboleth ,https://5e.tools/bestiary.html#aboleth_mm,10,alta,,bassa,alta,,,,,bassa,,bassa,,,,alta,,,,,,,,,,,,,,,,,,,alta,,
 TRUE,TRUE,Aberrazione,,,Beholder,,,,Endemico,Gazer,https://5e.tools/bestiary.html#gazer_vgm,"0,5",alta,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,alta,,

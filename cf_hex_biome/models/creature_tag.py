@@ -1,9 +1,9 @@
 from odoo import fields, models
-from ..data.list_creature_tag import LIST_CREATURE_TAG
 
 
 class CreatureTag(models.Model):
     _name = "creature.tag"
+    _inherit = 'read.csv.mixin'
     _description = "Tag per creature"
 
     name = fields.Char(
@@ -17,11 +17,3 @@ class CreatureTag(models.Model):
         string="Creature",
         help="Creature con questo tag"
     )
-
-    def popolate_creature_tag(self):
-        """Crea i tag per le creature partendo da LIST_CREATURE_TAG
-        """
-        for tag in LIST_CREATURE_TAG:
-            self.env["creature.tag"].create({
-                "name": tag
-            })

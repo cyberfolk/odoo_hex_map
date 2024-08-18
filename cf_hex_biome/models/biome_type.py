@@ -1,45 +1,9 @@
 from odoo import fields, models
-"""
-BIOMA	State		Evil/Neutral/Good
-Foresta	active	-	-
-Coste	active	-	-
-Aquatico	active	-	-
-Deserto	active	-	-
-Prateria	active	-	-
-Colline	active	-	-
-Montagne	active	-	-
-Palude	active	-	-
-Artico	active	-	-
-Male	future	external	evil
-Inferno	future	external	evil
-Abisso	future	external	evil
-Carceri	future	external	evil
-Distese Grige 	future	external	evil
-Gehenna	future	external	evil
-Acqua	future	elemental	neutral
-Aria	future	elemental	neutral
-Fuoco	future	elemental	neutral
-Terra	future	elemental	neutral
-Feywild	upcoming	mirror	neutral
-Shadowfell	upcoming	mirror	tending-evil
-Vulcano	upcoming	-	-
-A Dolce	upcoming	-	-
-Giungla	upcoming	-	-
-Savana	upcoming	-	-
-Cimitero	upcoming	-	tending-evil
-Far Realms 	upcoming	external	evil
-Space	upcoming	-	-
-Astrale	doubtful	external	-
-Etereo	doubtful	mirror	-
-Limbo	doubtful	external	neutral
-Bene	doubtful	external	good
-Underdark	doubtful	-	tending-evil
-Urban	doubtful	-	-
-Dungeon	doubtful	-	-
-"""
+
 
 class BiomeType(models.Model):
     _name = "biome.type"
+    _inherit = 'read.csv.mixin'
     _description = "Tipo di Bioma"
 
     name = fields.Char(
@@ -47,6 +11,10 @@ class BiomeType(models.Model):
         required=True,
         help="Nome del Bioma"
     )
+
+    _sql_constraints = [
+        ('unique_biome_type_name', 'UNIQUE(name)', 'Il nome del tipo di Bioma deve essere univoco!')
+    ]
 
     speed_of_travel = fields.Float(
         string="Velocità",
@@ -117,3 +85,17 @@ class BiomeType(models.Model):
         help="Posizione cosmologica del Bioma. Se il bioma si può trovare ovunque lasciare vuoto il campo",
     )
 
+    def cf_to_odoo_dict(self, row, utility_maps):
+        """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
+        vals = {
+            "name": row.get('name'),
+            "speed_of_travel": row.get('speed_of_travel'),
+            "cd_food": row.get('cd_food'),
+            "cd_water": row.get('cd_water'),
+            "cd_navigation": row.get('cd_navigation'),
+            "color": row.get('color'),
+            "state": row.get('state'),
+            "cosmology": row.get('cosmology'),
+            "good_evil_axis": row.get('good_evil_axis'),
+        }
+        return vals

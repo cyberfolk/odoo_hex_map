@@ -1,6 +1,4 @@
-import csv
 import logging
-from pathlib import Path
 
 from odoo import fields, models
 
@@ -9,6 +7,7 @@ _logger = logging.getLogger(__name__)
 
 class CreatureCreature(models.Model):
     _name = "creature.creature"
+    _inherit = 'read.csv.mixin'
     _description = "Creatura"
 
     name = fields.Char(
@@ -50,34 +49,20 @@ class CreatureCreature(models.Model):
         help="Tipo di creatura"
     )
 
-    def popolate_creature(self):
-        """Crea le creature partendo da un file csv
-        """
-        # Recupero il path del file CSV dove sono presenti le creature
-        creatures_path = (Path(__file__).resolve().parents[1] / 'data' / 'creatures.csv').as_posix()
+    def cf_to_odoo_dict(self, row, utility_maps):
+        """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
+        MAP_TYPES_IDS, MAP_TAGS_IDS = utility_maps[0], utility_maps[1]
 
-        # Creo delle mappe di conversione {nome: id} per i tipi e i tag delle creature
-        map_types_ids = {x.name: x.id for x in self.env['creature.type'].search([])}
-        map_tags_ids = {x.name: x.id for x in self.env['creature.tag'].search([])}
-        try:
-            with open(creatures_path, mode='r', encoding='utf-8') as file:
-                reader = csv.DictReader(file)
-                for i, row in enumerate(reader):
-                    tag_field_list =['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6', 'Tag7']
-                    tag_list = [row.get(tag) for tag in tag_field_list]
-                    tag_ids_list = [map_tags_ids[tag] for tag in tag_list if tag]
-                    vals = {
-                        'skip': bool(row.get('skip')),
-                        'cool': bool(row.get('cool')),
-                        'type_id': map_types_ids[row.get('Tipo')],
-                        'tag_ids': [(6, 0, tag_ids_list)],
-                        'name': row.get('Creature'),
-                        'link_5et': row.get('Link'),
-                        'cr': float(row.get('CR').replace(',', '.')) or 0,
-                    }
-                    self.create(vals)
-                    _logger.info(f"{i} Creatura {row.get('Creature')} creata!")
-        except Exception as e:
-            _logger.error(f"Errore durante l'importazione: {e}")
-
-        _logger.info("Importazione delle creature terminata!")
+        tag_field_list = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7']
+        tag_list = [row.get(tag) for tag in tag_field_list]
+        tag_ids_list = [MAP_TAGS_IDS[tag] for tag in tag_list if tag]
+        vals = {
+            'skip': bool(row.get('skip')),
+            'cool': bool(row.get('cool')),
+            'type_id': MAP_TYPES_IDS[row.get('type')],
+            'tag_ids': [(6, 0, tag_ids_list)],
+            'name': row.get('name'),
+            'link_5et': row.get('link'),
+            'cr': float(row.get('cr').replace(',', '.')) or 0,
+        }
+        return vals
