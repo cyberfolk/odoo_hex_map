@@ -237,13 +237,18 @@
             <field name="good_evil_axis">evil</field>
         </record>
 
-        <record id="urban" model="biome.type">
-            <field name="name">Urban</field>
+        <record id="urbano" model="biome.type">
+            <field name="name">Urbano</field>
             <field name="state">doubtful</field>
         </record>
 
         <record id="dungeon" model="biome.type">
             <field name="name">Dungeon</field>
+            <field name="state">doubtful</field>
+        </record>
+
+        <record id="mechanus" model="biome.type">
+            <field name="name">Mechanus</field>
             <field name="state">doubtful</field>
         </record>
     </data>

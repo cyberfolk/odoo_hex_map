@@ -11,10 +11,33 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record id="action_menu_creature_creature" model="ir.actions.act_window">
+        <field name="name">Creature</field>
+        <field name="res_model">creature.creature</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_menu_creature_tag" model="ir.actions.act_window">
+        <field name="name">Creature Tag</field>
+        <field name="res_model">creature.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_menu_creature_type" model="ir.actions.act_window">
+        <field name="name">Creature Tag</field>
+        <field name="res_model">creature.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <menuitem sequence="1" id="menu_biome" name="Biomi" parent="cf_hex_base.menu_root">
         <menuitem sequence="0" id="menu_biome_type" name="Tipi di Biomi" action="action_menu_biome_type"/>
     </menuitem>
-    <menuitem sequence="1" id="menu_structure" name="Strutture" parent="cf_hex_base.menu_root">
+    <menuitem sequence="2" id="menu_structure" name="Strutture" parent="cf_hex_base.menu_root">
         <menuitem sequence="0" id="menu_structure_structure" name="Strutture" action="action_menu_structure_structure"/>
+    </menuitem>
+    <menuitem sequence="3" id="menu_creature" name="Creature" parent="cf_hex_base.menu_root">
+        <menuitem sequence="0" id="menu_creature_creature" name="Creature" action="action_menu_creature_creature"/>
+        <menuitem sequence="1" id="menu_creature_tag" name="Creature Tag" action="action_menu_creature_tag"/>
+        <menuitem sequence="1" id="menu_creature_type" name="Creature Tipi" action="action_menu_creature_type"/>
     </menuitem>
 </odoo>

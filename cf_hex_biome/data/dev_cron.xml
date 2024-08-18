@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--INFO: Cron di supporto allo sviluppo -->
+<odoo>
+    <data >
+        <record id="cf_dev_cron" model="ir.cron">
+            <field name="name">Cron di supporto allo sviluppo</field>
+            <field eval="False" name="active"/>
+            <field name="interval_number">6</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="cf_hex_biome.model_creature_creature"/>
+            <field name="state">code</field>
+            <field name="code">model.popolate_creature()</field>
+        </record>
+    </data>
+</odoo>

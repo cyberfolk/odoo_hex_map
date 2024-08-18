@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_biome_type,access_biome_type,model_biome_type,base.group_user,1,1,1,1
 access_structure_structure,access_structure_structure,model_structure_structure,base.group_user,1,1,1,1
+access_creature_creature,access_creature_creature,model_creature_creature,base.group_user,1,1,1,1
+access_creature_tag,access_creature_tag,model_creature_tag,base.group_user,1,1,1,1
+access_creature_type,access_creature_type,model_creature_type,base.group_user,1,1,1,1

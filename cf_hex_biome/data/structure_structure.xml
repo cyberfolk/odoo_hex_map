@@ -1,8 +1,0 @@
-<odoo>
-    <data noupdate="0">
-        <record id="accampamento_disabitato" model="structure.structure">
-            <field name="name">Artico</field>
-            <field name="biome_type_ids" eval="[(6, 0, [ref('foresta'), ref('montagna'),ref('collina'), ref('prateria'), ref('deserto')])]"/>
-        </record>
-    </data>
-</odoo>

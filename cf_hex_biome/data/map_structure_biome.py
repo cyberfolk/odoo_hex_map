@@ -1,4 +1,4 @@
-STRUCTURE_BIOME = {
+MAP_STRUCTURE_BIOME = {
     "Accampamento disabitato": ["Foresta", "Montagna", "Collina", "Prateria", "Palude", "Deserto"],
     "Accampamento tribale": ["Foresta", "Montagna", "Collina", "Prateria", "Palude", "Deserto"],
     "Alberi a forma di portale": ["Foresta", "Montagna", "Collina", "Prateria", "Palude"],
