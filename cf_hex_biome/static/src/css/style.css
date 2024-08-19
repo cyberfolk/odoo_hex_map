@@ -1,0 +1,8 @@
+.text-muted {
+    --text-opacity: 1;
+    color: rgb(55 65 81 / 60%) !important;
+}
+.text-skip {
+    --text-opacity: 1;
+    color: red !important;
+}

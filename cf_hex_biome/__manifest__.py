@@ -25,5 +25,14 @@
     'application': False,
     'installable': True,
     'post_init_hook': 'post_init_hook_cf_hex_biome',
-
+    'assets': {
+        'web.assets_backend': [
+            '/cf_hex_biome/static/src/css/style.css',
+        ],
+        'web.assets_frontend': [
+            '/cf_hex_biome/static/src/css/style.css',
+        ]
+    },
 }
+
+
