@@ -1,0 +1,31 @@
+<odoo>
+    <record id="creature_type_view_form" model="ir.ui.view">
+        <field name="name">creature.type.form</field>
+        <field name="model">creature.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <div class="oe_title mt-2" colspan="2">
+                            <h1>
+                                <group>
+                                    <field class="text-nowrap" name="name" readonly="1" nolabel="1"/>
+                                </group>
+                            </h1>
+                        </div>
+                        <group string="Creature" colspan="2">
+                            <field name="creature_ids" nolabel="1" colspan="2">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="tag_ids" widget="many2many_tags"/>
+                                    <field name="biome_high_prob_ids" widget="many2many_tags"/>
+                                    <field name="biome_low_prob_ids" widget="many2many_tags"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

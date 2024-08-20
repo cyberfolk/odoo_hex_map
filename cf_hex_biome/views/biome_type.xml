@@ -5,11 +5,11 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="color" widget="color"/>
                 <field name="speed_of_travel"/>
                 <field name="cd_food"/>
                 <field name="cd_water"/>
                 <field name="cd_navigation"/>
-                <field name="color" widget="color"/>
                 <field name="structure_ids"/>
                 <field name="state" widget="badge"
                        decoration-success="state == 'active'"
@@ -35,17 +35,44 @@
             <form>
                 <sheet>
                     <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="speed_of_travel"/>
-                            <field name="cd_food"/>
-                            <field name="cd_water"/>
-                            <field name="cd_navigation"/>
-                            <field name="color" widget="color"/>
-                            <field name="structure_ids" widget='many2many_tags'/>
-                            <field name="state" />
-                            <field name="good_evil_axis"/>
-                            <field name="cosmology"/>
+                        <field name="state" widget="badge" nolabel="1"
+                               colspan="2" class=""
+                               decoration-success="state == 'active'"
+                               decoration-warning="state == 'future'"
+                               decoration-muted="state == 'doubtful'"
+                               decoration-info="state == 'upcoming'"/>
+
+                        <div class="oe_title mt-2" colspan="2">
+                            <h1>
+                                <group>
+                                    <field class="text-nowrap" name="name" readonly="1" nolabel="1"/>
+                                    <field name="color" widget="color" nolabel="1"/>
+                                </group>
+                            </h1>
+                        </div>
+                        <group col="3">
+                            <group>
+                                <field name="cd_food"/>
+                                <field name="cd_water"/>
+                                <field name="cd_navigation"/>
+                            </group>
+                            <group>
+                                <field name="state"/>
+                                <field name="good_evil_axis"/>
+                                <field name="cosmology"/>
+                            </group>
+                            <group>
+                                <field name="speed_of_travel"/>
+                            </group>
+                        </group>
+                        <group string="Strutture" colspan="2">
+                            <field name="structure_ids" nolabel="1" colspan="2" widget='many2many_tags'/>
+                        </group>
+                        <group string="Creature con Alta probabilità di trovarle nel Bioma" colspan="2">
+                            <field name="creature_high_prob_ids" nolabel="1" colspan="2" widget='many2many_tags'/>
+                        </group>
+                        <group string="Creature con Bassa probabilità di trovarle nel Bioma" colspan="2">
+                            <field name="creature_low_prob_ids" nolabel="1" colspan="2" widget='many2many_tags'/>
                         </group>
                     </group>
                 </sheet>

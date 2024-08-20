@@ -2,7 +2,11 @@
     --text-opacity: 1;
     color: rgb(55 65 81 / 60%) !important;
 }
-.text-skip {
-    --text-opacity: 1;
-    color: red !important;
+.o_field_widget.o_field_many2many_tags .badge{
+    cursor: pointer !important;
+}
+
+.o_form_view .o_form_label.o_form_label_empty, .o_form_view .o_form_label.o_form_label_false, .o_form_view .o_form_label.o_form_label_readonly {
+  opacity: 1;
+  font-weight: 400;
 }

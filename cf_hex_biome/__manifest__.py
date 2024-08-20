@@ -18,6 +18,8 @@
         "views/biome_type.xml",
         "views/structure_structure.xml",
         "views/creature_creature.xml",
+        "views/creature_type.xml",
+        "views/creature_tag.xml",
         "data/dev_cron.xml",
     ],
     'depends': ['cf_hex_base', 'base', 'web'],
@@ -28,6 +30,7 @@
     'assets': {
         'web.assets_backend': [
             '/cf_hex_biome/static/src/css/style.css',
+            '/cf_hex_biome/static/src/js/many2many_tags_fields.js',
         ],
         'web.assets_frontend': [
             '/cf_hex_biome/static/src/css/style.css',

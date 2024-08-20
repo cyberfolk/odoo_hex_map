@@ -17,9 +17,15 @@
             <form>
                 <sheet>
                     <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="biome_type_ids" widget='many2many_tags'/>
+                        <div class="oe_title mt-2" colspan="2">
+                            <h1>
+                                <group>
+                                    <field class="text-nowrap" name="name" readonly="1" nolabel="1"/>
+                                </group>
+                            </h1>
+                        </div>
+                        <group string="Biomi" colspan="2">
+                            <field name="biome_type_ids" nolabel="1" colspan="2" widget="many2many_tags"/>
                         </group>
                     </group>
                 </sheet>

@@ -17,3 +17,5 @@ class CreatureType(models.Model):
         inverse_name="type_id",
         string="Creature",
     )
+
+

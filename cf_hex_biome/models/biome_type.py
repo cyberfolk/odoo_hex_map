@@ -1,5 +1,27 @@
 from odoo import fields, models
 
+STATE_LIST = [
+    ("active", "Attivo"),
+    ("future", "Dopo"),
+    ("doubtful", "Non attivare"),
+    ("upcoming", "A breve"),
+]
+
+GOOD_EVIL_LIST = [
+    ("good", "Bene"),
+    ("evil", "Male"),
+    ("neutral", "Neutrale"),
+]
+
+COSMOLOGY_LIST = [
+    ("external", "Esterno"),
+    ("mirror", "Specchio"),
+    ("elemental", "Elementale"),
+]
+REVERSE_STATE_LIST = {v: k for k, v in STATE_LIST}
+REVERSE_GOOD_EVIL_LIST = {v: k for k, v in GOOD_EVIL_LIST}
+REVERSE_COSMOLOGY_LIST = {v: k for k, v in COSMOLOGY_LIST}
+
 
 class BiomeType(models.Model):
     _name = "biome.type"
@@ -53,49 +75,50 @@ class BiomeType(models.Model):
 
     state = fields.Selection(
         string="Stato",
-        selection=[
-            ("active", "Attivo"),
-            ("future", "Dopo"),
-            ("doubtful", "Non attivare"),
-            ("upcoming", "A breve"),
-        ],
+        selection=STATE_LIST,
         default="active",
         help="Stato di attivazione",
     )
 
     good_evil_axis = fields.Selection(
         string="Bene/Male",
-        selection=[
-            ("good", "Bene"),
-            ("evil", "Male"),
-            ("neutral", "Neutrale"),
-        ],
+        selection=GOOD_EVIL_LIST,
         default=None,
         help="Asse Bene/Male. Se il bioma non è incline verso un allineamento specifico lasciare vuoto il campo.",
     )
 
     cosmology = fields.Selection(
         string="Cosmologia",
-        selection=[
-            ("external", "Esterno"),
-            ("mirror", "Specchio"),
-            ("elemental", "Elementale"),
-        ],
+        selection=COSMOLOGY_LIST,
         default=None,
         help="Posizione cosmologica del Bioma. Se il bioma si può trovare ovunque lasciare vuoto il campo",
+    )
+
+    creature_high_prob_ids = fields.Many2many(
+        comodel_name="creature.creature",
+        relation="creature_biome_high_prob_rel",  # Specify a unique relation name
+        string="Creature %Alta",
+        help="Creature con Alta probabilità di trovarle nel Bioma."
+    )
+
+    creature_low_prob_ids = fields.Many2many(
+        comodel_name="creature.creature",
+        relation="creature_biome_low_prob_rel",  # Specify a unique relation name
+        string="Creature %Bassa",
+        help="Creature con Bassa probabilità di trovarle nel Bioma."
     )
 
     def cf_to_odoo_dict(self, row, utility_maps):
         """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
         vals = {
-            "name": row.get('name'),
-            "speed_of_travel": row.get('speed_of_travel'),
-            "cd_food": row.get('cd_food'),
-            "cd_water": row.get('cd_water'),
-            "cd_navigation": row.get('cd_navigation'),
-            "color": row.get('color'),
-            "state": row.get('state'),
-            "cosmology": row.get('cosmology'),
-            "good_evil_axis": row.get('good_evil_axis'),
+            "name": row.get('Nome'),
+            "speed_of_travel": row.get('Velocità'),
+            "cd_food": row.get('CD Cibo'),
+            "cd_water": row.get('CD Acqua'),
+            "cd_navigation": row.get('CD Navigazione'),
+            "color": row.get('Colore'),
+            "state": REVERSE_STATE_LIST.get(row.get('Stato')),
+            "cosmology": REVERSE_COSMOLOGY_LIST.get(row.get('Cosmologia')),
+            "good_evil_axis": REVERSE_GOOD_EVIL_LIST.get(row.get('Bene/Male')),
         }
         return vals

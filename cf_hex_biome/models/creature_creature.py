@@ -23,7 +23,7 @@ class CreatureCreature(models.Model):
     )
 
     link_5et = fields.Char(
-        string="link 5et",
+        string="Link 5et",
         help="Link al form della creatura su 5etools per avere maggiori dettagli."
     )
 
@@ -49,20 +49,37 @@ class CreatureCreature(models.Model):
         help="Tipo di creatura"
     )
 
+    biome_high_prob_ids = fields.Many2many(
+        comodel_name="biome.type",
+        relation="creature_biome_high_prob_rel",  # Specify a unique relation name
+        string="Biomi %Alta",
+        help="Biomi con Alta probabilità di trovare la creatura."
+    )
+
+    biome_low_prob_ids = fields.Many2many(
+        comodel_name="biome.type",
+        relation="creature_biome_low_prob_rel",  # Specify a unique relation name
+        string="Biomi %Bassa",
+        help="Biomi con Bassa probabilità di trovare la creatura."
+    )
+
     def cf_to_odoo_dict(self, row, utility_maps):
         """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
-        MAP_TYPES_IDS, MAP_TAGS_IDS = utility_maps[0], utility_maps[1]
 
-        tag_field_list = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7']
-        tag_list = [row.get(tag) for tag in tag_field_list]
-        tag_ids_list = [MAP_TAGS_IDS[tag] for tag in tag_list if tag]
+        MAP_TYPES_IDS, MAP_TAGS_IDS, MAP_BIOME_IDS = utility_maps
+        biome_high_prob_ids = [MAP_BIOME_IDS[bioma] for bioma in row.get('Biomi %Alta')]
+        biome_low_prob_ids = [MAP_BIOME_IDS[bioma] for bioma in row.get('Biomi %Bassa')]
+        tag_ids_list = [MAP_TAGS_IDS[tag] for tag in row.get('Tag')]
+
         vals = {
-            'skip': bool(row.get('skip')),
-            'cool': bool(row.get('cool')),
-            'type_id': MAP_TYPES_IDS[row.get('type')],
+            'skip': bool(row.get('Sconosciuta')),
+            'cool': bool(row.get('Interessante')),
+            'type_id': MAP_TYPES_IDS[row.get('Tipo')],
             'tag_ids': [(6, 0, tag_ids_list)],
-            'name': row.get('name'),
-            'link_5et': row.get('link'),
-            'cr': float(row.get('cr').replace(',', '.')) or 0,
+            'name': row.get('Nome'),
+            'link_5et': row.get('Link 5et'),
+            'cr': float(row.get('Grado Sfida')) or 0,
+            'biome_high_prob_ids': [(6, 0, biome_high_prob_ids)],
+            'biome_low_prob_ids': [(6, 0, biome_low_prob_ids)],
         }
         return vals

@@ -13,11 +13,11 @@ from odoo import models
 _logger = logging.getLogger(__name__)
 
 MAP_MODEL_CSV = {
-    "biome.type": "biome_type.csv",
-    "creature.type": "creature_type.csv",
-    "creature.tag": "creature_tag.csv",
-    "creature.creature": "creature_creature.csv",
-    "structure.structure": "structure_structure.csv"
+    "biome.type": "Tipo di Bioma (biome.type).csv",
+    "creature.type": "Tipi di creature (creature.type).csv",
+    "creature.tag": "Tag per creature (creature.tag).csv",
+    "creature.creature": "Creatura (creature.creature).csv",
+    "structure.structure": "Struttura (structure.structure).csv"
 }
 
 
@@ -29,7 +29,7 @@ class ReadCsvMixin(models.AbstractModel):
         """TO OVERRIDE - Traduce una riga di un file csv in un dizionario 'odoo_dict'.
            Ovvero un dizionario adatto a creare record del modello che eredita il mixin."""
         vals = {
-            "name": row.get('name'),
+            "name": row.get('Nome'),
         }
         return vals
 
@@ -70,21 +70,23 @@ class ReadCsvMixin(models.AbstractModel):
 
             with open(file_path, mode='r', encoding='utf-8') as file:
                 reader = csv.DictReader(file)
-                for i, row in enumerate(reader):
+                dicts = self.read_dicts_from_csv(reader)
+                for i, dikt in enumerate(dicts):
                     count = f"({str(i + 1).zfill(3)})"
-                    if not row.get('name'):
-                        _logger.warning(f" - {count} SKIP   -> Missing 'name' field.")
+                    if not dikt.get('Nome'):
+                        _logger.warning(f" - {count} SKIP   -> Missing 'Nome' field.")
                         continue
 
-                    already_exists = self.search_count([('name', '=', row.get('name'))]) > 0
+                    already_exists = self.search_count([('name', '=', dikt.get('Nome'))]) > 0
                     if already_exists:
-                        _logger.info(f" - {count} SKIP   {row.get('name')} -> Already exists.")
+                        _logger.info(f" - {count} SKIP   {dikt.get('Nome')} -> Already exists.")
                         continue
 
-                    vals = self.cf_to_odoo_dict(row, utility_maps)
+                    vals = self.cf_to_odoo_dict(dikt, utility_maps)
                     self.create(vals)
-                    _logger.info(f" - {count} CREATE {row.get('name')}")
+                    _logger.info(f" - {count} CREATE {dikt.get('Nome')}")
 
+                stop = 0
         except Exception as e:
             msg = f"Errore durante la lettura del file csv:\n {e}"
             _logger.error(msg)
@@ -100,3 +102,75 @@ class ReadCsvMixin(models.AbstractModel):
                 'func': 'popolate_by_csv',
             })
         _logger.info(f"** END  ** popolate_by_csv() - ({self._name})")
+
+    def read_dicts_from_csv(self, reader):
+        """Processa le righe di un file CSV per ritornare una lista di dizionari normalizzati in base al campo 'Nome'.
+
+        Il metodo esegue le seguenti operazioni:
+        1. FASE 1 [CONTAINER_B]: Raggruppa le righe del CSV in base al campo 'Nome'.
+           Ogni volta che il campo 'Nome' cambia, inizia un nuovo batch di righe.
+        2. FASE 1 [CONTAINER_D]: Trasforma i batch di righe in dizionari normalizzati, cioè un dizionario con degli
+           appositi campi-lista per raggruppare i valori dei campi presenti su più righe dello stesso batch.
+
+        Esempio:
+            FILE CSV:
+                "Nome", "A", "B", "C", "D"
+                "nom1", "a",  "",  "", "b"
+                "nom2", "1", "2", "3", "4"
+                    "", "a",  "", "c",  ""
+                    "",  "", "d", "e",  ""
+                "nom3", "1",  "", "1", "1"
+                    "",  "", "2",  "",  ""
+                    "", "3",  "",  "", "3"
+                    "", "4",  "", "4",  ""
+
+            CONTAINER_B:
+                [[
+                    {'Nome': 'nom1', 'A': 'a', 'B': '', 'C': '', 'D': 'b'}
+                ],[
+                    {'Nome': 'nom2', 'A': '1', 'B': '2', 'C': '3', 'D': '4'},
+                    {'Nome': '', 'A': 'a', 'B': '', 'C': 'c', 'D': ''},
+                    {'Nome': '', 'A': '', 'B': 'd', 'C': 'e', 'D': ''}
+                ],[
+                    {'Nome': 'nom3', 'A': '1', 'B': '', 'C': '1', 'D': '1'},
+                    {'Nome': '', 'A': '', 'B': '2', 'C': '', 'D': ''},
+                    {'Nome': '', 'A': '3', 'B': '', 'C': '', 'D': '3'},
+                    {'Nome': '', 'A': '4', 'B': '', 'C': '4', 'D': ''}
+                ]]
+
+            CONTAINER_D:
+                 [{'Nome': 'nom1', 'A': 'a', 'B': [], 'C': [], 'D': 'b'},
+                  {'Nome': 'nom2', 'A': ['1', 'a'], 'B': ['2', 'd'], 'C': ['3', 'c', 'e'], 'D': '4'},
+                  {'Nome': 'nom3''A': ['1', '3', '4'], 'B': '2', 'C': ['1', '4'], 'D': ['1', '3']}]
+        """
+        list_fields = [v.args.get('string') for k, v in self._fields.items() if v.type in ['one2many', 'many2many']]
+
+        # FASE 1: Raggruppa le righe in base al campo 'Nome'
+        container_B = []  # Contenitore di Batch
+        batch = []  # Batch che raggruppale le righe del reader inerenti allo stesso campo 'Nome'
+        for row in reader:
+            if row['Nome']:  # Quando il campo 'Nome' non è vuoto
+                if batch:
+                    container_B.append(batch)  # Aggiungi il batch precedente al container_B
+                batch = [row]  # Inizia un nuovo batch
+            else:
+                batch.append(row)  # Aggiungi la row al batch corrente
+        if batch:  # Aggiungi l'ultimo gruppo se esiste
+            container_B.append(batch)
+
+        # FASE 2: Trasforma i batch di righe in dizionari normalizzati
+        container_D = []  # Contenitore di Dizionari da ritornare
+        dikt = {}  # Dizionario da ritornare
+        for batch in container_B:
+            dikt = {}
+            for row in batch:
+                for key, value in row.items():
+                    dikt.setdefault(key, []).append(value)
+            for key, value in dikt.items():
+                value = list(filter(lambda x: x, value))  # Filtra valori vuoti
+                dikt[key] = value
+                if key not in list_fields:
+                    dikt[key] = value[0] if value else None
+            container_D.append(dikt)
+
+        return container_D
