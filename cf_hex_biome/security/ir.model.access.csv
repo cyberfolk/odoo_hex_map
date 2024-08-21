@@ -4,3 +4,5 @@ access_structure_structure,access_structure_structure,model_structure_structure,
 access_creature_creature,access_creature_creature,model_creature_creature,base.group_user,1,1,1,1
 access_creature_tag,access_creature_tag,model_creature_tag,base.group_user,1,1,1,1
 access_creature_type,access_creature_type,model_creature_type,base.group_user,1,1,1,1
+access_creature_encounter,access_creature_encounter,model_creature_encounter,base.group_user,1,1,1,1
+access_creature_encounter_line,access_creature_encounter_line,model_creature_encounter_line,base.group_user,1,1,1,1

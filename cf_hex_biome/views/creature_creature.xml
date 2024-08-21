@@ -1,10 +1,26 @@
 <odoo>
+    <record id="creature_creature_view_search" model="ir.ui.view">
+        <field name="name">creature.creature.search</field>
+        <field name="model">creature.creature</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="cr"/>
+                <field name="type_id"/>
+                <field name="tag_ids"/>
+                <field name="biome_low_prob_ids"/>
+                <field name="biome_high_prob_ids"/>
+                <field name="biome_ids"/>
+            </search>
+        </field>
+    </record>
+
     <record id="creature_creature_view_tree" model="ir.ui.view">
         <field name="name">creature.creature.tree</field>
         <field name="model">creature.creature</field>
         <field name="arch" type="xml">
             <tree decoration-bf="cool"
-                  decoration-muted="skip">
+                  decoration-muted="skip" editable="top">
                 <field name="name"/>
                 <field name="link_5et" widget="url" text="Link 5etools"/>
                 <field name="cr"/>
@@ -34,7 +50,7 @@
                         </div>
                         <group>
                             <field name="link_5et" widget="url" nolabel="1" colspan="2" readonly="1"/>
-                            <field name="cr" string="GS"  readonly="1"/>
+                            <field name="cr" string="GS" readonly="1"/>
                             <field name="type_id" readonly="1"/>
                             <field name="skip" widget="boolean_toggle"/>
                             <field name="cool" widget="boolean_toggle"/>

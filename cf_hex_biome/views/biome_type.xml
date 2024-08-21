@@ -74,6 +74,18 @@
                         <group string="Creature con Bassa probabilità di trovarle nel Bioma" colspan="2">
                             <field name="creature_low_prob_ids" nolabel="1" colspan="2" widget='many2many_tags'/>
                         </group>
+                        <group string="Creature innocue nel Bioma" colspan="2">
+                            <field name="creature_inoffensive" nolabel="1" colspan="2" widget='many2many_tags'/>
+                        </group>
+                        <group string="Creature Non Violente presenti nel bioma" colspan="2">
+                            <field name="creature_not_violent" nolabel="1" colspan="2" widget='many2many_tags'/>
+                        </group>
+                        <group string="Creature Interessanti presenti nel bioma" colspan="2">
+                            <field name="creature_cool" nolabel="1" colspan="2" widget='many2many_tags'/>
+                        </group>
+                        <group string="Creature Endemiche presenti nel bioma" colspan="2">
+                            <field name="creature_endemic" nolabel="1" colspan="2" widget='many2many_tags'/>
+                        </group>
                     </group>
                 </sheet>
             </form>

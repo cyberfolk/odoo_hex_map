@@ -1,6 +1,7 @@
 import logging
 
-from odoo import fields, models
+from odoo import fields, models, api
+from ..constants.exp import MAP_CR_EXP
 
 _logger = logging.getLogger(__name__)
 
@@ -20,6 +21,12 @@ class CreatureCreature(models.Model):
         string="Grado Sfida",
         required=True,
         help="Grado sfida della creatura."
+    )
+
+    exp = fields.Float(
+        string="Exp",
+        compute="_compute_exp",
+        help="Esperienza ottenuta eliminando la creatura."
     )
 
     link_5et = fields.Char(
@@ -62,6 +69,23 @@ class CreatureCreature(models.Model):
         string="Biomi %Bassa",
         help="Biomi con Bassa probabilità di trovare la creatura."
     )
+
+    biome_ids = fields.Many2many(
+        comodel_name="biome.type",
+        string="Biomi",
+        compute="_compute_biome_ids",
+        help="Lista che comprende Biomi %Bassa e Biomi %Alta."
+    )
+
+    @api.depends("cr")
+    def _compute_exp(self):
+        for record in self:
+            record.exp = MAP_CR_EXP[str(record.cr)]
+
+    @api.depends("biome_high_prob_ids", "biome_low_prob_ids")
+    def _compute_biome_ids(self):
+        for record in self:
+            record.biome_ids = record.biome_high_prob_ids + record.biome_low_prob_ids
 
     def cf_to_odoo_dict(self, row, utility_maps):
         """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""

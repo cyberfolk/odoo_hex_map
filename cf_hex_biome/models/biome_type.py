@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 
 STATE_LIST = [
     ("active", "Attivo"),
@@ -108,6 +108,57 @@ class BiomeType(models.Model):
         help="Creature con Bassa probabilità di trovarle nel Bioma."
     )
 
+    creature_inoffensive = fields.Many2many(
+        string="Creature Innocue",
+        comodel_name="creature.creature",
+        compute="_compute_creature_inoffensive",
+        help="Creature Innocue presenti nel bioma."
+    )
+
+    creature_not_violent = fields.Many2many(
+        string="Creature Non Violente",
+        comodel_name="creature.creature",
+        compute="_compute_creature_not_violent",
+        help="Creature Non Violente presenti nel bioma."
+    )
+
+    creature_cool = fields.Many2many(
+        string="Creature Interessanti",
+        comodel_name="creature.creature",
+        compute="_compute_creature_cool",
+        help="Creature Interessanti presenti nel bioma."
+    )
+
+    creature_endemic = fields.Many2many(
+        string="Creature Endemiche",
+        comodel_name="creature.creature",
+        compute="_compute_creature_endemic",
+        help="Creature Endemiche presenti nel bioma."
+    )
+
+    def _compute_creature_inoffensive(self):
+        for record in self:
+            creature = record.creature_high_prob_ids | record.creature_low_prob_ids
+            tag_inoffensive_id = self.env['creature.tag'].search([("name", "=", "Innocuo")])
+            self.creature_inoffensive = creature.filtered(lambda x: tag_inoffensive_id in x.tag_ids)
+
+    def _compute_creature_not_violent(self):
+        for record in self:
+            creature = record.creature_high_prob_ids | record.creature_low_prob_ids
+            tag_not_violent_id = self.env['creature.tag'].search([("name", "=", "Non Violento")])
+            self.creature_not_violent = creature.filtered(lambda x: tag_not_violent_id in x.tag_ids)
+
+    def _compute_creature_cool(self):
+        for record in self:
+            creature = record.creature_high_prob_ids | record.creature_low_prob_ids
+            self.creature_cool = creature.filtered(lambda x: x.cool)
+
+    def _compute_creature_endemic(self):
+        for record in self:
+            creature = record.creature_high_prob_ids | record.creature_low_prob_ids
+            tag_endemic_id = self.env['creature.tag'].search([("name", "=", "Endemico")])
+            self.creature_endemic = creature.filtered(lambda x: tag_endemic_id in x.tag_ids)
+
     def cf_to_odoo_dict(self, row, utility_maps):
         """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
         vals = {
@@ -122,3 +173,5 @@ class BiomeType(models.Model):
             "good_evil_axis": REVERSE_GOOD_EVIL_LIST.get(row.get('Bene/Male')),
         }
         return vals
+
+

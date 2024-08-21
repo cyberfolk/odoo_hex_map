@@ -20,6 +20,8 @@
         "views/creature_creature.xml",
         "views/creature_type.xml",
         "views/creature_tag.xml",
+        "views/creature_encounter.xml",
+        "views/creature_encounter_line.xml",
         "data/dev_cron.xml",
     ],
     'depends': ['cf_hex_base', 'base', 'web'],
