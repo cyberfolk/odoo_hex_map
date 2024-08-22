@@ -14,7 +14,8 @@ class CreatureEncounter(models.Model):
     name = fields.Char(
         string="Nome",
         help="Nome dello scontro.",
-        compute="_compute_name"
+        compute="_compute_name",
+        store=True
     )
 
     line_ids = fields.One2many(
@@ -46,6 +47,7 @@ class CreatureEncounter(models.Model):
         string="SML",
         compute="_compute_sml",
         help="Scontro Mortale per 4 PG di Livello 'SML'",
+        store=True,
     )
 
     creature_ids = fields.Many2many(
@@ -57,16 +59,30 @@ class CreatureEncounter(models.Model):
 
     biome_type_ids = fields.Many2many(
         comodel_name="biome.type",
+        relation="creature_encounter_biome_type_rel",
         compute="_compute_biome_type_ids",
         string="Tipi di Bioma",
         help="Tipi di Bioma dove può verificarsi lo scontro.",
-
+        store=True,
     )
+
+    is_endemic = fields.Boolean(
+        string="Endemico",
+        compute="_compute_is_endemic",
+        store=True,
+    )
+
+    @api.depends("line_ids")
+    def _compute_is_endemic(self):
+        for record in self:
+            record.is_endemic = all(line.is_endemic for line in record.line_ids)
 
     @api.depends("line_ids")
     def _compute_name(self):
         for record in self:
             record.name = " + ".join(filter(None, record.line_ids.mapped("name")))
+            if record.is_endemic:
+                record.name = f"Endemico: {record.name}"
             if not record.name:
                 record.name = f"Nome temporaneo"
 
@@ -121,18 +137,19 @@ class CreatureEncounter(models.Model):
 
     def create_sml_encounter(self):
         _logger.info("START create_sml_encounter")
-        not_violent = self.env['creature.tag'].search([("name", "=", "Non Violento")]).id
-        inoffensive = self.env['creature.tag'].search([("name", "=", "Innocuo")]).id
-        skip_tags = [not_violent, inoffensive]
         for sml, qtys in MAP_SML_QTY.items():
             _logger.info(f"** START SML {sml}")
             for i, qty in enumerate(qtys):
                 if not qty or qty > 11:
                     continue
                 cr = LIST_CR[i]
-                creatures = self.env["creature.creature"].search([("cr", "=", cr), ("tag_ids", "not in", skip_tags)])
+                creatures = self.env["creature.creature"].search([("cr", "=", cr), ("is_endemic", "=", True)])
                 _logger.info(f"**** START SML {sml} - CR {cr} - FIND {len(creatures)} CREATURES")
                 for n, creature in enumerate(creatures):
+                    encounter = self.search([("name", "=", f"Endemico: {qty} x {creature.name}")])
+                    if encounter:
+                        _logger.warning(f"*** ({n + 1}/{len(creatures)}) SKIP {encounter.name} - ALREADY EXISTS")
+                        continue
                     encounter = self.create({
                         "line_ids": [Command.create({
                             'creature_qty': qty,

@@ -2,7 +2,7 @@
     <record id="action_menu_biome_type" model="ir.actions.act_window">
         <field name="name">Tipi di Biomi</field>
         <field name="res_model">biome.type</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <record id="action_menu_structure_structure" model="ir.actions.act_window">
@@ -34,10 +34,17 @@
         <field name="res_model">creature.encounter</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <record id="action_menu_creature_encounter_line" model="ir.actions.act_window">
-        <field name="name">Linee Creature Scontri</field>
+        <field name="name">Creature Scontri Linee</field>
         <field name="res_model">creature.encounter.line</field>
         <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_menu_todo" model="ir.actions.act_window">
+        <field name="name">TODO</field>
+        <field name="res_model">todo</field>
+        <field name="view_mode">tree</field>
     </record>
 
     <menuitem sequence="1" id="menu_biome" name="Biomi" parent="cf_hex_base.menu_root">
@@ -51,6 +58,7 @@
         <menuitem sequence="1" id="menu_creature_tag" name="Creature Tag" action="action_menu_creature_tag"/>
         <menuitem sequence="2" id="menu_creature_type" name="Creature Tipi" action="action_menu_creature_type"/>
         <menuitem sequence="4" id="menu_creature_encounter" name="Creature Scontri" action="action_menu_creature_encounter"/>
-        <menuitem sequence="5" id="menu_creature_encounter_line" name="Linee Creature Scontri" action="action_menu_creature_encounter_line"/>
+        <menuitem sequence="5" id="menu_creature_encounter_line" name="Creature Scontri Linee" action="action_menu_creature_encounter_line"/>
     </menuitem>
+    <menuitem sequence="4" id="todo" name="TODO" parent="cf_hex_base.menu_root" action="action_menu_todo"/>
 </odoo>

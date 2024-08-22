@@ -1,0 +1,12 @@
+<odoo>
+    <record id="todo_view_tree" model="ir.ui.view">
+        <field name="name">todo.tree</field>
+        <field name="model">todo</field>
+        <field name="arch" type="xml" >
+            <tree editable="top">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

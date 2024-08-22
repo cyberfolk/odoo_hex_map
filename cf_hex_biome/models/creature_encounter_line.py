@@ -28,6 +28,11 @@ class CreatureEncounterLine(models.Model):
         string="Creatura",
     )
 
+    is_endemic = fields.Boolean(
+        string="Endemico",
+        related='creature_id.is_endemic',
+    )
+
     creature_qty = fields.Integer(
         string="Quantità",
         required=True,

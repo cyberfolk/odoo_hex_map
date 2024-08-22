@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from ..utility.utility import is_text_white
 
 STATE_LIST = [
     ("active", "Attivo"),
@@ -108,56 +109,80 @@ class BiomeType(models.Model):
         help="Creature con Bassa probabilità di trovarle nel Bioma."
     )
 
-    creature_inoffensive = fields.Many2many(
+    creature_innocuous = fields.Many2many(
         string="Creature Innocue",
         comodel_name="creature.creature",
-        compute="_compute_creature_inoffensive",
+        compute="_compute_creature_boolean_tag",
         help="Creature Innocue presenti nel bioma."
     )
 
     creature_not_violent = fields.Many2many(
         string="Creature Non Violente",
         comodel_name="creature.creature",
-        compute="_compute_creature_not_violent",
+        compute="_compute_creature_boolean_tag",
         help="Creature Non Violente presenti nel bioma."
     )
 
     creature_cool = fields.Many2many(
         string="Creature Interessanti",
         comodel_name="creature.creature",
-        compute="_compute_creature_cool",
+        compute="_compute_creature_boolean_tag",
         help="Creature Interessanti presenti nel bioma."
     )
 
     creature_endemic = fields.Many2many(
         string="Creature Endemiche",
         comodel_name="creature.creature",
-        compute="_compute_creature_endemic",
+        compute="_compute_creature_boolean_tag",
         help="Creature Endemiche presenti nel bioma."
     )
 
-    def _compute_creature_inoffensive(self):
-        for record in self:
-            creature = record.creature_high_prob_ids | record.creature_low_prob_ids
-            tag_inoffensive_id = self.env['creature.tag'].search([("name", "=", "Innocuo")])
-            self.creature_inoffensive = creature.filtered(lambda x: tag_inoffensive_id in x.tag_ids)
+    creature_social = fields.Many2many(
+        string="Creature Sociali",
+        comodel_name="creature.creature",
+        compute="_compute_creature_boolean_tag",
+        help="Creature Sociali presenti nel bioma."
+    )
 
-    def _compute_creature_not_violent(self):
-        for record in self:
-            creature = record.creature_high_prob_ids | record.creature_low_prob_ids
-            tag_not_violent_id = self.env['creature.tag'].search([("name", "=", "Non Violento")])
-            self.creature_not_violent = creature.filtered(lambda x: tag_not_violent_id in x.tag_ids)
+    creature_boss = fields.Many2many(
+        string="Creature Boss",
+        comodel_name="creature.creature",
+        compute="_compute_creature_boolean_tag",
+        help="Creature Boss presenti nel bioma."
+    )
 
-    def _compute_creature_cool(self):
-        for record in self:
-            creature = record.creature_high_prob_ids | record.creature_low_prob_ids
-            self.creature_cool = creature.filtered(lambda x: x.cool)
+    encounter_ids = fields.Many2many(
+        comodel_name="creature.encounter",
+        relation="creature_encounter_biome_type_rel",
+        string="Scontri del Bioma",
+        help="Scontri che si possono verificare nel bioma.",
+    )
 
-    def _compute_creature_endemic(self):
+    kanban_color_name = fields.Char(
+        string="Kanban Colore Nome",
+        compute="_compute_color_name",
+        help="Campo di utility per impostare il colore del nome del bioma nella vista kanban.",
+    )
+
+    @api.depends('color')
+    def _compute_color_name(self):
+        for record in self:
+            if is_text_white(record.color):
+                record.kanban_color_name = "#ffffff"
+            else:
+                record.kanban_color_name = "#000000"
+
+
+
+    def _compute_creature_boolean_tag(self):
         for record in self:
             creature = record.creature_high_prob_ids | record.creature_low_prob_ids
-            tag_endemic_id = self.env['creature.tag'].search([("name", "=", "Endemico")])
-            self.creature_endemic = creature.filtered(lambda x: tag_endemic_id in x.tag_ids)
+            self.creature_innocuous = creature.filtered(lambda x: x.is_innocuous)
+            self.creature_not_violent = creature.filtered(lambda x: x.is_not_violent)
+            self.creature_cool = creature.filtered(lambda x: x.is_cool)
+            self.creature_endemic = creature.filtered(lambda x: x.is_endemic)
+            self.creature_social = creature.filtered(lambda x: x.is_social)
+            self.creature_boss = creature.filtered(lambda x: x.is_boss)
 
     def cf_to_odoo_dict(self, row, utility_maps):
         """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
@@ -173,5 +198,3 @@ class BiomeType(models.Model):
             "good_evil_axis": REVERSE_GOOD_EVIL_LIST.get(row.get('Bene/Male')),
         }
         return vals
-
-

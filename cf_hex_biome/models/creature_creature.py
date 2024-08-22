@@ -1,6 +1,6 @@
 import logging
 
-from odoo import fields, models, api
+from odoo import fields, models, api, Command
 from ..constants.exp import MAP_CR_EXP
 
 _logger = logging.getLogger(__name__)
@@ -34,14 +34,53 @@ class CreatureCreature(models.Model):
         help="Link al form della creatura su 5etools per avere maggiori dettagli."
     )
 
-    skip = fields.Boolean(
+    is_skip = fields.Boolean(
         string="Sconosciuta",
-        help="Se selezionato, la creatura è sconosciuta dalla maggior parte dei DM. Considera creature più note."
+        compute="_compute_boolean_tag",
+        help="Se vero, la creatura è sconosciuta dalla maggior parte dei DM. Considera creature più note.",
+        store=True
     )
 
-    cool = fields.Boolean(
+    is_cool = fields.Boolean(
         string="Interessante",
-        help="Se selezionato, la creatura è molto interessante, e funziona bene per creare atmosfera."
+        compute="_compute_boolean_tag",
+        help="Se vero, la creatura è molto interessante, e funziona bene per creare atmosfera.",
+        store=True
+    )
+
+    is_endemic = fields.Boolean(
+        string="Endemico",
+        compute="_compute_boolean_tag",
+        help="Se vero, la creatura è una specie endemica del bioma dove è presente.",
+        store=True
+    )
+
+    is_boss = fields.Boolean(
+        string="Boss",
+        compute="_compute_boolean_tag",
+        help="Se vero, la creatura è un boss di fine Quest.",
+        store=True
+    )
+
+    is_not_violent = fields.Boolean(
+        string="Non violento",
+        compute="_compute_boolean_tag",
+        help="Se vero, la creatura è non violenta, potrebbe sapere combattere, ma non attaccherebbe per prima.",
+        store=True
+    )
+
+    is_innocuous = fields.Boolean(
+        string="Innocuo",
+        compute="_compute_boolean_tag",
+        help="Se vero, la creatura è molto innocua, anche se attacca non sarebbe una minaccia.",
+        store=True
+    )
+
+    is_social = fields.Boolean(
+        string="Sociale",
+        compute="_compute_boolean_tag",
+        help="Se vero, la creatura è immersa in un contesto sociale.",
+        store=True
     )
 
     tag_ids = fields.Many2many(
@@ -74,7 +113,8 @@ class CreatureCreature(models.Model):
         comodel_name="biome.type",
         string="Biomi",
         compute="_compute_biome_ids",
-        help="Lista che comprende Biomi %Bassa e Biomi %Alta."
+        help="Lista che comprende Biomi %Bassa e Biomi %Alta.",
+        store=True
     )
 
     @api.depends("cr")
@@ -87,6 +127,17 @@ class CreatureCreature(models.Model):
         for record in self:
             record.biome_ids = record.biome_high_prob_ids + record.biome_low_prob_ids
 
+    @api.depends("tag_ids")
+    def _compute_boolean_tag(self):
+        for record in self:
+            record.is_endemic = True if "Endemico" in record.tag_ids.mapped("name") else False
+            record.is_boss = True if "Boss" in record.tag_ids.mapped("name") else False
+            record.is_not_violent = True if "Non Violento" in record.tag_ids.mapped("name") else False
+            record.is_social = True if "Sociale" in record.tag_ids.mapped("name") else False
+            record.is_skip = True if "Sconosciuto" in record.tag_ids.mapped("name") else False
+            record.is_cool = True if "Interessante" in record.tag_ids.mapped("name") else False
+            record.is_innocuous = True if "Innocuo" in record.tag_ids.mapped("name") else False
+
     def cf_to_odoo_dict(self, row, utility_maps):
         """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
 
@@ -96,8 +147,6 @@ class CreatureCreature(models.Model):
         tag_ids_list = [MAP_TAGS_IDS[tag] for tag in row.get('Tag')]
 
         vals = {
-            'skip': bool(row.get('Sconosciuta')),
-            'cool': bool(row.get('Interessante')),
             'type_id': MAP_TYPES_IDS[row.get('Tipo')],
             'tag_ids': [(6, 0, tag_ids_list)],
             'name': row.get('Nome'),
@@ -107,3 +156,13 @@ class CreatureCreature(models.Model):
             'biome_low_prob_ids': [(6, 0, biome_low_prob_ids)],
         }
         return vals
+
+    def add_tag_skip_and_cool(self):
+        cool = self.search([('cool', '=', True)])
+        skip = self.search([('skip', '=', True)])
+        tag_cool_id = self.env['creature.tag'].search([('name', '=', 'Interessante')]).id
+        tag_skip_id = self.env['creature.tag'].search([('name', '=', 'Sconosciuto')]).id
+        for record in cool:
+            record.tag_ids = [Command.link(tag_cool_id)]
+        for record in skip:
+            record.tag_ids = [Command.link(tag_skip_id)]
