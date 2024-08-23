@@ -1,5 +1,5 @@
 from odoo import fields, models, api
-from ..utility.utility import is_text_white
+from ..utility.utility import is_dark
 
 STATE_LIST = [
     ("active", "Attivo"),
@@ -24,10 +24,10 @@ REVERSE_GOOD_EVIL_LIST = {v: k for k, v in GOOD_EVIL_LIST}
 REVERSE_COSMOLOGY_LIST = {v: k for k, v in COSMOLOGY_LIST}
 
 
-class BiomeType(models.Model):
-    _name = "biome.type"
+class BiomeBiome(models.Model):
+    _name = "biome.biome"
     _inherit = 'read.csv.mixin'
-    _description = "Tipo di Bioma"
+    _description = "Bioma"
 
     name = fields.Char(
         string="Nome",
@@ -36,7 +36,7 @@ class BiomeType(models.Model):
     )
 
     _sql_constraints = [
-        ('unique_biome_type_name', 'UNIQUE(name)', 'Il nome del tipo di Bioma deve essere univoco!')
+        ('unique_biome_biome_name', 'UNIQUE(name)', 'Il nome del Bioma deve essere univoco!')
     ]
 
     speed_of_travel = fields.Float(
@@ -153,25 +153,22 @@ class BiomeType(models.Model):
 
     encounter_ids = fields.Many2many(
         comodel_name="creature.encounter",
-        relation="creature_encounter_biome_type_rel",
+        relation="creature_encounter_biome_biome_rel",
         string="Scontri del Bioma",
         help="Scontri che si possono verificare nel bioma.",
     )
 
     kanban_color_name = fields.Char(
         string="Kanban Colore Nome",
-        compute="_compute_color_name",
-        help="Campo di utility per impostare il colore del nome del bioma nella vista kanban.",
+        compute="_compute_kanban_color_name",
+        help="Campo utility per impostare il colore del nome del bioma nella vista kanban.",
     )
 
     @api.depends('color')
-    def _compute_color_name(self):
+    def _compute_kanban_color_name(self):
         for record in self:
-            if is_text_white(record.color):
-                record.kanban_color_name = "#ffffff"
-            else:
-                record.kanban_color_name = "#000000"
-
+            _is_dark = is_dark(record.color)
+            record.kanban_color_name = "#ffffff" if _is_dark else "#000000"
 
 
     def _compute_creature_boolean_tag(self):

@@ -6,11 +6,11 @@
             <search>
                 <field name="name"/>
                 <field name="creature_ids"/>
-                <field name="biome_type_ids"/>
+                <field name="biome_ids"/>
                 <field name="sml"/>
                 <field name="exp_adj"/>
                 <filter name="filter_tag_endemic" string="Endemico" domain="[('is_endemic', '=', True)]"/>
-                <filter string="Biomi" name="groupby_biome_type_ids" context="{'group_by': 'biome_type_ids'}"/>
+                <filter string="Biomi" name="groupby_biome_ids" context="{'group_by': 'biome_ids'}"/>
                 <filter string="sml" name="groupby_sml" context="{'group_by': 'sml'}"/>
             </search>
         </field>
@@ -25,7 +25,7 @@
                 <field name="name"/>
                 <field name="exp_adj"/>
                 <field name="is_endemic"/>
-                <field name="biome_type_ids" widget="many2many_tags"/>
+                <field name="biome_ids" widget="many2many_tags"/>
             </tree>
         </field>
     </record>
@@ -43,7 +43,7 @@
                             </h1>
                         </div>
                         <group>
-                            <field name="biome_type_ids" widget="many2many_tags"/>
+                            <field name="biome_ids" widget="many2many_tags"/>
                             <field name="exp_adj"/>
                             <field name="exp_sum"/>
                             <field name="sml"/>

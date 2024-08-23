@@ -1,16 +1,28 @@
+import logging
+
 from . import models
+
+_logger = logging.getLogger(__name__)
+from odoo.exceptions import ValidationError
 
 
 def post_init_hook_cf_hex_biome(env):
-    """Viene eseguito dopo l'installazione del modulo. Serve per settare:
-        - I Tipi di Biomi,
+    """Viene eseguito dopo l'installazione del modulo. Serve per popolare:
+        - I Biomi,
         - Le strutture dentro i biomi,
         - I Tag delle creature,
         - I Tipi delle creature,
         - Le Creature,
     """
-    # env["biome.type"].popolate_by_csv()
-    # env["structure.structure"].popolate_by_csv()
-    # env["creature.tag"].popolate_by_csv()
-    # env["creature.type"].popolate_by_csv()
-    # env["creature.creature"].popolate_by_csv()
+    try:
+        env["biome.biome"].popolate_by_csv()
+        env["structure.structure"].popolate_by_csv()
+        env["creature.tag"].popolate_by_csv()
+        env["creature.type"].popolate_by_csv()
+        env["creature.creature"].popolate_by_csv()
+        env["creature.encounter"].popolate_endemic_encounter()
+    except Exception as e:
+        msg = (f"Errore nella funzione post_init_hook_cf_hex_biome()\n"
+               f"Fallito caricamento dei dati per il modulo cf_hex_biome\n"
+               f"{e}")
+        raise ValidationError(msg)

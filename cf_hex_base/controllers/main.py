@@ -10,10 +10,9 @@ _logger = logging.getLogger(__name__)
 
 class HexMapController(http.Controller):
 
-    @http.route("/api/hex_macro",
-                type='http', auth='public', cors='*', csrf=False, methods=['GET'],  save_session=False)
+    @http.route("/api/hex_macro", type='http', auth='public', cors='*', csrf=False, methods=['GET'], save_session=False)
     def fetch_hex_macro(self, **data):
-        """End point che ritorna in formato json l' hex_macro, gli hex_quad e gli hex_hex opportunamente incapsulati."""
+        """End point che ritorna il JSON del hex_macro con hex_quad e hex_hex."""
 
         _logger.info("RUN fetch_hex_macro")
         hex_macro = request.env.ref('cf_hex_base.hex_macro_1').sudo()

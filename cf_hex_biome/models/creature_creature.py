@@ -96,21 +96,21 @@ class CreatureCreature(models.Model):
     )
 
     biome_high_prob_ids = fields.Many2many(
-        comodel_name="biome.type",
+        comodel_name="biome.biome",
         relation="creature_biome_high_prob_rel",  # Specify a unique relation name
         string="Biomi %Alta",
         help="Biomi con Alta probabilità di trovare la creatura."
     )
 
     biome_low_prob_ids = fields.Many2many(
-        comodel_name="biome.type",
+        comodel_name="biome.biome",
         relation="creature_biome_low_prob_rel",  # Specify a unique relation name
         string="Biomi %Bassa",
         help="Biomi con Bassa probabilità di trovare la creatura."
     )
 
     biome_ids = fields.Many2many(
-        comodel_name="biome.type",
+        comodel_name="biome.biome",
         string="Biomi",
         compute="_compute_biome_ids",
         help="Lista che comprende Biomi %Bassa e Biomi %Alta.",

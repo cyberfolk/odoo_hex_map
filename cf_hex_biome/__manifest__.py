@@ -15,7 +15,7 @@
     'data': [
         "security/ir.model.access.csv",
         "views/menu_root.xml",
-        "views/biome_type.xml",
+        "views/biome_biome.xml",
         "views/structure_structure.xml",
         "views/creature_creature.xml",
         "views/creature_type.xml",

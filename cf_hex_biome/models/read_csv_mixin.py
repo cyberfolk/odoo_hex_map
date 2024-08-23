@@ -13,7 +13,7 @@ from odoo import models
 _logger = logging.getLogger(__name__)
 
 MAP_MODEL_CSV = {
-    "biome.type": "Tipo di Bioma (biome.type).csv",
+    "biome.biome": "Bioma (biome.biome).csv",
     "creature.type": "Tipi di creature (creature.type).csv",
     "creature.tag": "Tag per creature (creature.tag).csv",
     "creature.creature": "Creatura (creature.creature).csv",
@@ -52,8 +52,8 @@ class ReadCsvMixin(models.AbstractModel):
         # Creo delle mappe di conversione {nome: id}
         map_creature_types_ids = {x.name: x.id for x in self.env['creature.type'].search([])}
         map_creature_tags_ids = {x.name: x.id for x in self.env['creature.tag'].search([])}
-        map_biome_types_ids = {x.name: x.id for x in self.env['biome.type'].search([])}
-        UTILITY_MAP = (map_creature_types_ids, map_creature_tags_ids, map_biome_types_ids)
+        map_biome_ids = {x.name: x.id for x in self.env['biome.biome'].search([])}
+        UTILITY_MAP = (map_creature_types_ids, map_creature_tags_ids, map_biome_ids)
 
         _logger.info(f"** START ** popolate_by_csv() - ({self._name})")
         try:
@@ -61,18 +61,17 @@ class ReadCsvMixin(models.AbstractModel):
             name_file_csv = MAP_MODEL_CSV.get(self._name)
             if not name_file_csv:
                 _logger.error(f"No CSV file mapped for model: {self._name}")
-                return
+                raise FileNotFoundError(f"No CSV file mapped for model: {self._name}")
 
             # 2. Costruisce il percorso completo del file CSV
             file_path = (Path(__file__).resolve().parents[1] / 'data' / name_file_csv).as_posix()
             if not os.path.exists(file_path):
                 _logger.error(f"File not found: {file_path}")
-                return
+                raise FileNotFoundError(f"File not found: {file_path}")
 
             # 3. Apre il file CSV e invoca la funzione `read_dicts_from_csv`
             with open(file_path, mode='r', encoding='utf-8') as file:
-                reader = csv.DictReader(file)
-                normalized_dicts = self.read_dicts_from_csv(reader)
+                normalized_dicts = self.read_dicts_from_csv(file)
 
                 for i, dikt in enumerate(normalized_dicts):
                     count = f"({str(i + 1).zfill(3)})"
@@ -94,7 +93,7 @@ class ReadCsvMixin(models.AbstractModel):
                     _logger.info(f" - {count} CREATE {dikt.get('Nome')}")
 
         except Exception as e:
-            msg = f"Errore durante la lettura del file csv:\n {e}"
+            msg = f"** END  ** popolate_by_csv() - Errore durante la lettura del file csv:\n {e}"
             _logger.error(msg)
             frame = inspect.currentframe()
             self.env['ir.logging'].sudo().create({
@@ -107,10 +106,13 @@ class ReadCsvMixin(models.AbstractModel):
                 'message': msg,
                 'func': 'popolate_by_csv',
             })
+            raise e
         _logger.info(f"** END  ** popolate_by_csv() - ({self._name})")
 
-    def read_dicts_from_csv(self, reader):
+    def read_dicts_from_csv(self, csv_file):
         """Processa le righe di un file CSV per ritornare una lista di dizionari normalizzati in base al campo 'Nome'.
+        @param csv_file: Un file CSV con formato Odoo-style contenente records del modello che eredita il mixin.
+        @return: Una lista di dizionari che rispecchia i campi del modello che eredita il mixin.
 
         Steps:
         1. CONTAINER_B: Raggruppa le righe del CSV in base al campo 'Nome'.
@@ -154,6 +156,7 @@ class ReadCsvMixin(models.AbstractModel):
         # 1. CONTAINER_B: Raggruppa le righe in base al campo 'Nome'
         container_B = []  # Contenitore di Batch
         batch = []  # Batch che raggruppale le righe del reader inerenti allo stesso campo 'Nome'
+        reader = csv.DictReader(csv_file)
         for row in reader:
             if row['Nome']:  # Quando il campo 'Nome' non è vuoto
                 if batch:

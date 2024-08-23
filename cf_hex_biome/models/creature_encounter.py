@@ -57,12 +57,12 @@ class CreatureEncounter(models.Model):
         help="Creature che compongono lo scontro.",
     )
 
-    biome_type_ids = fields.Many2many(
-        comodel_name="biome.type",
-        relation="creature_encounter_biome_type_rel",
-        compute="_compute_biome_type_ids",
-        string="Tipi di Bioma",
-        help="Tipi di Bioma dove può verificarsi lo scontro.",
+    biome_ids = fields.Many2many(
+        comodel_name="biome.biome",
+        relation="creature_encounter_biome_biome_rel",
+        compute="_compute_biome_ids",
+        string="Biomi",
+        help="Biomi dove può verificarsi lo scontro.",
         store=True,
     )
 
@@ -128,15 +128,15 @@ class CreatureEncounter(models.Model):
                 self.creature_ids = []
 
     @api.depends("line_ids")
-    def _compute_biome_type_ids(self):
+    def _compute_biome_ids(self):
         for record in self:
             if record.creature_ids and record.creature_ids.biome_ids:
-                record.biome_type_ids = record.creature_ids.biome_ids
+                record.biome_ids = record.creature_ids.biome_ids
             else:
-                record.biome_type_ids = []  # or any other default value or action
+                record.biome_ids = []  # or any other default value or action
 
-    def create_sml_encounter(self):
-        _logger.info("START create_sml_encounter")
+    def popolate_endemic_encounter(self):
+        _logger.info("START popolate_endemic_encounter")
         for sml, qtys in MAP_SML_QTY.items():
             _logger.info(f"** START SML {sml}")
             for i, qty in enumerate(qtys):
@@ -159,4 +159,4 @@ class CreatureEncounter(models.Model):
                     _logger.info(f"****** ({n + 1}/{len(creatures)}) CREATE {encounter.name}")
                 _logger.info(f"**** END SML {sml} - CR {cr}")
             _logger.info(f"** END SML {sml}")
-        _logger.info("END create_sml_encounter")
+        _logger.info("END popolate_endemic_encounter")

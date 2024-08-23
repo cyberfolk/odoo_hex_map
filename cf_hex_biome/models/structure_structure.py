@@ -12,19 +12,19 @@ class StructureStructure(models.Model):
         help="Struttura"
     )
 
-    biome_type_ids = fields.Many2many(
-        comodel_name="biome.type",
-        string="Tipi di Bioma",
-        help="Tipi di Bioma"
+    biome_ids = fields.Many2many(
+        comodel_name="biome.biome",
+        string="Biomi",
+        help="Biomi dove si può trovare la struttura"
     )
 
     def cf_to_odoo_dict(self, row, utility_maps):
         """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
         MAP_BIOME_IDS = utility_maps[2]
-        biome_type_names = row.get('Tipi di Bioma')
-        biome_type_ids = [MAP_BIOME_IDS.get(x) for x in biome_type_names]
+        biome_names = row.get('Biomi')
+        biome_ids = [MAP_BIOME_IDS.get(x) for x in biome_names]
         vals = {
             "name": row.get('Nome'),
-            "biome_type_ids": [(6, 0, biome_type_ids)]
+            "biome_ids": [(6, 0, biome_ids)]
         }
         return vals
