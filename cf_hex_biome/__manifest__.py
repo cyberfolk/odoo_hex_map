@@ -22,6 +22,7 @@
         "views/creature_tag.xml",
         "views/creature_encounter.xml",
         "views/creature_encounter_line.xml",
+        "views/faction_faction.xml",
         "views/todo.xml",
         "data/dev_cron.xml",
     ],

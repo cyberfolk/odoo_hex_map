@@ -7,3 +7,4 @@ access_creature_type,access_creature_type,model_creature_type,base.group_user,1,
 access_creature_encounter,access_creature_encounter,model_creature_encounter,base.group_user,1,1,1,1
 access_creature_encounter_line,access_creature_encounter_line,model_creature_encounter_line,base.group_user,1,1,1,1
 access_todo,access_todo,model_todo,base.group_user,1,1,1,1
+access_faction_faction,access_faction_faction,model_faction_faction,base.group_user,1,1,1,1

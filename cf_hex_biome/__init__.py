@@ -14,6 +14,7 @@ def post_init_hook_cf_hex_biome(env):
         - I Tag delle creature,
         - I Tipi delle creature,
         - Le Creature,
+        - Gli scontri,
     """
     try:
         env["biome.biome"].popolate_by_csv()

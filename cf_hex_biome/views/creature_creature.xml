@@ -35,7 +35,7 @@
         <field name="model">creature.creature</field>
         <field name="arch" type="xml">
             <tree decoration-bf="is_cool"
-                  decoration-muted="is_skip" editable="top">
+                  decoration-muted="is_skip">
                 <field name="is_skip" column_invisible="1"/>
                 <field name="is_cool" column_invisible="1"/>
                 <field name="name"/>

@@ -7,3 +7,4 @@ from . import creature_type
 from . import creature_encounter
 from . import creature_encounter_line
 from . import todo
+from . import faction_faction
