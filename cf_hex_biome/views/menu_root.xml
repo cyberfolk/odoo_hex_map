@@ -47,6 +47,11 @@
         <field name="view_mode">tree</field>
     </record>
 
+    <record id="action_exp_tool" model="ir.actions.client">
+        <field name="name">Exp Tool</field>
+        <field name="tag">exp_tool</field>
+    </record>
+
     <menuitem sequence="1" id="menu_biome" name="Biomi" parent="cf_hex_base.menu_root">
         <menuitem sequence="0" id="menu_biome_biome" name="Biomi" action="action_menu_biome_biome"/>
         <menuitem sequence="0" id="menu_structure_structure" name="Strutture" action="action_menu_structure_structure"/>
@@ -58,5 +63,6 @@
         <menuitem sequence="4" id="menu_creature_encounter" name="Creature Scontri" action="action_menu_creature_encounter"/>
         <menuitem sequence="5" id="menu_creature_encounter_line" name="Creature Scontri Linee" action="action_menu_creature_encounter_line"/>
     </menuitem>
-    <menuitem sequence="3" id="todo" name="TODO" parent="cf_hex_base.menu_root" action="action_menu_todo"/>
+    <menuitem sequence="3" id="menu_exp_tool" name="Exp Tool" parent="cf_hex_base.menu_root" action="action_exp_tool"/>
+    <menuitem sequence="4" id="menu_todo" name="TODO" parent="cf_hex_base.menu_root" action="action_menu_todo"/>
 </odoo>

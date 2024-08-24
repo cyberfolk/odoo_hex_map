@@ -2,31 +2,32 @@
 import { registry } from "@web/core/registry";
 import { Component, onWillStart } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
-import { getAxes } from '../utility/utils.js';
+import { jsonrpc } from "@web/core/network/rpc_service";
 const actionRegistry = registry.category("actions");
 
-class ViewMacro extends Component {
-    static template = "ViewMacro"
+
+class ExpTool extends Component {
+    static template = "ExpTool";
     static components = {};
 
     setup() {
         super.setup();
         this.orm = useService("orm");
-        this.macro = null
+        this.exp_table = null;
+        const rpc = useService("rpc");  // Use the RPC service for making HTTP requests to the server
 
         onWillStart(async () => {
-            this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
-            .then((result) => { return JSON.parse(result) })
-        })
-    }
+            this.exp_table = await jsonrpc(
+            '/your_controller_route', {}
+            ).then((res)=>{
+                console.log(res)
+                return res
+            }).catch((error) => {
+                console.error("Error fetching data:");
+                return null;
+            });
 
-    getHexStyle(hex) {
-        return `${getAxes(hex.index, 0.95)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
-    }
-
-    getQuadStyle(quad) {
-        return `${getAxes(quad.index, 0.97)}; z-index: ${20 - quad.index}; clip-path: ${quad.polygon};`
+        });
     }
 }
-
-actionRegistry.add('view_macro', ViewMacro);
+actionRegistry.add('exp_tool', ExpTool);

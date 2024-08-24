@@ -34,11 +34,10 @@
         'web.assets_backend': [
             '/cf_hex_biome/static/src/css/style.css',
             '/cf_hex_biome/static/src/js/many2many_tags_fields.js',
+            '/cf_hex_biome/static/src/exp_tool/*',
         ],
         'web.assets_frontend': [
             '/cf_hex_biome/static/src/css/style.css',
         ]
     },
 }
-
-
