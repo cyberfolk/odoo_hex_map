@@ -17,6 +17,10 @@ class CreatureCreature(models.Model):
         help="Nome generico della creatura per come è registrata sui manuali."
     )
 
+    _sql_constraints = [
+        ('unique_creature_creature_name', 'UNIQUE(name)', 'Il nome della creatura deve essere univoco!')
+    ]
+
     cr = fields.Float(
         string="Grado Sfida",
         required=True,
@@ -51,7 +55,7 @@ class CreatureCreature(models.Model):
     is_endemic = fields.Boolean(
         string="Endemico",
         compute="_compute_boolean_tag",
-        help="Se vero, la creatura è una specie endemica del bioma dove è presente.",
+        help="Se vero, la creatura è una specie endemica del bioma, ed è aggressiva.",
         store=True
     )
 
@@ -72,14 +76,14 @@ class CreatureCreature(models.Model):
     is_innocuous = fields.Boolean(
         string="Innocuo",
         compute="_compute_boolean_tag",
-        help="Se vero, la creatura è molto innocua, anche se attacca non sarebbe una minaccia.",
+        help="Se vero, la creatura è innocua, anche se attacca non sarebbe una minaccia.",
         store=True
     )
 
     is_social = fields.Boolean(
         string="Sociale",
         compute="_compute_boolean_tag",
-        help="Se vero, la creatura è immersa in un contesto sociale.",
+        help="Se vero, la creatura fa parte di una specie con una struttura sociale organizzata.",
         store=True
     )
 

@@ -20,11 +20,11 @@
     <record id="action_menu_creature_tag" model="ir.actions.act_window">
         <field name="name">Creature Tag</field>
         <field name="res_model">creature.tag</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <record id="action_menu_creature_type" model="ir.actions.act_window">
-        <field name="name">Creature Tag</field>
+        <field name="name">Creature Tipi</field>
         <field name="res_model">creature.type</field>
         <field name="view_mode">tree,form</field>
     </record>

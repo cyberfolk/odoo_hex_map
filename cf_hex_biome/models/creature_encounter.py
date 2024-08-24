@@ -132,7 +132,7 @@ class CreatureEncounter(models.Model):
         for record in self:
             if record.creature_ids and record.creature_ids.biome_ids:
                 record.biome_ids = record.creature_ids.biome_ids
-            else:
+            if not record.biome_ids:
                 record.biome_ids = []  # or any other default value or action
 
     def popolate_endemic_encounter(self):
