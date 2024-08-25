@@ -8,7 +8,7 @@ import logging
 import os
 from pathlib import Path
 
-from odoo import models
+from odoo import models, Command
 
 _logger = logging.getLogger(__name__)
 
@@ -117,7 +117,7 @@ class ReadCsvMixin(models.AbstractModel):
         Steps:
         1. CONTAINER_B: Raggruppa le righe del CSV in base al campo 'Nome'.
            Ogni volta che il campo 'Nome' cambia, inizia un nuovo batch di righe.
-        2. CONTAINER_D: Trasforma i batch di righe in dizionari normalizzati, cioè un dizionario con degli
+        2. CONTAINER_DN: Trasforma i batch di righe in dizionari normalizzati, cioè un dizionario con degli
            appositi campi-lista per raggruppare i valori dei campi presenti su più righe dello stesso batch.
 
         FILE CSV:
@@ -145,13 +145,20 @@ class ReadCsvMixin(models.AbstractModel):
                 {'Nome': '', 'A': '4', 'B': '', 'C': '4', 'D': ''}
             ]]
 
-        CONTAINER_D:
+        CONTAINER_DN:
              [{'Nome': 'nom1', 'A': 'a', 'B': [], 'C': [], 'D': 'b'},
               {'Nome': 'nom2', 'A': ['1', 'a'], 'B': ['2', 'd'], 'C': ['3', 'c', 'e'], 'D': '4'},
               {'Nome': 'nom3''A': ['1', '3', '4'], 'B': '2', 'C': ['1', '4'], 'D': ['1', '3']}]
         """
         # list_fields = Elenco dei campi del record che sono 'one2many' o 'many2many'
         list_fields = [v.args.get('string') for k, v in self._fields.items() if v.type in ['one2many', 'many2many']]
+        METADATA = {v.string: {
+            'name': v.name,
+            'type': v.type,
+            'comodel_name': v.comodel_name,
+            'map_comodel_name_ids': None if not v.comodel_name else {
+                x.name: x.id for x in self.env[v.comodel_name].search([])}
+        } for k, v in self._fields.items()}
 
         # 1. CONTAINER_B: Raggruppa le righe in base al campo 'Nome'
         container_B = []  # Contenitore di Batch
@@ -167,8 +174,8 @@ class ReadCsvMixin(models.AbstractModel):
         if batch:  # Aggiungi l'ultimo gruppo se esiste
             container_B.append(batch)
 
-        # 2. CONTAINER_D: Trasforma i batch di righe in dizionari normalizzati
-        container_D = []  # Contenitore di Dizionari da ritornare
+        # 2. CONTAINER_DN: Trasforma i batch di righe in dizionari normalizzati
+        container_DN = []  # Contenitore di Dizionari da ritornare
         for batch in container_B:
             dikt = {}
             for row in batch:  # Unifico i batch di righe in un unico dizionario {key: list}
@@ -179,6 +186,35 @@ class ReadCsvMixin(models.AbstractModel):
                 dikt[key] = value
                 if key not in list_fields:  # Se il campo non è 'one2many' o 'many2many' estraggo il valore dall lista
                     dikt[key] = value[0] if value else None
-            container_D.append(dikt)
+            container_DN.append(dikt)
 
-        return container_D
+            # for field_name, field_value in dikt.items():  # Normalizza i valori 'list'
+            #     list_value = list(filter(lambda x: x, field_value))  # Filtra le liste eliminando i valori vuoti
+            #     new_field_name = METADATA[field_name]['name']
+            #     new_field_type = METADATA[field_name]['type']
+            #     new_field_map_comodel = METADATA[field_name]['map_comodel_name_ids']
+            #     if list_value and new_field_type in ['one2many', 'many2many']:
+            #         list_ids = [new_field_map_comodel[x] for x in list_value]
+            #         list_value = [Command.create(list_ids)]
+            #     if list_value and new_field_type in ['many2one']:
+            #         list_value = new_field_map_comodel[list_value[0]]
+            #     if list_value and new_field_type not in ['one2many', 'many2many', 'many2one']:
+            #         list_value = list_value[0]
+            #     dikt[new_field_name] = list_value
+            # container_DN.append(dikt)
+
+        # # 3. CONTAINER_OD: Trasforma i batch di righe in dizionari 'odoo_dict'
+        container_OD = []  # Contenitore di Dizionari 'odoo_dict'
+        odoo_dikt = {}
+        for dikt_DN in container_DN:
+            for field_name, field_value in dikt_DN.items():
+                new_k = METADATA[field_name]['name']
+                if field_value and METADATA[field_name]['type'] in ['one2many', 'many2many']:
+                    list_ids = [METADATA[field_name]['map_comodel_name_ids'][x] for x in field_value]
+                    field_value = [Command.create(list_ids)]
+                if field_value and METADATA[field_name]['type'] in ['many2one']:
+                    field_value = METADATA[field_name]['map_comodel_name_ids'][field_value]
+                odoo_dikt[new_k] = field_value
+            container_OD.append(odoo_dikt)
+
+        return container_DN
