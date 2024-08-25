@@ -17,14 +17,3 @@ class StructureStructure(models.Model):
         string="Biomi",
         help="Biomi dove si può trovare la struttura"
     )
-
-    def cf_to_odoo_dict(self, row, utility_maps):
-        """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
-        MAP_BIOME_IDS = utility_maps[2]
-        biome_names = row.get('Biomi')
-        biome_ids = [MAP_BIOME_IDS.get(x) for x in biome_names]
-        vals = {
-            "name": row.get('Nome'),
-            "biome_ids": [(6, 0, biome_ids)]
-        }
-        return vals

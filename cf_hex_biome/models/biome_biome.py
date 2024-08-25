@@ -180,18 +180,3 @@ class BiomeBiome(models.Model):
             self.creature_endemic = creature.filtered(lambda x: x.is_endemic)
             self.creature_social = creature.filtered(lambda x: x.is_social)
             self.creature_boss = creature.filtered(lambda x: x.is_boss)
-
-    def cf_to_odoo_dict(self, row, utility_maps):
-        """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
-        vals = {
-            "name": row.get('Nome'),
-            "speed_of_travel": row.get('Velocità'),
-            "cd_food": row.get('CD Cibo'),
-            "cd_water": row.get('CD Acqua'),
-            "cd_navigation": row.get('CD Navigazione'),
-            "color": row.get('Colore'),
-            "state": REVERSE_STATE_LIST.get(row.get('Stato')),
-            "cosmology": REVERSE_COSMOLOGY_LIST.get(row.get('Cosmologia')),
-            "good_evil_axis": REVERSE_GOOD_EVIL_LIST.get(row.get('Bene/Male')),
-        }
-        return vals

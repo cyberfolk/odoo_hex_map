@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--INFO: Cron di supporto allo sviluppo -->
 <odoo>
-    <data >
+    <data noupdate="1">
         <record id="cf_dev_cron" model="ir.cron">
             <field name="name">Cron di supporto allo sviluppo</field>
             <field eval="False" name="active"/>

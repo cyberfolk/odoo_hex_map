@@ -141,32 +141,3 @@ class CreatureCreature(models.Model):
             record.is_skip = True if "Sconosciuto" in record.tag_ids.mapped("name") else False
             record.is_cool = True if "Interessante" in record.tag_ids.mapped("name") else False
             record.is_innocuous = True if "Innocuo" in record.tag_ids.mapped("name") else False
-
-    def cf_to_odoo_dict(self, row, utility_maps):
-        """Traduce una riga di un file csv in un dizionario 'odoo_dict'."""
-
-        MAP_TYPES_IDS, MAP_TAGS_IDS, MAP_BIOME_IDS = utility_maps
-        biome_high_prob_ids = [MAP_BIOME_IDS[bioma] for bioma in row.get('Biomi %Alta')]
-        biome_low_prob_ids = [MAP_BIOME_IDS[bioma] for bioma in row.get('Biomi %Bassa')]
-        tag_ids_list = [MAP_TAGS_IDS[tag] for tag in row.get('Tag')]
-
-        vals = {
-            'type_id': MAP_TYPES_IDS[row.get('Tipo')],
-            'tag_ids': [(6, 0, tag_ids_list)],
-            'name': row.get('Nome'),
-            'link_5et': row.get('Link 5et'),
-            'cr': float(row.get('Grado Sfida')) or 0,
-            'biome_high_prob_ids': [(6, 0, biome_high_prob_ids)],
-            'biome_low_prob_ids': [(6, 0, biome_low_prob_ids)],
-        }
-        return vals
-
-    def add_tag_skip_and_cool(self):
-        cool = self.search([('cool', '=', True)])
-        skip = self.search([('skip', '=', True)])
-        tag_cool_id = self.env['creature.tag'].search([('name', '=', 'Interessante')]).id
-        tag_skip_id = self.env['creature.tag'].search([('name', '=', 'Sconosciuto')]).id
-        for record in cool:
-            record.tag_ids = [Command.link(tag_cool_id)]
-        for record in skip:
-            record.tag_ids = [Command.link(tag_skip_id)]
