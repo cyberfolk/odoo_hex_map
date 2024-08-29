@@ -10,7 +10,7 @@
             <field name="numbercall">-1</field>
             <field name="model_id" ref="cf_hex_biome.model_creature_creature"/>
             <field name="state">code</field>
-            <field name="code">env["creature.creature"].popolate_by_csv()</field>
+            <field name="code">env["creature.encounter"].popolate_encounter()</field>
         </record>
     </data>
 </odoo>

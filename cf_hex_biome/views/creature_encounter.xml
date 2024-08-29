@@ -9,9 +9,12 @@
                 <field name="biome_ids"/>
                 <field name="sml"/>
                 <field name="exp_adj"/>
+                <field name="exp_adj"/>
+                <field name="faction_id"/>
                 <filter name="filter_tag_endemic" string="Endemico" domain="[('is_endemic', '=', True)]"/>
                 <filter string="Biomi" name="groupby_biome_ids" context="{'group_by': 'biome_ids'}"/>
                 <filter string="sml" name="groupby_sml" context="{'group_by': 'sml'}"/>
+                <filter string="Fazioni" name="groupby_faction_id" context="{'group_by': 'faction_id'}"/>
             </search>
         </field>
     </record>
@@ -25,6 +28,7 @@
                 <field name="name"/>
                 <field name="exp_adj"/>
                 <field name="is_endemic"/>
+                <field name="faction_id"/>
                 <field name="biome_ids" widget="many2many_tags"/>
             </tree>
         </field>
@@ -47,6 +51,7 @@
                             <field name="exp_adj"/>
                             <field name="exp_sum"/>
                             <field name="sml"/>
+                            <field name="faction_id"/>
                         </group>
                         <group string="Componenti dello scontro" colspan="2">
                             <field name="line_ids" nolabel="1" colspan="2">

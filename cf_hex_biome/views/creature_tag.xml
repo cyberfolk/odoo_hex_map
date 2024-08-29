@@ -3,8 +3,8 @@
         <field name="name">creature.tag.kanban</field>
         <field name="model">creature.tag</field>
         <field name="arch" type="xml">
-<!--            <kanban class="o_kanban_mobile" default_group_by="kanban_is_faction_label">-->
-            <kanban class="o_kanban_mobile">
+            <kanban class="o_kanban_mobile" default_group_by="is_faction">
+<!--            <kanban class="o_kanban_mobile">-->
                 <field name="name"/>
                 <templates>
                     <t t-name="kanban-box">
@@ -29,7 +29,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-<!--                <field name="is_faction" widget="boolean_toggle"/>-->
+                <field name="is_faction" widget="boolean_toggle"/>
             </tree>
         </field>
     </record>
@@ -49,7 +49,7 @@
                             </h1>
                         </div>
                         <group>
-<!--                            <field name="is_faction" widget="boolean_toggle"/>-->
+                            <field name="is_faction" widget="boolean_toggle"/>
                         </group>
                         <group string="Creature" colspan="2">
                             <field name="creature_ids" nolabel="1" colspan="2">

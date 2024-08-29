@@ -3,6 +3,7 @@
         <field name="name">Tipi di Biomi</field>
         <field name="res_model">biome.biome</field>
         <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'search_default_filter_state_active':1}</field>
     </record>
 
     <record id="action_menu_structure_structure" model="ir.actions.act_window">
@@ -50,7 +51,8 @@
     <record id="action_menu_faction_faction" model="ir.actions.act_window">
         <field name="name">Fazioni</field>
         <field name="res_model">faction.faction</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'search_default_filter_state_active':1}</field>
     </record>
 
     <record id="action_exp_tool" model="ir.actions.client">

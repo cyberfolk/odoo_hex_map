@@ -45,6 +45,7 @@
                 <field name="tag_ids" widget="many2many_tags"/>
                 <field name="biome_low_prob_ids" widget="many2many_tags"/>
                 <field name="biome_high_prob_ids" widget="many2many_tags"/>
+                <field name="faction_ids" widget="many2many_tags"/>
             </tree>
         </field>
     </record>
@@ -74,6 +75,9 @@
                         </group>
                         <group string="Biomi con Bassa probabilità di trovare la creatura" colspan="2">
                             <field name="biome_low_prob_ids" nolabel="1" colspan="2" widget="many2many_tags"/>
+                        </group>
+                        <group string="Fazioni in cui si può trovare la creatura" colspan="2">
+                            <field name="faction_ids" nolabel="1" colspan="2" widget="many2many_tags"/>
                         </group>
                     </group>
                 </sheet>

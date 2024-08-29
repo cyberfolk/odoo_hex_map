@@ -1,27 +1,6 @@
 from odoo import fields, models, api
-from ..utility.utility import is_dark
-
-STATE_LIST = [
-    ("active", "Attivo"),
-    ("future", "Dopo"),
-    ("doubtful", "Non attivare"),
-    ("upcoming", "A breve"),
-]
-
-GOOD_EVIL_LIST = [
-    ("good", "Bene"),
-    ("evil", "Male"),
-    ("neutral", "Neutrale"),
-]
-
-COSMOLOGY_LIST = [
-    ("external", "Esterno"),
-    ("mirror", "Specchio"),
-    ("elemental", "Elementale"),
-]
-REVERSE_STATE_LIST = {v: k for k, v in STATE_LIST}
-REVERSE_GOOD_EVIL_LIST = {v: k for k, v in GOOD_EVIL_LIST}
-REVERSE_COSMOLOGY_LIST = {v: k for k, v in COSMOLOGY_LIST}
+from ..utility.color import is_dark
+from ..utility.selection import STATE_LIST, GOOD_EVIL_LIST, COSMOLOGY_LIST
 
 
 class BiomeBiome(models.Model):
@@ -169,7 +148,6 @@ class BiomeBiome(models.Model):
         for record in self:
             _is_dark = is_dark(record.color)
             record.kanban_color_name = "#ffffff" if _is_dark else "#000000"
-
 
     def _compute_creature_boolean_tag(self):
         for record in self:

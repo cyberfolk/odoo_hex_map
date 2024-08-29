@@ -1,7 +1,7 @@
 import logging
 
 from odoo import fields, models, api, Command
-from ..constants.exp import MAP_CR_EXP
+from ..utility.exp import MAP_CR_EXP
 
 _logger = logging.getLogger(__name__)
 
@@ -83,7 +83,7 @@ class CreatureCreature(models.Model):
     is_social = fields.Boolean(
         string="Sociale",
         compute="_compute_boolean_tag",
-        help="Se vero, la creatura fa parte di una specie con una struttura sociale organizzata.",
+        help="Se vero, la creatura fa parte di una struttura sociale organizzata.",
         store=True
     )
 
@@ -111,6 +111,13 @@ class CreatureCreature(models.Model):
         relation="creature_biome_low_prob_rel",  # Specify a unique relation name
         string="Biomi %Bassa",
         help="Biomi con Bassa probabilità di trovare la creatura."
+    )
+
+    faction_ids = fields.Many2many(
+        comodel_name="faction.faction",
+        relation="faction_faction_creature_creature_rel",
+        string="Fazioni",
+        help="Fazioni della Creatura",
     )
 
     biome_ids = fields.Many2many(

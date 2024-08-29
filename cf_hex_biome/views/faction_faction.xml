@@ -1,4 +1,63 @@
 <odoo>
+    <record id="faction_faction_view_search" model="ir.ui.view">
+        <field name="name">faction.faction.search</field>
+        <field name="model">faction.faction</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="state"/>
+                <filter name="filter_state_active" string="Attivi" domain="[('state', '=', 'active')]"/>
+                <filter name="groupby_state" string="State" context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="faction_faction_view_tree" model="ir.ui.view">
+        <field name="name">faction.faction.tree</field>
+        <field name="model">faction.faction</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'future'"
+                       decoration-muted="state == 'doubtful'"
+                       decoration-info="state == 'upcoming'"/>
+                <field name="good_evil_axis" widget="badge"
+                       decoration-info="good_evil_axis == 'good'"
+                       decoration-danger="good_evil_axis == 'evil'"
+                       decoration-muted="good_evil_axis == 'neutral'"/>
+                <field name="cosmology" widget="badge"
+                       decoration-info="cosmology == 'external'"
+                       decoration-primary="cosmology == 'mirror'"
+                       decoration-warning="cosmology == 'elemental'"/>
+                <field name="creature_ids" widget="many2many_tags"/></tree>
+        </field>
+    </record>
+
+    <record id="faction_faction_view_kanban" model="ir.ui.view">
+        <field name="name">faction.faction.kanban</field>
+        <field name="model">faction.faction</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="state">
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-12">
+                                    <strong>
+                                        <t t-esc="record.name.value"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="faction_faction_view_form" model="ir.ui.view">
         <field name="name">faction.faction.form</field>
         <field name="model">faction.faction</field>
@@ -6,6 +65,12 @@
             <form>
                 <sheet>
                     <group>
+                        <field name="state" widget="badge" nolabel="1"
+                               colspan="2" class=""
+                               decoration-success="state == 'active'"
+                               decoration-warning="state == 'future'"
+                               decoration-muted="state == 'doubtful'"
+                               decoration-info="state == 'upcoming'"/>
                         <div class="oe_title mt-2" colspan="2">
                             <h1>
                                 <group>
@@ -13,16 +78,19 @@
                                 </group>
                             </h1>
                         </div>
-<!--                        <group string="Creature" colspan="2">-->
-<!--                            <field name="creature_ids" nolabel="1" colspan="2">-->
-<!--                                <tree>-->
-<!--                                    <field name="name"/>-->
-<!--                                    <field name="tag_ids" widget="many2many_tags"/>-->
-<!--                                    <field name="biome_high_prob_ids" widget="many2many_tags"/>-->
-<!--                                    <field name="biome_low_prob_ids" widget="many2many_tags"/>-->
-<!--                                </tree>-->
-<!--                            </field>-->
-<!--                        </group>-->
+                        <group col="3">
+                            <group>
+                                <field name="state"/>
+                                <field name="good_evil_axis"/>
+                                <field name="cosmology"/>
+                            </group>
+                        </group>
+                        <group string="Creature della fazione" colspan="2">
+                            <field name="creature_ids" nolabel="1" colspan="2"/>
+                        </group>
+                        <group string="Scontri della fazione" colspan="2">
+                            <field name="encounter_ids" nolabel="1" colspan="2" default_group_by="sml"/>
+                        </group>
                     </group>
                 </sheet>
             </form>

@@ -1,7 +1,9 @@
+import csv
 import logging
+from pathlib import Path
 
 from odoo import fields, models, api, Command
-from ..constants.exp import MAP_QTY_MOD, MAP_LEVEL_EXP, MAP_SML_QTY, LIST_CR
+from ..utility.exp import MAP_QTY_MOD, MAP_LEVEL_EXP, MAP_SML_QTY, LIST_CR
 
 _logger = logging.getLogger(__name__)
 
@@ -72,16 +74,26 @@ class CreatureEncounter(models.Model):
         store=True,
     )
 
-    @api.depends("line_ids")
+    faction_id = fields.Many2one(
+        comodel_name="faction.faction",
+        string="Fazione",
+        help="Fazione dello scontro",
+    )
+
+    @api.depends("line_ids", "faction_id")
     def _compute_is_endemic(self):
         for record in self:
             record.is_endemic = all(line.is_endemic for line in record.line_ids)
+            if record.faction_id:
+                record.is_endemic = False
 
-    @api.depends("line_ids")
+    @api.depends("line_ids", "faction_id")
     def _compute_name(self):
         for record in self:
             record.name = " + ".join(filter(None, record.line_ids.mapped("name")))
-            if record.is_endemic:
+            if record.faction_id:
+                record.name = f"{record.faction_id.name}: {record.name}"
+            elif record.is_endemic:
                 record.name = f"Endemico: {record.name}"
             if not record.name:
                 record.name = f"Nome temporaneo"
@@ -103,7 +115,8 @@ class CreatureEncounter(models.Model):
     @api.depends("line_ids")
     def _compute_exp_adj(self):
         for record in self:
-            record.exp_adj = record.exp_sum * MAP_QTY_MOD[str(record.tot_creatures)]
+            modificatore = MAP_QTY_MOD.get(str(record.tot_creatures), 4)
+            record.exp_adj = record.exp_sum * modificatore
             if not record.exp_adj:
                 record.exp_adj = 0
 
@@ -160,3 +173,39 @@ class CreatureEncounter(models.Model):
                 _logger.info(f"**** END SML {sml} - CR {cr}")
             _logger.info(f"** END SML {sml}")
         _logger.info("END popolate_endemic_encounter")
+
+    def popolate_faction_encounter(self):
+        MAP_FACTION_ID = {x.name: x.id for x in self.env['faction.faction'].search([])}
+        MAP_CREATURE_ID = {x.name: x.id for x in self.env['creature.creature'].search([])}
+        name_file_csv = 'faction_encounter.csv'
+        file_path = (Path(__file__).resolve().parents[1] / 'data' / name_file_csv).as_posix()
+        with open(file_path, mode='r', encoding='utf-8') as csv_file:
+            reader = csv.DictReader(csv_file)
+            i = 0
+            for row in reader:
+                i += 1
+                faction_id = MAP_FACTION_ID.get(row['fazione'])
+                list_creature_name = [row['c1'], row['c2'], row['c3'], row['c4']]
+                list_creature_id = [MAP_CREATURE_ID[x] for x in list_creature_name if x]
+                list_creature_number = [int(row['n1'] or 0), int(row['n2'] or 0), int(row['n3'] or 0),
+                                        int(row['n4'] or 0)]
+
+                lines = []
+                for _id, num in zip(list_creature_id, list_creature_number):
+                    if (_id is None) != (num is None):
+                        raise ValueError("Un elemento è `None` mentre l'altro è valorizzato.")
+                    if _id is not None and num is not None:
+                        lines.append({
+                            'creature_qty': num,
+                            'creature_id': _id
+                        })
+
+                encounter = self.create({
+                    "faction_id": faction_id,
+                    "line_ids":  [(fields.Command.create(line)) for line in lines]
+                })
+                print(f"{i} - {encounter.name} - {row['fazione']} - {list_creature_name} - {list_creature_number}")
+
+                stop = 0
+            stop = 0
+        stop = 0
