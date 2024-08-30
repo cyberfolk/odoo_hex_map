@@ -8,6 +8,7 @@ old_note = [
     ("Diavoli", "Aggiungere signori inferno."),
     ("TAG Boss - Signore", "Distinguere i due tag."),
     ("Nightwalker", "Ho messo solo shadowfell, ma andrebbe un po' bene ovunque."),
+    ("creature.encounter", "aggiungere azione per download_encounters_py."),
 ]
 import logging
 
