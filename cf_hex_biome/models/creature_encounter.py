@@ -1,8 +1,11 @@
 import csv
+import importlib.util
 import logging
+import os
 from pathlib import Path
 
-from odoo import fields, models, api, Command
+from odoo import fields, api, Command
+from odoo import models
 from ..utility.exp import MAP_QTY_MOD, MAP_LEVEL_EXP, MAP_SML_QTY, LIST_CR
 
 _logger = logging.getLogger(__name__)
@@ -174,38 +177,46 @@ class CreatureEncounter(models.Model):
             _logger.info(f"** END SML {sml}")
         _logger.info("END popolate_endemic_encounter")
 
-    def popolate_faction_encounter(self):
-        MAP_FACTION_ID = {x.name: x.id for x in self.env['faction.faction'].search([])}
-        MAP_CREATURE_ID = {x.name: x.id for x in self.env['creature.creature'].search([])}
-        name_file_csv = 'faction_encounter.csv'
-        file_path = (Path(__file__).resolve().parents[1] / 'data' / name_file_csv).as_posix()
-        with open(file_path, mode='r', encoding='utf-8') as csv_file:
-            reader = csv.DictReader(csv_file)
-            i = 0
-            for row in reader:
-                i += 1
-                faction_id = MAP_FACTION_ID.get(row['fazione'])
-                list_creature_name = [row['c1'], row['c2'], row['c3'], row['c4']]
-                list_creature_id = [MAP_CREATURE_ID[x] for x in list_creature_name if x]
-                list_creature_number = [int(row['n1'] or 0), int(row['n2'] or 0), int(row['n3'] or 0),
-                                        int(row['n4'] or 0)]
+    def popolate_by_py(self):
+        """Crea record partendo dal encounter.py che deve essere presente nella cartella 'data'."""
+        _logger.info(f"** START ** popolate_by_py() - ({self._name})")
+        try:
+            name_file = 'encounters.py'
+            file_path = (Path(__file__).resolve().parents[1] / 'data' / name_file).as_posix()
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"File not found: {file_path}")
 
-                lines = []
-                for _id, num in zip(list_creature_id, list_creature_number):
-                    if (_id is None) != (num is None):
-                        raise ValueError("Un elemento è `None` mentre l'altro è valorizzato.")
-                    if _id is not None and num is not None:
-                        lines.append({
-                            'creature_qty': num,
-                            'creature_id': _id
-                        })
+            spec = importlib.util.spec_from_file_location("encounters", file_path)
+            modulo = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(modulo)
 
-                encounter = self.create({
-                    "faction_id": faction_id,
-                    "line_ids":  [(fields.Command.create(line)) for line in lines]
-                })
-                print(f"{i} - {encounter.name} - {row['fazione']} - {list_creature_name} - {list_creature_number}")
+            # Restituisci il dizionario dal modulo
+            encounters = getattr(modulo, 'encounters', None)
+            self.create(encounters)
 
-                stop = 0
-            stop = 0
-        stop = 0
+        except Exception as e:
+            self._log_error(e)
+            raise e
+        _logger.info(f"** END  ** popolate_by_py() - ({self._name})")
+
+    def download_encounters_py(self):
+        """Scarica il file encounter.py."""
+        _logger.info("START download_encounter")
+        encounters = self.search([])
+        encounters_list = [{
+            "faction_id": encounter.faction_id.id or None,
+            "line_ids": [(0, 0, {
+                'creature_qty': line.creature_qty,
+                'creature_id': line.creature_qty
+            }) for line in encounter.line_ids]
+        } for encounter in encounters]
+
+        nome_file = 'encounters.py'
+        contenuto = 'encounters = ' + str(encounters_list)
+        file_path = (Path(__file__).resolve().parents[1] / 'data' / nome_file).as_posix()
+
+        # Scrivi il contenuto nel file
+        with open(file_path, 'w') as file:
+            file.write(contenuto)
+        _logger.info("END download_encounter - SUCCESS")
+

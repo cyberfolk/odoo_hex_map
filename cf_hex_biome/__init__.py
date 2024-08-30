@@ -22,7 +22,8 @@ def post_init_hook_cf_hex_biome(env):
         env["creature.tag"].popolate_by_csv()
         env["creature.type"].popolate_by_csv()
         env["creature.creature"].popolate_by_csv()
-        env["creature.encounter"].popolate_endemic_encounter()
+        env["faction.faction"].popolate_by_csv()
+        env["creature.encounter"].popolate_by_py()
     except Exception as e:
         msg = (f"Errore nella funzione post_init_hook_cf_hex_biome()\n"
                f"Fallito caricamento dei dati per il modulo cf_hex_biome\n"

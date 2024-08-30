@@ -13,7 +13,8 @@ MAP_MODEL_CSV = {
     "creature.type": "Tipi di creature (creature.type).csv",
     "creature.tag": "Tag per creature (creature.tag).csv",
     "creature.creature": "Creatura (creature.creature).csv",
-    "structure.structure": "Struttura (structure.structure).csv"
+    "structure.structure": "Struttura (structure.structure).csv",
+    "faction.faction": "Fazione (faction.faction).csv"
 }
 
 
@@ -31,6 +32,7 @@ class ReadCsvMixin(models.AbstractModel):
             for i, dikt in enumerate(dikt_list):
                 dikt_name = dikt.get('Nome', [None])[0]
                 if not dikt_name or self._record_exists(dikt_name):
+                    _logger.warning(f" - ({str(i + 1).zfill(3)}) SKIP {dikt_name} - Already exists")
                     continue
                 odoo_dikt = self._prepare_record_dict(dikt)
                 self.create(odoo_dikt)
