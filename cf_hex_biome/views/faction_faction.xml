@@ -6,7 +6,14 @@
             <search>
                 <field name="name"/>
                 <field name="state"/>
+                <field name="is_parent"/>
+                <field name="is_child"/>
                 <filter name="filter_state_active" string="Attivi" domain="[('state', '=', 'active')]"/>
+                <filter name="filter_is_parent" string="È Padre" domain="[('is_parent', '=', True)]"/>
+                <filter name="filter_is_child" string="È Figlio" domain="[('is_child', '=', True)]"/>
+                <filter name="filter_is_not_child" string="Non Figlio" domain="[('is_child', '=', False)]"/>
+                <filter name="filter_state_active_and_is_not_child" string="Attive e non Figlio"
+                        domain="['&amp;', ('state', '=', 'active'), ('is_child', '=', False)]"/>
                 <filter name="groupby_state" string="State" context="{'group_by': 'state'}"/>
             </search>
         </field>
@@ -16,7 +23,9 @@
         <field name="name">faction.faction.tree</field>
         <field name="model">faction.faction</field>
         <field name="arch" type="xml">
+            <!--<tree editable="top">-->
             <tree>
+                <field name="code"/>
                 <field name="name"/>
                 <field name="state" widget="badge"
                        decoration-success="state == 'active'"
@@ -31,7 +40,8 @@
                        decoration-info="cosmology == 'external'"
                        decoration-primary="cosmology == 'mirror'"
                        decoration-warning="cosmology == 'elemental'"/>
-                <field name="creature_ids" widget="many2many_tags"/></tree>
+                <field name="creature_ids" widget="many2many_tags"/>
+            </tree>
         </field>
     </record>
 
@@ -74,23 +84,119 @@
                         <div class="oe_title mt-2" colspan="2">
                             <h1>
                                 <group>
-                                    <field class="text-nowrap" name="name" readonly="1" nolabel="1"/>
+                                    <field colspan="2" class=" text-nowrap" name="name" nolabel="1"/>
                                 </group>
                             </h1>
                         </div>
-                        <group col="3">
+                        <group col="2">
                             <group>
+                                <field name="code"/>
                                 <field name="state"/>
                                 <field name="good_evil_axis"/>
                                 <field name="cosmology"/>
+                                <field name="parent_id"/>
                             </group>
                         </group>
-                        <group string="Creature della fazione" colspan="2">
-                            <field name="creature_ids" nolabel="1" colspan="2"/>
-                        </group>
-                        <group string="Scontri della fazione" colspan="2">
-                            <field name="encounter_ids" nolabel="1" colspan="2" default_group_by="sml"/>
-                        </group>
+                        <notebook>
+                            <page string="Creature">
+                                <group string="Creature della fazione" colspan="2">
+                                    <field name="creature_ids" nolabel="1" colspan="2"/>
+                                </group>
+                            </page>
+                            <page string="Fazioni figlie">
+                                <group string="Fazioni figlie" colspan="2">
+                                    <field name="child_ids" nolabel="1" colspan="2"/>
+                                </group>
+                            </page>
+                            <page string="Scontri">
+                                <group string="Scontri della fazione" colspan="2">
+                                    <field name="encounter_ids" nolabel="1" colspan="2">
+                                        <tree>
+                                            <field name="sml"/>
+                                            <field name="name"/>
+                                            <field name="exp_adj"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Info MM">
+                                <field name="description"/>
+                            </page>
+                            <page string="Domande">
+                                <group string="Info base:" col="3">
+                                    <group string="Da quanti anni sono nella regione?">
+                                        <field name="n01_years_in_region" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Quali sono le loro operazioni quotidiane?">
+                                        <field name="n02_daily_operations" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Come si nutrono?">
+                                        <field name="n03_feeding_habits" nolabel="1" colspan="2"/>
+                                    </group>
+                                </group>
+                                <group string="Gerarchia e struttura sociale" col="3">
+                                    <group string="Come si occupano delle normali minacce?">
+                                        <field name="n04_handling_threats" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="A quali poteri rispondono?">
+                                        <field name="n05_answering_powers" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Hanno degli esploratori?">
+                                        <field name="n06_scouts" nolabel="1" colspan="2"/>
+                                    </group>
+                                </group>
+                                <group string="Territorio e influenza" col="3">
+                                    <group string="Che posizioni chiave controllano?">
+                                        <field name="n07_key_positions_controlled" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Come segnano i loro confini?">
+                                        <field name="n08_boundary_marking" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Come rivendicano il loro territorio?">
+                                        <field name="n09_territory_claiming" nolabel="1" colspan="2"/>
+                                    </group>
+                                </group>
+                                <group string="Basi" col="3">
+                                    <group string="Che Struttura è la loro Base?">
+                                        <field name="n11_base_structure" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="L'hanno costruita loro o esisteva già?">
+                                        <field name="n12_base_origin" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Perché viene utilizzata?">
+                                        <field name="n13_base_purpose" nolabel="1" colspan="2"/>
+                                    </group>
+                                </group>
+                                <group string="Motivazioni" col="3">
+                                    <group string="Obbiettivi a Lungo Termine?">
+                                        <field name="n14_long_term_goals" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Obbiettivi a Breve Termine?">
+                                        <field name="n15_short_term_goals" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Da che motivazioni sono spinti?">
+                                        <field name="n16_motivations" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="In che modo intendono Raggiungerli?">
+                                        <field name="n17_goal_strategy" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="I leader come vede i PG?">
+                                        <field name="n18_leader_view_of_pcs" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Come entrano in contatto coi PG?">
+                                        <field name="n19_contact_with_pcs" nolabel="1" colspan="2"/>
+                                    </group>
+                                </group>
+                                <group string="Extra" col="3">
+                                    <group string="Possibili sviluppi della Fazione?">
+                                        <field name="n20_possible_developments" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Tema della Fazione?">
+                                        <field name="n10_faction_theme" nolabel="1" colspan="2"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
                     </group>
                 </sheet>
             </form>

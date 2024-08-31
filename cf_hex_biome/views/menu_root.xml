@@ -52,7 +52,7 @@
         <field name="name">Fazioni</field>
         <field name="res_model">faction.faction</field>
         <field name="view_mode">tree,form,kanban</field>
-        <field name="context">{'search_default_filter_state_active':1}</field>
+        <field name="context">{'search_default_filter_state_active_and_is_not_child':1}</field>
     </record>
 
     <record id="action_exp_tool" model="ir.actions.client">

@@ -95,7 +95,7 @@ class CreatureEncounter(models.Model):
         for record in self:
             record.name = " + ".join(filter(None, record.line_ids.mapped("name")))
             if record.faction_id:
-                record.name = f"{record.faction_id.name}: {record.name}"
+                record.name = f"{record.faction_id.code}: {record.name}"
             elif record.is_endemic:
                 record.name = f"Endemico: {record.name}"
             if not record.name:
