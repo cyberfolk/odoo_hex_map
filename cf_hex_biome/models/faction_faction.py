@@ -1,8 +1,4 @@
-import os
-import importlib.util
 import logging
-import os
-from pathlib import Path
 
 from odoo import fields, models, api
 from ..utility.selection import STATE_LIST, GOOD_EVIL_LIST, COSMOLOGY_LIST
@@ -12,9 +8,15 @@ _logger = logging.getLogger(__name__)
 
 class FactionFaction(models.Model):
     _name = "faction.faction"
-    _inherit = 'read.csv.mixin'
+    _inherit = 'import.by.py.mixin'
     _description = "Fazione"
 
+    _sql_constraints = [
+        ('unique_faction_faction_name', 'UNIQUE(name)', 'Il nome della fazione deve essere univoco!'),
+        ('unique_faction_faction_code', 'UNIQUE(code)', 'Il code della fazione deve essere univoco!')
+    ]
+
+    # region FIELD -----------------------------------------------------------------------------------------------------
     name = fields.Char(
         string="Nome",
         required=True,
@@ -25,11 +27,6 @@ class FactionFaction(models.Model):
         string="Codice",
         help="Codice della fazione",
     )
-
-    _sql_constraints = [
-        ('unique_faction_faction_name', 'UNIQUE(name)', 'Il nome della fazione deve essere univoco!'),
-        ('unique_faction_faction_name', 'UNIQUE(code)', 'Il code della fazione deve essere univoco!')
-    ]
 
     child_ids = fields.One2many(
         comodel_name="faction.faction",
@@ -135,6 +132,9 @@ class FactionFaction(models.Model):
     n19_possible_developments = fields.Text(string="Possibili sviluppi della Fazione?")
     n20_faction_theme = fields.Text(string="Tema della Fazione?")
 
+    # endregion FIELD --------------------------------------------------------------------------------------------------
+
+    # region COMPUTED METHOD -------------------------------------------------------------------------------------------
     @api.depends("child_ids", "parent_id")
     def _compute_is_child(self):
         for rec in self:
@@ -161,7 +161,9 @@ class FactionFaction(models.Model):
             ])
             rec.desc_creature = f"""<div class="row">{content}</div>""" if content else "Nessuna creatura"
 
-    def download_factions_py(self):
+    # endregion COMPUTED METHOD ----------------------------------------------------------------------------------------
+
+    def get_data_str(self):
         """Scarica i dati delle fazioni nel file 'faction.py' mettendolo nella cartella 'data'."""
         _logger.info("START download_factions_py")
 
@@ -199,57 +201,44 @@ class FactionFaction(models.Model):
 
         faction_childs_parents = [{
             'name': faction.name,
-            'parent_id': faction.parent_id.name if faction.parent_id else None,
-            'child_ids': [x.name for x in faction.child_ids] if faction.child_ids else None,
+            'parent_name': faction.parent_id.name if faction.parent_id else None,
+            'child_names': [x.name for x in faction.child_ids] if faction.child_ids else None,
         } for faction in factions]
 
-        nome_file = 'factions.py'
-        content = (f'factions = {faction_list}\n'
-                   f'faction_childs_parents = {faction_childs_parents}')
-        file_path = (Path(__file__).resolve().parents[1] / 'data' / nome_file).as_posix()
+        dat_str = (f'faction_dikts = {faction_list}\n'
+                   f'parent_dikts = {faction_childs_parents}')
+        return dat_str
 
-        try:
-            # Write content to file
-            with open(file_path, 'w', encoding='utf-8') as file:
-                file.write(content)
-            _logger.info("END download_factions_py - SUCCESS")
-        except IOError as e:
-            _logger.error(f"Failed to write to {file_path}: {e}")
+    def _popolate_by_py(self, modulo):
+        # Restituisci il dizionario dal modulo
+        faction_dikts = getattr(modulo, 'faction_dikts', None)
+        parent_dikts = getattr(modulo, 'parent_dikts', None)
+        if faction_dikts is None:
+            raise ValueError(f"'factions' not found in {name_file}")
+        if parent_dikts is None:
+            raise ValueError(f"'faction_childs_parents' not found in {name_file}")
 
-    def popolate_by_py(self):
-        """Crea record partendo dal factions.py che deve essere presente nella cartella 'data'."""
-        _logger.info(f"** START ** popolate_by_py() - ({self._name})")
-        try:
-            name_file = 'factions.py'
-            file_path = (Path(__file__).resolve().parents[1] / 'data' / name_file).as_posix()
-            if not os.path.exists(file_path):
-                raise FileNotFoundError(f"File not found: {file_path}")
+        MAP_CREATURE_ID = {x.name: x.id for x in self.env['creature.creature'].search([])}
 
-            spec = importlib.util.spec_from_file_location("factions", file_path)
-            modulo = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(modulo)
+        # Process each encounter
+        for faction in faction_dikts:
+            if faction['creature_names']:
+                faction['creature_ids'] = [MAP_CREATURE_ID.get(x) for x in faction['creature_names']]
+            faction.pop('creature_names', None)
+        factions = self.create(faction_dikts)
 
-            # Restituisci il dizionario dal modulo
-            factions = getattr(modulo, 'factions', None)
-            faction_childs_parents = getattr(modulo, 'factions', None)
-            if factions is None:
-                raise ValueError(f"'factions' not found in {name_file}")
-            if faction_childs_parents is None:
-                raise ValueError(f"'faction_childs_parents' not found in {name_file}")
+        for parent_info in parent_dikts:
+            if parent_info.get('child_names'):
+                child_records = self.env['faction.faction'].search([('name', 'in', parent_info['child_names'])])
+                parent_info['child_ids'] = [(6, 0, child_records.ids)] if child_records else []
 
-            MAP_CREATURE_ID = {x.name: x.id for x in self.env['creature.creature'].search([])}
+            if parent_info.get('parent_name'):
+                parent_record = self.env['faction.faction'].search([('name', '=', parent_info['parent_name'])])
+                parent_info['parent_id'] = parent_record.id if parent_record else None
 
-            # Process each encounter
-            for faction in factions:
-                if faction['creature_names']:
-                    faction['creature_ids'] = [MAP_CREATURE_ID.get(x) for x in faction['creature_names']]
-                faction.pop('creature_names', None)
-            self.create(factions)
-
-            stop = 0
-
-        except Exception as e:
-            _logger.error(f"** ERROR ** popolate_by_py() - ({self._name})")
-            _logger.exception(e)
-        finally:
-            _logger.info(f"** END  ** popolate_by_py() - ({self._name})")
+            faction_record = factions.filtered(lambda x: x.name == parent_info['name'])
+            if faction_record:
+                faction_record.write({
+                    'parent_id': parent_info.get('parent_id', []),
+                    'child_ids': parent_info.get('child_ids', []),
+                })
