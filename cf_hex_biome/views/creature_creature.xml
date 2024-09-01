@@ -56,30 +56,29 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <group>
-                        <div class="oe_title mt-2" colspan="2">
-                            <h1>
-                                <field name="name" readonly="1"/>
-                            </h1>
-                        </div>
+                    <div class="oe_title mt-2" colspan="4">
+                        <h1>
+                            <field name="name" colspan="2"/>
+                        </h1>
+                        <field name="link_5et" widget="url" nolabel="1" colspan="2"/>
+                    </div>
+                    <group col="3">
                         <group>
-                            <field name="link_5et" widget="url" nolabel="1" colspan="2" readonly="1"/>
-                            <field name="cr" string="GS" readonly="1"/>
-                            <field name="type_id" readonly="1"/>
+                            <field name="cr" string="GS"/>
+                            <field name="type_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
                         </group>
-                        <group string="Tag" colspan="2">
-                            <field name="tag_ids" nolabel="1" colspan="2" widget="many2many_tags"/>
-                        </group>
-                        <group string="Biomi con Alta probabilità di trovare la creatura" colspan="2">
-                            <field name="biome_high_prob_ids" nolabel="1" colspan="2" widget="many2many_tags"/>
-                        </group>
-                        <group string="Biomi con Bassa probabilità di trovare la creatura" colspan="2">
-                            <field name="biome_low_prob_ids" nolabel="1" colspan="2" widget="many2many_tags"/>
-                        </group>
-                        <group string="Fazioni in cui si può trovare la creatura" colspan="2">
-                            <field name="faction_ids" nolabel="1" colspan="2" widget="many2many_tags"/>
+                        <group colspan="2">
+                            <field name="faction_ids" widget="many2many_tags"/>
+                            <field name="biome_high_prob_ids" widget="many2many_tags"/>
+                            <field name="biome_low_prob_ids" widget="many2many_tags"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page name="Info MM">
+                            <field name="description" colspan="4"/>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

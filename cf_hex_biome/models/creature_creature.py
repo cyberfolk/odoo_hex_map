@@ -128,6 +128,11 @@ class CreatureCreature(models.Model):
         store=True
     )
 
+    description = fields.Html(
+        string="Descrizione",
+        help="Descrizione della Creatura",
+    )
+
     @api.depends("cr")
     def _compute_exp(self):
         for record in self:

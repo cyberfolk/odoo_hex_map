@@ -98,9 +98,92 @@
                             </group>
                         </group>
                         <notebook>
+                            <page string="Info MM">
+                                <field name="description"/>
+                            </page>
                             <page string="Creature">
+                                <group>
+                                    <field name="desc_creature" nolabel="1" colspan="2"/>
+                                </group>
                                 <group string="Creature della fazione" colspan="2">
                                     <field name="creature_ids" nolabel="1" colspan="2"/>
+                                </group>
+                            </page>
+                            <page string="Domande">
+                                <group col="3">
+                                    <group col="1" string="Info base:">
+                                        <group string="1. Da quanti anni sono nella regione?">
+                                            <field name="n01_years_in_region" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="2. Quali sono le loro operazioni quotidiane?">
+                                            <field name="n02_daily_operations" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="3. Come si nutrono?">
+                                            <field name="n03_feeding_habits" nolabel="1" colspan="2"/>
+                                        </group>
+                                    </group>
+                                    <group col="1" string="Gerarchia e struttura sociale">
+                                        <group string="4. Come si occupano delle normali minacce?">
+                                            <field name="n04_handling_threats" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="5. A quali poteri rispondono?">
+                                            <field name="n05_answering_powers" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="6. Hanno degli esploratori?">
+                                            <field name="n06_scouts" nolabel="1" colspan="2"/>
+                                        </group>
+                                    </group>
+                                    <group col="1" string="Territorio e influenza">
+                                        <group string="7. Che posizioni chiave controllano?">
+                                            <field name="n07_key_positions_controlled" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="8. Come segnano i loro confini?">
+                                            <field name="n08_boundary_marking" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="9. Come rivendicano il loro territorio?">
+                                            <field name="n09_territory_claiming" nolabel="1" colspan="2"/>
+                                        </group>
+                                    </group>
+                                    <group col="1" string="Basi">
+                                        <group string="10. Che Struttura è la loro Base?">
+                                            <field name="n10_base_structure" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="11. L'hanno costruita loro o esisteva già?">
+                                            <field name="n11_base_origin" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="12. Perché viene utilizzata?">
+                                            <field name="n12_base_purpose" nolabel="1" colspan="2"/>
+                                        </group>
+                                    </group>
+                                    <group col="1" string="Motivazioni">
+                                        <group string="13. Obbiettivi a Lungo Termine?">
+                                            <field name="n13_long_term_goals" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="14. Obbiettivi a Breve Termine?">
+                                            <field name="n14_short_term_goals" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="15. Da che motivazioni sono spinti?">
+                                            <field name="n15_motivations" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="16. In che modo intendono Raggiungerli?">
+                                            <field name="n16_goal_strategy" nolabel="1" colspan="2"/>
+                                        </group>
+                                    </group>
+                                    <group col="1" string="Extra">
+                                        <group string="17. I leader come vede i PG?">
+                                            <field name="n17_leader_view_of_pcs" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="18.Come entrano in contatto coi PG?">
+                                            <field name="n18_contact_with_pcs" nolabel="1" colspan="2"/>
+                                        </group>
+
+                                        <group string="19. Possibili sviluppi della Fazione?">
+                                            <field name="n19_possible_developments" nolabel="1" colspan="2"/>
+                                        </group>
+                                        <group string="20. Tema della Fazione?">
+                                            <field name="n20_faction_theme" nolabel="1" colspan="2"/>
+                                        </group>
+                                    </group>
                                 </group>
                             </page>
                             <page string="Fazioni figlie">
@@ -117,83 +200,6 @@
                                             <field name="exp_adj"/>
                                         </tree>
                                     </field>
-                                </group>
-                            </page>
-                            <page string="Info MM">
-                                <field name="description"/>
-                            </page>
-                            <page string="Domande">
-                                <group string="Info base:" col="3">
-                                    <group string="Da quanti anni sono nella regione?">
-                                        <field name="n01_years_in_region" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Quali sono le loro operazioni quotidiane?">
-                                        <field name="n02_daily_operations" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Come si nutrono?">
-                                        <field name="n03_feeding_habits" nolabel="1" colspan="2"/>
-                                    </group>
-                                </group>
-                                <group string="Gerarchia e struttura sociale" col="3">
-                                    <group string="Come si occupano delle normali minacce?">
-                                        <field name="n04_handling_threats" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="A quali poteri rispondono?">
-                                        <field name="n05_answering_powers" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Hanno degli esploratori?">
-                                        <field name="n06_scouts" nolabel="1" colspan="2"/>
-                                    </group>
-                                </group>
-                                <group string="Territorio e influenza" col="3">
-                                    <group string="Che posizioni chiave controllano?">
-                                        <field name="n07_key_positions_controlled" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Come segnano i loro confini?">
-                                        <field name="n08_boundary_marking" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Come rivendicano il loro territorio?">
-                                        <field name="n09_territory_claiming" nolabel="1" colspan="2"/>
-                                    </group>
-                                </group>
-                                <group string="Basi" col="3">
-                                    <group string="Che Struttura è la loro Base?">
-                                        <field name="n11_base_structure" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="L'hanno costruita loro o esisteva già?">
-                                        <field name="n12_base_origin" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Perché viene utilizzata?">
-                                        <field name="n13_base_purpose" nolabel="1" colspan="2"/>
-                                    </group>
-                                </group>
-                                <group string="Motivazioni" col="3">
-                                    <group string="Obbiettivi a Lungo Termine?">
-                                        <field name="n14_long_term_goals" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Obbiettivi a Breve Termine?">
-                                        <field name="n15_short_term_goals" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Da che motivazioni sono spinti?">
-                                        <field name="n16_motivations" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="In che modo intendono Raggiungerli?">
-                                        <field name="n17_goal_strategy" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="I leader come vede i PG?">
-                                        <field name="n18_leader_view_of_pcs" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Come entrano in contatto coi PG?">
-                                        <field name="n19_contact_with_pcs" nolabel="1" colspan="2"/>
-                                    </group>
-                                </group>
-                                <group string="Extra" col="3">
-                                    <group string="Possibili sviluppi della Fazione?">
-                                        <field name="n20_possible_developments" nolabel="1" colspan="2"/>
-                                    </group>
-                                    <group string="Tema della Fazione?">
-                                        <field name="n10_faction_theme" nolabel="1" colspan="2"/>
-                                    </group>
                                 </group>
                             </page>
                         </notebook>

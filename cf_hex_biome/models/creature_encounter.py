@@ -221,9 +221,10 @@ class CreatureEncounter(models.Model):
         except Exception as e:
             _logger.error(f"** ERROR ** popolate_by_py() - ({self._name})")
             _logger.exception(e)
-        _logger.info(f"** END  ** popolate_by_py() - ({self._name})")
+        finally:
+            _logger.info(f"** END  ** popolate_by_py() - ({self._name})")
 
-    # region --------- DEPRECATI ---------------------------------------------------------------------------------------
+    # region --- METODI DEPRECATI -------------------------------------------------------------------------------------
     def download_encounters_py(self):
         _logger.info("DEPRECATE download_encounters_py")
         pass
@@ -243,7 +244,7 @@ class CreatureEncounter(models.Model):
         } for encounter in encounters]
 
         nome_file = 'encounters.py'
-        contenuto = f'encounters = {encounters_list}'
+        content = f'encounters = {encounters_list}'
         file_path = (Path(__file__).resolve().parents[1] / 'data' / nome_file).as_posix()
 
         try:
@@ -290,5 +291,4 @@ class CreatureEncounter(models.Model):
                     "line_ids": [(fields.Command.create(line)) for line in lines]
                 })
                 print(f"{i} - {encounter.name} - {row['fazione']} - {list_creature_name} - {list_creature_number}")
-    # region --------- DEPRECATI ---------------------------------------------------------------------------------------
-
+    # endregion --------- DEPRECATI ------------------------------------------------------------------------------------
