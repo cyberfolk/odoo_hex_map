@@ -3,7 +3,6 @@ from odoo import fields, models
 
 class CreatureType(models.Model):
     _name = "creature.type"
-    _inherit = 'read.csv.mixin'
     _description = "Tipi di creature"
 
     name = fields.Char(

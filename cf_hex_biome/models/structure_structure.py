@@ -3,7 +3,6 @@ from odoo import fields, models
 
 class StructureStructure(models.Model):
     _name = "structure.structure"
-    _inherit = 'read.csv.mixin'
     _description = "Struttura"
 
     name = fields.Char(

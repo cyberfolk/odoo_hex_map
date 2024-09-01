@@ -5,7 +5,6 @@ from ..utility.selection import STATE_LIST, GOOD_EVIL_LIST, COSMOLOGY_LIST
 
 class BiomeBiome(models.Model):
     _name = "biome.biome"
-    _inherit = 'read.csv.mixin'
     _description = "Bioma"
 
     name = fields.Char(

@@ -3,7 +3,6 @@ from odoo import fields, models, api
 
 class CreatureTag(models.Model):
     _name = "creature.tag"
-    _inherit = 'read.csv.mixin'
     _description = "Tag per creature"
 
     name = fields.Char(

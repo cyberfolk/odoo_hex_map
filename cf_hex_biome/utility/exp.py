@@ -86,18 +86,3 @@ MAP_LEVEL_EXP = {
     "19": (2400, 4900, 7300, 10900, 30000),
     "20": (2800, 5700, 8500, 12700, 40000),
 }
-
-# Dizionario per creare degli scontri a SML X con solo creature di CR Y
-# Nella tupla sono riportate la quantity di creature di quel CR per ottenere quel SML
-# "SML": ("q_cr0125", "q_cr025", "q_cr05", "q_cr1", "q_cr2", "q_cr3", "q_cr4, "q_cr5", "q_cr6", "q_cr7", "q_cr8")
-LIST_CR = [0.125, 0.25, 0.5, 1, 2, 3, 4, 5, 6, 7, 8]
-MAP_SML_QTY = {
-    "3": (16, 11, 7, 4, None, None, None, 1, None, None, None),
-    "4": (20, 14, 9, 5, 3, 2, None, None, 1, None, None),
-    "5": (45, 22, 14, 9, 5, 3, None, None, None, None, None),
-    "6": (56, 28, 15, 10, 6, 4, None, 2, None, None, None),
-    "7": (68, 33, 17, 11, None, 5, 3, None, 2, None, None),
-    "8": (84, 42, 21, 14, 8, 6, 4, None, None, None, None),
-    "9": (96, 48, 24, 15, 9, None, None, 3, None, None, None),
-    "10": (120, 56, 28, 15, 10, 7, 5, None, None, None, 2),
-}

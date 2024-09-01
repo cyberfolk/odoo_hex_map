@@ -4,14 +4,13 @@ from pathlib import Path
 
 from odoo import fields, api, Command
 from odoo import models
-from ..utility.exp import MAP_QTY_MOD, MAP_LEVEL_EXP, MAP_SML_QTY, LIST_CR
+from ..utility.exp import MAP_QTY_MOD, MAP_LEVEL_EXP
 
 _logger = logging.getLogger(__name__)
 
 
 class CreatureEncounter(models.Model):
     _name = "creature.encounter"
-    _inherit = 'import.by.py.mixin'
     _description = "Scontro"
 
     # region FIELD -----------------------------------------------------------------------------------------------------

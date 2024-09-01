@@ -14,12 +14,11 @@ MAP_MODEL_CSV = {
     "creature.tag": "Tag per creature (creature.tag).csv",
     "creature.creature": "Creatura (creature.creature).csv",
     "structure.structure": "Struttura (structure.structure).csv",
-    "faction.faction": "Fazione (faction.faction).csv"
 }
 
 
-class ReadCsvMixin(models.AbstractModel):
-    _name = 'read.csv.mixin'
+class MixinImportCsv(models.AbstractModel):
+    _name = 'mixin.import.csv'
     _description = 'Mixin per leggere file csv e popolare modelli'
 
     def popolate_by_csv(self):

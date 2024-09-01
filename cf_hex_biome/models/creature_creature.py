@@ -8,7 +8,6 @@ _logger = logging.getLogger(__name__)
 
 class CreatureCreature(models.Model):
     _name = "creature.creature"
-    _inherit = 'read.csv.mixin'
     _description = "Creatura"
 
     name = fields.Char(

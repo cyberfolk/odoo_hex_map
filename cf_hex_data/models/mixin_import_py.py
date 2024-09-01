@@ -13,8 +13,8 @@ MAP_MODEL_PY = {
 }
 
 
-class ImportByPyMixin(models.AbstractModel):
-    _name = 'import.by.py.mixin'
+class MixinImportPy(models.AbstractModel):
+    _name = 'mixin.import.py'
     _description = 'Mixin per popolare i vari modelli da python'
 
     def _get_file_path(self):
@@ -60,4 +60,12 @@ class ImportByPyMixin(models.AbstractModel):
             _logger.error(f"** ERROR ** popolate_by_py() - ({self._name})")
             _logger.exception(e)
         finally:
-            _logger.info(f"** END  ** popolate_by_py() - ({self._name})")
+            _logger.info(f"** END   ** popolate_by_py() - ({self._name})")
+
+    def _popolate_by_py(self, modulo):
+        """Da ereditare nei modelli che implementano il mixin."""
+        pass
+
+    def get_data_str(self):
+        """Da ereditare nei modelli che implementano il mixin."""
+        pass
