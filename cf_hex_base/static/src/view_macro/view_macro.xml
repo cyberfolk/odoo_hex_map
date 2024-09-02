@@ -1,25 +1,27 @@
 <t t-name="ViewMacro">
-    <div class="sticky-top p-3">
-        <button class="btn me-1" t-on-click="setZoom00"
-                t-attf-class="{{zoom == '00' ? 'btn-primary': 'btn-secondary' }}">+00%</button>
-        <button class="btn me-1" t-on-click="setZoom50"
-                t-attf-class="{{zoom == '50' ? 'btn-primary': 'btn-secondary' }}">+50%</button>
-        <button class="btn me-1" t-on-click="setZoom75"
-                t-attf-class="{{zoom == '75' ? 'btn-primary': 'btn-secondary' }}">+75%</button>
-    </div>
-    <div class="container hv-center p-3">
-        <div class="macro_form" t-attf-style="
-            {{zoom == '00' ? 'zoom: 100%;': '' }}
-            {{zoom == '50' ? 'zoom: 150%;': '' }}
-            {{zoom == '75' ? 'zoom: 175%;': '' }}"
-        >
+    <t t-name="ZoomButtons">
+        <div class="position-fixed p-3" style="z-index: 100;">
+            <t t-set="zoomLevels" t-value="[100, 150, 175, 200, 300, 500]"/>
+            <t t-foreach="zoomLevels" t-as="_zoom" t-key="_zoom">
+                <button class="btn me-1" t-on-click="() => this.setZoom(_zoom + '%')"
+                        t-att-class="zoom == _zoom + '%' ? 'btn-primary': 'btn-secondary'">
+                    <t t-esc="'x' + _zoom/100"/>
+                </button>
+            </t>
+        </div>
+    </t>
+
+    <div class="hv-center-fix p-3" t-attf-style="zoom: {{zoom}}">
+        <div class="macro_form" >
             <div class="macro_dim">
                 <t t-foreach="macro.quad_ids" t-as="quad" t-key="quad.id">
                     <a t-attf-href="http://localhost:8069/web#id=#{quad.id}&amp;model=hex.quad&amp;view_type=form">
                         <div class="quad quad_dim bg-dark " t-att-style="getQuadStyle(quad)">
                             <div class="label_quad" t-esc="quad.code"/>
                             <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
-                                <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)"/>
+                                <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">
+                                    <img style="width: 100%;" src="/cf_hex_base/static/src/2-sandlands_forest.png"/>
+                                </div>
                                 <!-- <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">-->
                                 <!--     <div class="text-white" t-esc="hex.code"/>-->
                                 <!-- </div>-->

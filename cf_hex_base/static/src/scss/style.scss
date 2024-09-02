@@ -131,6 +131,13 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
     align-items: center;
 }
 
+.hv-center-fix {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .hex {
     clip-path: $hex_polygon;
     position: absolute;
@@ -157,12 +164,12 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 /********************************
 *  FIX SCROLL ACTION.CLIENT      *
 ********************************/
-html .o_web_client {
-    overflow: auto !important;
-}
-.o_action_manager {
-    overflow: auto !important;
-}
+// html .o_web_client {
+//     overflow: auto !important;
+// }
+// .o_action_manager {
+//     overflow: auto !important;
+// }
 html .o_web_client > .o_action_manager{
     overflow: auto !important;
 }
