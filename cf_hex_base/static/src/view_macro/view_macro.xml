@@ -1,6 +1,18 @@
 <t t-name="ViewMacro">
+    <div class="sticky-top p-3">
+        <button class="btn me-1" t-on-click="setZoom00"
+                t-attf-class="{{zoom == '00' ? 'btn-primary': 'btn-secondary' }}">+00%</button>
+        <button class="btn me-1" t-on-click="setZoom50"
+                t-attf-class="{{zoom == '50' ? 'btn-primary': 'btn-secondary' }}">+50%</button>
+        <button class="btn me-1" t-on-click="setZoom75"
+                t-attf-class="{{zoom == '75' ? 'btn-primary': 'btn-secondary' }}">+75%</button>
+    </div>
     <div class="container hv-center p-3">
-        <div class="macro_form">
+        <div class="macro_form" t-attf-style="
+            {{zoom == '00' ? 'zoom: 100%;': '' }}
+            {{zoom == '50' ? 'zoom: 150%;': '' }}
+            {{zoom == '75' ? 'zoom: 175%;': '' }}"
+        >
             <div class="macro_dim">
                 <t t-foreach="macro.quad_ids" t-as="quad" t-key="quad.id">
                     <a t-attf-href="http://localhost:8069/web#id=#{quad.id}&amp;model=hex.quad&amp;view_type=form">

@@ -13,11 +13,30 @@ class ViewMacro extends Component {
         super.setup();
         this.orm = useService("orm");
         this.macro = null
+        this.zoom = '00'
 
         onWillStart(async () => {
             this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
         })
+    }
+    setZoom00(){
+        this.zoom = '00'
+        console.log(this.zoom)
+            this.render();
+
+    }
+    setZoom50(){
+        this.zoom = '50'
+        console.log(this.zoom)
+            this.render();
+
+    }
+    setZoom75(){
+        this.zoom = '75'
+        console.log(this.zoom)
+            this.render();
+
     }
 
     getHexStyle(hex) {
