@@ -1,6 +1,7 @@
+import json
+
 from odoo import fields, models, api
 from ..utility.constant import BORDERS_MAP
-from ..utility.odoo_to_json import obj_odoo_to_json
 
 
 class MacroArea(models.Model):
@@ -21,10 +22,28 @@ class MacroArea(models.Model):
 
     @api.model
     def get_json_macro(self):
-        """Metodo richiamato dal orm di macro.js
+        """Metodo richiamato dal orm di view_macro.js
             :return: Json della Macro-Area."""
+        # Ho ottimizzato il codice recuperando i dati con solo 3 query al DB
         self_macro = self.env['hex.macro'].browse(1)
-        json_macro = obj_odoo_to_json(self_macro)
+
+        quad_fields = ['id', 'code', 'index', 'polygon', 'hex_ids']
+        hex_fields = ['id', 'code', 'index', 'color']
+
+        # Otteniamo tutti i quad e i relativi hex in una singola query
+        quads = self_macro.quad_ids.read(quad_fields)
+        hex_map = {quad['id']: self.env['hex.hex'].browse(quad['hex_ids']).read(hex_fields) for quad in quads}
+
+        dict_macro = {
+            'quad_ids': [{
+                'id': quad['id'],
+                'code': quad['code'],
+                'index': quad['index'],
+                'polygon': quad['polygon'],
+                'hex_ids': hex_map[quad['id']],
+            } for quad in quads]
+        }
+        json_macro = json.dumps(dict_macro)
         return json_macro
 
     @api.depends('index')

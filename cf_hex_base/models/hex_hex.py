@@ -57,3 +57,11 @@ class Hex(models.Model):
             else:
                 code = 'void'
             record.code = code
+
+    @api.model
+    def change_hex_color(self, hex_id, current_color):
+        """Metodo richiamato dal orm di view_macro.js
+           Cambia il colore di un hex_id con current_color"""
+
+        _hex = self.env['hex.hex'].browse(hex_id)
+        _hex.color = current_color

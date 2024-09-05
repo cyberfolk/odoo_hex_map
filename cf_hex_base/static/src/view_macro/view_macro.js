@@ -14,6 +14,7 @@ class ViewMacro extends Component {
         this.orm = useService("orm");
         this.macro = null
         this.zoom = '100%'
+        this.currentColor = ""
 
         onWillStart(async () => {
             this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
@@ -24,6 +25,29 @@ class ViewMacro extends Component {
         this.zoom = percentage
         this.render();
     }
+
+    setCurrentColor(color){
+        this.currentColor = color
+        this.render();
+    }
+
+    /**
+     * Cambia il colore di hex con this.currentColor, e poi aggiorna this.macro.
+     * Se currentColor non è impostato => non fa nulla
+     */
+    async changeHexColor(hex){
+        const hex_id = hex.id;
+        if (!this.currentColor)
+            return false
+
+        await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.currentColor], {});
+        console.log("Color changed successfully");
+
+        this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
+            .then((result) => { return JSON.parse(result) })
+        this.render(true);
+    }
+
 
     getHexStyle(hex) {
         return `${getAxes(hex.index, 0.95)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
