@@ -1,28 +1,7 @@
 <t t-name="ViewMacro">
     <div class="position-fixed p-3" style="z-index: 100;">
-        <div id="ZoomButtons" class="p-2 rounded" style="background-color: #7f00655c">
-            <t t-set="zoomLevels" t-value="[100, 150, 175, 200, 300, 500]"/>
-            <t t-foreach="zoomLevels" t-as="_zoom" t-key="_zoom">
-                <button class="btn me-1" t-on-click="() => this.setZoom(_zoom + '%')"
-                        t-att-class="zoom == _zoom + '%' ? 'btn-primary': 'btn-secondary'">
-                    <t t-esc="'x' + _zoom/100"/>
-                </button>
-            </t>
-        </div>
-        <div id="CurrentColorButtons" class="mt-3 p-2 rounded" style="background-color: #7f00655c">
-            <div class="m-1 fw-bold">Scegli un Colore e dipingi gli Esagoni:</div>
-            <div id="CurrentColorButtons_hidePart" t-att-class="currentColor? 'd-block': ''">
-                <button class="btn m-1" t-on-click="() => this.setCurrentColor('')"
-                        t-att-class="currentColor == ''? 'btn-secondary': 'btn-primary'">Reset
-                </button>
-                <t t-set="colorList" t-value="['#c7ffff','#FFDF00','#007F00','#2FDF2F','#FF7F00','#FF0000','#BF00FF','#00BFFF','#0000FF']"/>
-                <t t-foreach="colorList" t-as="_color" t-key="_color">
-                    <button class="btn p-2 me-1" t-att-style="'background-color: ' + _color +';'" t-on-click="() => this.setCurrentColor(_color)"
-                            t-att-class="currentColor == _color? 'button_color_active': ''">
-                    </button>
-                </t>
-            </div>
-        </div>
+        <t t-call="WidgetZoom"/>
+        <t t-call="WidgetCurrentColor"/>
     </div>
 
     <div class="hv-center-fix p-3 bg-white" t-attf-style="zoom: {{zoom}}">
@@ -32,39 +11,12 @@
                     <!-- QUAD COLORATI + HEX CHE CAMBIANO COLORE -->
                     <div class="quad quad_dim bg-dark " t-att-style="getQuadStyle(quad)">
                         <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
-                            <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)"
+                            <div class="hex hex_dim hv-center"
+                                 t-att-style="getHexStyle(hex)"
                                  t-att-class="currentColor == '' ? 'pointer': 'crosshair'"
                                  t-on-click="() => this.onClick(hex)"/>
                         </t>
                     </div>
-
-                    <!-- QUAD COLORATI + HEX CODE -->
-                    <!--                    <div class="quad quad_dim bg-dark " t-att-style="getQuadStyle(quad)">-->
-                    <!--                        <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">-->
-                    <!--                            <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">-->
-                    <!--                                <div class="text-white" t-esc="hex.code"/>-->
-                    <!--                            </div>-->
-                    <!--                        </t>-->
-                    <!--                    </div>-->
-
-                    <!-- IMMAGINE NEGLI HEX -->
-                    <!--                    <div class="quad quad_dim bg-dark " t-att-style="getQuadStyle(quad)">-->
-                    <!--                        <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">-->
-                    <!--                            <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)">-->
-                    <!--                                <img style="width: 100%;" src="/cf_hex_base/static/src/2-sandlands_forest.png"/>-->
-                    <!--                            </div>-->
-                    <!--                        </t>-->
-                    <!--                    </div>-->
-
-                    <!-- QUAD COLORATI + LINK QUAD + CODICE QUAD -->
-                    <!--                    <a t-attf-href="http://localhost:8069/web#id=#{quad.id}&amp;model=hex.quad&amp;view_type=form">-->
-                    <!--                        <div class="quad quad_dim bg-dark " t-att-style="getQuadStyle(quad)">-->
-                    <!--                            <div class="label_quad" t-esc="quad.code"/>-->
-                    <!--                            <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">-->
-                    <!--                                <div class="hex hex_dim hv-center" t-att-style="getHexStyle(hex)"/>-->
-                    <!--                            </t>-->
-                    <!--                        </div>-->
-                    <!--                    </a>-->
                 </t>
             </div>
         </div>

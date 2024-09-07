@@ -55,19 +55,41 @@ $MF-QH: $MF-HH_INIZIALE * 5; // Quad Height
 $MF-MW: $MF-HW_INIZIALE * 16; // Macro Width
 $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 
+/********************************
+*  WidgetCurrentColor           *
+********************************/
+.wdgcc-btn-active {
+    outline: 3px solid #000 !important;
+    opacity: 0.5;
+}
+#wdgcc {
+    #wdgcc-hide-part {
+        display: none;
+    }
+    &:hover {
+        #wdgcc-hide-part {
+            display: block;
+        }
+        #wdgcc-title-1 {
+            display: none;
+        }
+    }
+}
+
+/********************************
+*  WidgetZoom                   *
+********************************/
+#wdgzoom {
+    &:hover {
+        button {
+            display: inline !important;
+        }
+  }
+}
 
 /********************************
 *  MACRO FORM - CLASSI          *
 ********************************/
-.button_color_active {
-    border: solid #0000004d;
-}
-#CurrentColorButtons_hidePart{
-    display: none;
-}
-#CurrentColorButtons:hover #CurrentColorButtons_hidePart{
-    display: block;
-}
 .macro_form {
     .macro_dim {
         height: $MF-MH;
@@ -133,8 +155,22 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 /********************************
 *  CLASSI - UTILITY             *
 ********************************/
-.pointer         { cursor: pointer; }
-.crosshair       { cursor: crosshair; }
+.pointer        { cursor: pointer; }
+.crosshair      { cursor: crosshair; }
+.z-100          { z-index: 100; }
+.bg-widget      { background-color: #7f00655c; }
+
+.widget-container{
+    background-color: #cda1c4;
+    @extend .p-2;
+    @extend .rounded;
+    width: fit-content;
+}
+
+.widget-title{
+    @extend .m-1;
+    @extend .fw-bold;
+}
 
 .hv-center {
     text-align: center;
