@@ -62,6 +62,12 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 .button_color_active {
     border: solid #0000004d;
 }
+#CurrentColorButtons_hidePart{
+    display: none;
+}
+#CurrentColorButtons:hover #CurrentColorButtons_hidePart{
+    display: block;
+}
 .macro_form {
     .macro_dim {
         height: $MF-MH;
@@ -127,6 +133,9 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 /********************************
 *  CLASSI - UTILITY             *
 ********************************/
+.pointer         { cursor: pointer; }
+.crosshair       { cursor: crosshair; }
+
 .hv-center {
     text-align: center;
     display: flex;

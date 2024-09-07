@@ -11,6 +11,7 @@ class ViewMacro extends Component {
 
     setup() {
         super.setup();
+        this.action = useService("action");
         this.orm = useService("orm");
         this.macro = null
         this.zoom = '100%'
@@ -32,22 +33,43 @@ class ViewMacro extends Component {
     }
 
     /**
-     * Cambia il colore di hex con this.currentColor, e poi aggiorna this.macro.
-     * Se currentColor non è impostato => non fa nulla
+     * Gestisce l'azione di click su un oggetto "hex":
+     *  apre il form del "hex" se non è presente un colore corrente,
+     *  altrimenti cambia il colore del "hex".
      */
-    async changeHexColor(hex){
+    async onClick(hex){
         const hex_id = hex.id;
         if (!this.currentColor)
-            return false
+            this.goToViewForm(hex_id)
+        else{
+            this.changeColorHex(hex_id)
+        }
+    }
 
+     /**
+     * Apre la view-form del hex_id passato.
+     */
+    goToViewForm(hex_id){
+        this.action.doAction({
+            type: 'ir.actions.act_window',
+            name: 'Form View',
+            res_model: 'hex.hex',
+            res_id: hex_id,
+            views: [[false, 'form']],
+            target: 'current'
+        });
+    }
+
+    /**
+     * Cambia il colore di hex_id settandolo con il currentColor, poi aggiorna la macroarea la renderizza.
+     */
+    async changeColorHex(hex_id){
         await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.currentColor], {});
         console.log("Color changed successfully");
-
         this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
         this.render(true);
     }
-
 
     getHexStyle(hex) {
         return `${getAxes(hex.index, 0.95)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
