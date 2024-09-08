@@ -10,12 +10,13 @@ _logger = logging.getLogger(__name__)
 def post_init_hook_cf_hex_data(env):
     """Viene eseguito dopo l'installazione del modulo. Serve per popolare:
          - I biomi,
-         - Le Strutture
+         - Le Strutture,
          - I Tag delle Creature,
          - I Tipi delle Creature,
          - Le Creature,
          - Le Fazioni,
-         - Gli Scontri
+         - Gli Scontri,
+         - Gli Asset Tiles,
     """
     try:
         _logger.info("* START * post_init_hook_cf_hex_data()")
@@ -26,6 +27,7 @@ def post_init_hook_cf_hex_data(env):
         env["creature.creature"].popolate_by_csv()
         env["faction.faction"].popolate_by_py()
         env["creature.encounter"].popolate_by_py()
+        env["asset.tile"].load_images()
     except Exception as e:
         msg = (f"Errore nella funzione post_init_hook_cf_hex_data()\n"
                f"Fallito caricamento dei dati per il modulo cf_hex_biome\n"

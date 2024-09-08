@@ -18,6 +18,7 @@
         "views/hex_hex.xml",
         "views/hex_quad.xml",
         "views/filter_apps.xml",
+        "views/asset_tile.xml",
         "data/hex.xml",
     ],
     'depends': ['base', 'web'],

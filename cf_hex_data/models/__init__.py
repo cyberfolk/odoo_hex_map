@@ -7,3 +7,4 @@ from . import creature_tag
 from . import creature_type
 from . import creature_encounter
 from . import faction_faction
+from . import asset_tile

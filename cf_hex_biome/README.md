@@ -3,6 +3,6 @@
 
 **Technologies**: Odoo, Python, XML, HTML, SCSS e Bootstrap.
 
-**Info**: :world_map: In questo modulo vengono introdotti i Biomi nella Hex Map.
+- **cf_hex_biome** In questo modulo vengono introdotti i Biomi, Le Creature, Le Fazioni e gli Scontri.
 
 <img src="../cf_hex_base/static/description/icon.png" width="250"/>

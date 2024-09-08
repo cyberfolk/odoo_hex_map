@@ -3,6 +3,6 @@
 
 **Technologies**: Odoo, Python, XML, HTML, SCSS e Bootstrap.
 
-**Info**: :world_map: In questo modulo vengono salvati i dati per popolare i record.
+- **cf_hex_data** In questo modulo vengono caricati i dati dei modelli introdotti negli altri moduli.
 
 <img src="../cf_hex_base/static/description/icon.png" width="250"/>
