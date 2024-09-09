@@ -77,6 +77,62 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 }
 
 /********************************
+*  WidgetCurrentTiles           *
+********************************/
+.wdgct-btn-active{
+    @extend .rounded-circle;
+    background: #edd6d6;
+}
+#wdgct{
+    overflow-y: none;
+    &:hover {
+        #wdgct-title-1{
+            display: none;
+        }
+        #wdgct-hide-part{
+            display: block;
+        }
+    }
+
+    #wdgct-hide-part{
+        display: none;
+        #tiles_kit_0{
+            overflow-y: scroll;
+            height: 500px;
+            .dir_1-box{
+                .dir_1-name{
+                    @extend .fw-bold;
+                    text-transform: capitalize;
+                }
+                .dir_1-tiles{
+    //                 display: none;
+                    @extend .row;
+                    @extend .mx-1;
+
+                    .dir_1-tile{
+                        @extend .col-2;
+                        &:hover{
+                            cursor: pointer;
+                            transform: scale(1.30);
+                        }
+                        .dir_1-tile-img{
+                            width: 100%;
+                        }
+                    }
+                }
+
+                &:hover{
+                    .dir_1-tiles{
+                        display: flex;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/********************************
 *  WidgetZoom                   *
 ********************************/
 #wdgzoom {

@@ -28,7 +28,7 @@ class MacroArea(models.Model):
         self_macro = self.env['hex.macro'].browse(1)
 
         quad_fields = ['id', 'code', 'index', 'polygon', 'hex_ids']
-        hex_fields = ['id', 'code', 'index', 'color']
+        hex_fields = ['id', 'code', 'index', 'color', 'asset_ids']
 
         # Otteniamo tutti i quad e i relativi hex in una singola query
         quads = self_macro.quad_ids.read(quad_fields)

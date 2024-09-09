@@ -6,6 +6,12 @@ class Hex(models.Model):
     _inherit = ['hex.mixin']
     _description = "Hexagonal cell"
 
+    asset_ids = fields.Many2many(
+        comodel_name='asset.tile',
+        string="Assets",
+        help="Assets contained in this hex"
+    )
+
     quad_id = fields.Many2one(
         comodel_name='hex.quad',
         string="Quadrant",
@@ -65,3 +71,11 @@ class Hex(models.Model):
 
         _hex = self.env['hex.hex'].browse(hex_id)
         _hex.color = current_color
+
+    @api.model
+    def set_asset_tiles(self, hex_id, current_tile):
+        """Metodo richiamato dal orm di view_macro.js
+           Setta un AssetTiles su un hex_id con current_tile"""
+
+        _hex = self.env['hex.hex'].browse(hex_id)
+        _hex.asset_ids = [(4, current_tile)]

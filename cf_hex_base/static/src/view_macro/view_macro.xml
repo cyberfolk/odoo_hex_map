@@ -1,7 +1,8 @@
 <t t-name="ViewMacro">
-    <div class="position-fixed p-3" style="z-index: 100;">
+    <div class="position-fixed w-25 p-3" style="z-index: 100;">
         <t t-call="WidgetZoom"/>
         <t t-call="WidgetCurrentColor"/>
+        <t t-call="WidgetCurrentTiles"/>
     </div>
 
     <div class="hv-center-fix p-3 bg-white" t-attf-style="zoom: {{zoom}}">
@@ -14,7 +15,11 @@
                             <div class="hex hex_dim hv-center"
                                  t-att-style="getHexStyle(hex)"
                                  t-att-class="currentColor == '' ? 'pointer': 'crosshair'"
-                                 t-on-click="() => this.onClick(hex)"/>
+                                 t-on-click="() => this.onClick(hex)">
+                                <t t-if="hex.asset_ids[0]">
+                                    <img class="w-100" t-att-src="'/web/image/asset.tile/' + hex.asset_ids[0] + '/image'"/>
+                                </t>
+                            </div>
                         </t>
                     </div>
                 </t>

@@ -16,10 +16,15 @@ class ViewMacro extends Component {
         this.macro = null
         this.zoom = '100%'
         this.currentColor = ""
+        this.currentTile_id = ""
+        this.tilesKit = null
 
         onWillStart(async () => {
             this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
+            this.tilesKit = await this.orm.call("asset.tile", "get_json_tiles_kit", [], {})
+            .then((result) => { return JSON.parse(result) })
+            console.log(this.macro)
         })
     }
     setZoom(percentage){
@@ -29,6 +34,13 @@ class ViewMacro extends Component {
 
     setCurrentColor(color){
         this.currentColor = color
+        this.currentTile = ''
+        this.render();
+    }
+
+    setCurrentTile(tile_id){
+        this.currentTile = tile_id
+        this.currentColor = ''
         this.render();
     }
 
@@ -39,10 +51,13 @@ class ViewMacro extends Component {
      */
     async onClick(hex){
         const hex_id = hex.id;
-        if (!this.currentColor)
-            this.goToViewForm(hex_id)
-        else{
+
+        if (this.currentColor)
             this.changeColorHex(hex_id)
+        else if (this.currentTile)
+            this.setAssetTiles(hex_id)
+        else {
+            this.goToViewForm(hex_id)
         }
     }
 
@@ -66,6 +81,17 @@ class ViewMacro extends Component {
     async changeColorHex(hex_id){
         await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.currentColor], {});
         console.log("Color changed successfully");
+        this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
+            .then((result) => { return JSON.parse(result) })
+        this.render(true);
+    }
+
+    /**
+     * Cambia il colore di hex_id settandolo con il currentColor, poi aggiorna la macroarea la renderizza.
+     */
+    async setAssetTiles(hex_id){
+        await this.orm.call("hex.hex", "set_asset_tiles", [hex_id, this.currentTile], {});
+        console.log("Asset Set successfully");
         this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
         this.render(true);
