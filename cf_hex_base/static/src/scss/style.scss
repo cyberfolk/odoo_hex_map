@@ -58,19 +58,19 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 /********************************
 *  WidgetCurrentColor           *
 ********************************/
-.wdgcc-btn-active {
+.w_cc-btn-active {
     outline: 3px solid #000 !important;
     opacity: 0.5;
 }
-#wdgcc {
-    #wdgcc-hide-part {
+#w_cc {
+    #w_cc-hide-part {
         display: none;
     }
     &:hover {
-        #wdgcc-hide-part {
+        #w_cc-hide-part {
             display: block;
         }
-        #wdgcc-title-1 {
+        #w_cc-title-1 {
             display: none;
         }
     }
@@ -79,22 +79,22 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 /********************************
 *  WidgetCurrentTiles           *
 ********************************/
-.wdgct-btn-active{
+.w_ct-btn-active{
     @extend .rounded-circle;
     background: #edd6d6;
 }
-#wdgct{
+#w_ct{
     overflow-y: none;
     &:hover {
-        #wdgct-title-1{
+        #w_ct-title-1{
             display: none;
         }
-        #wdgct-hide-part{
+        #w_ct-hide-part{
             display: block;
         }
     }
 
-    #wdgct-hide-part{
+    #w_ct-hide-part{
         display: none;
         #tiles_kit_0{
             overflow-y: scroll;
@@ -135,7 +135,7 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 /********************************
 *  WidgetZoom                   *
 ********************************/
-#wdgzoom {
+#w_cz {
     &:hover {
         button {
             display: inline !important;
@@ -221,11 +221,11 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
     @extend .p-2;
     @extend .rounded;
     width: fit-content;
-}
 
-.widget-title{
-    @extend .m-1;
-    @extend .fw-bold;
+    .widget-title{
+        @extend .m-1;
+        @extend .fw-bold;
+    }
 }
 
 .hv-center {

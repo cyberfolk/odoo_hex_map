@@ -1,18 +1,13 @@
-<div t-name="WidgetCurrentTiles" id="wdgct" class="mt-2 widget-container">
-    <div id="wdgct-title-1" class="widget-title"
-         t-att-class="currentTiles? 'd-none': ''">
+<div t-name="WidgetCurrentTiles" id="w_ct" class="mt-2 widget-container">
+    <div id="w_ct-title-1" class="widget-title"
+         t-att-class="state.currentTiles? 'd-none': ''">
         <span>Colloca Tiles</span>
     </div>
 
-    <div id="wdgct-hide-part" t-att-class="currentTile? 'd-block': ''">
+    <div id="w_ct-hide-part" t-att-class="state.currentTile? 'd-block': ''">
         <div class="widget-title">
             <span>Scegli un Tiles e collocalo negli Esagoni:</span>
         </div>
-        <button class="btn m-1"
-                t-on-click="() => this.setCurrentTile('')"
-                t-att-class="(!currentTile)? 'btn-secondary disabled': 'btn-primary'">
-            <span>Reset</span>
-        </button>
         <div id="tiles_kit_0" class="m-1">
             <t t-foreach="tilesKit" t-as="dir_1" t-key="dir_1">
                 <div class="dir_1-box">
@@ -23,7 +18,7 @@
                                 <div class="dir_1-tile">
                                     <img class="dir_1-tile-img" t-att-src="'/web/image/asset.tile/' + tile_1.id + '/image'"
                                          t-on-click="() => this.setCurrentTile(tile_1.id)"
-                                         t-att-class="currentTile == tile_1.id? 'wdgct-btn-active': ''"/>
+                                         t-att-class="state.currentTile == tile_1.id? 'w_ct-btn-active': ''"/>
                                 </div>
                             </t>
                         </div>

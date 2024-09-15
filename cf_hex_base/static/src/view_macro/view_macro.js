@@ -1,6 +1,6 @@
 /** @odoo-module **/
 import { registry } from "@web/core/registry";
-import { Component, onWillStart } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { getAxes } from '../utility/utils.js';
 const actionRegistry = registry.category("actions");
@@ -13,35 +13,33 @@ class ViewMacro extends Component {
         super.setup();
         this.action = useService("action");
         this.orm = useService("orm");
-        this.macro = null
-        this.zoom = '100%'
-        this.currentColor = ""
-        this.currentTile_id = ""
         this.tilesKit = null
+        this.state = useState({
+            macro: null,
+            zoom: '100%',
+            currentColor: "",
+            currentTile: ""
+        })
 
         onWillStart(async () => {
-            this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
+            this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
             this.tilesKit = await this.orm.call("asset.tile", "get_json_tiles_kit", [], {})
             .then((result) => { return JSON.parse(result) })
-            console.log(this.macro)
         })
     }
     setZoom(percentage){
-        this.zoom = percentage
-        this.render();
+        this.state.zoom = percentage
     }
 
     setCurrentColor(color){
-        this.currentColor = color
-        this.currentTile = ''
-        this.render();
+        this.state.currentColor = color
+        this.state.currentTile = ''
     }
 
     setCurrentTile(tile_id){
-        this.currentTile = tile_id
-        this.currentColor = ''
-        this.render();
+        this.state.currentTile = tile_id
+        this.state.currentColor = ''
     }
 
     /**
@@ -52,9 +50,9 @@ class ViewMacro extends Component {
     async onClick(hex){
         const hex_id = hex.id;
 
-        if (this.currentColor)
+        if (this.state.currentColor)
             this.changeColorHex(hex_id)
-        else if (this.currentTile)
+        else if (this.state.currentTile)
             this.setAssetTiles(hex_id)
         else {
             this.goToViewForm(hex_id)
@@ -76,25 +74,35 @@ class ViewMacro extends Component {
     }
 
     /**
-     * Cambia il colore di hex_id settandolo con il currentColor, poi aggiorna la macroarea la renderizza.
+     * Cambia il colore di hex_id settandolo con il currentColor, poi aggiorna la macroarea.
      */
     async changeColorHex(hex_id){
-        await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.currentColor], {});
+        await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.state.currentColor], {});
         console.log("Color changed successfully");
-        this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
+        this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
-        this.render(true);
     }
 
     /**
-     * Cambia il colore di hex_id settandolo con il currentColor, poi aggiorna la macroarea la renderizza.
+     * Cambia il tales selezionato settandolo con il currentTile, poi aggiorna la macroarea.
      */
     async setAssetTiles(hex_id){
-        await this.orm.call("hex.hex", "set_asset_tiles", [hex_id, this.currentTile], {});
+        await this.orm.call("hex.hex", "set_asset_tiles", [hex_id, this.state.currentTile], {});
         console.log("Asset Set successfully");
-        this.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
+        this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
-        this.render(true);
+    }
+
+    resetCurrentSelections_ClickOutside(event) {
+        // Verifica se l'elemento cliccato non appartiene alla macro_form o ai suoi figli
+        if (!event.target.closest('.hex')) {
+            this.resetCurrentSelections();
+        }
+    }
+
+    resetCurrentSelections(){
+        this.state.currentTile = ''
+        this.state.currentColor = ''
     }
 
     getHexStyle(hex) {

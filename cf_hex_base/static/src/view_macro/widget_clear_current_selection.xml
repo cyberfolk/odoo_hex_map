@@ -1,0 +1,8 @@
+<div t-name="WidgetClearCurrentSelection" id="w_ccs" class="mt-2 d-flex align-items-center widget-container"
+     t-att-class="(state.currentColor || state.currentTile)? '': 'd-none'">
+
+    <button class="btn me-1 px-2 py-1 btn-primary"
+            t-on-click="resetCurrentSelections">
+        <span>Reset</span>
+    </button>
+</div>

@@ -1,14 +1,16 @@
 <t t-name="ViewMacro">
     <div class="position-fixed w-25 p-3" style="z-index: 100;">
+        <t t-call="WidgetClearCurrentSelection"/>
         <t t-call="WidgetZoom"/>
         <t t-call="WidgetCurrentColor"/>
         <t t-call="WidgetCurrentTiles"/>
     </div>
 
-    <div class="hv-center-fix p-3 bg-white" t-attf-style="zoom: {{zoom}}">
+    <div class="hv-center-fix p-3 bg-white" t-attf-style="zoom: {{zoom}}"
+         t-on-click="resetCurrentSelections_ClickOutside">
         <div class="macro_form">
             <div class="macro_dim">
-                <t t-foreach="macro.quad_ids" t-as="quad" t-key="quad.id">
+                <t t-foreach="state.macro.quad_ids" t-as="quad" t-key="quad.id">
                     <!-- QUAD COLORATI + HEX CHE CAMBIANO COLORE -->
                     <div class="quad quad_dim bg-dark " t-att-style="getQuadStyle(quad)">
                         <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">

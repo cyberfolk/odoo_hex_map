@@ -1,26 +1,23 @@
-<div t-name="WidgetCurrentColor" id="wdgcc" class="mt-2 widget-container">
-    <div id="wdgcc-title-1" class="widget-title"
-         t-att-class="currentColor? 'd-none': ''">
+<div t-name="WidgetCurrentColor" id="w_cc" class="mt-2 widget-container">
+    <div id="w_cc-title-1" class="widget-title"
+         t-att-class="state.currentColor? 'd-none': ''">
         <span>Dipingi Hex</span>
     </div>
 
-    <div id="wdgcc-hide-part" t-att-class="currentColor? 'd-block': ''">
+    <div id="w_cc-hide-part" t-att-class="state.currentColor? 'd-block': ''">
         <div class="widget-title">
             <span>Scegli un Colore e dipingi gli Esagoni:</span>
         </div>
-        <button class="btn m-1"
-                t-on-click="() => this.setCurrentColor('')"
-                t-att-class="(!currentColor)? 'btn-secondary disabled': 'btn-primary'">
-            <span>Reset</span>
-        </button>
-        <t t-set="colorList"
-           t-value="['#c7ffff','#FFDF00','#007F00','#2FDF2F','#FF7F00','#FF0000','#BF00FF','#00BFFF','#0000FF']"/>
-        <t t-foreach="colorList" t-as="_color" t-key="_color">
-            <button class="btn p-2 me-1"
-                    t-att-style="'background-color: ' + _color +';'"
-                    t-on-click="() => this.setCurrentColor(_color)"
-                    t-att-class="currentColor == _color? 'wdgcc-btn-active': ''">
-            </button>
-        </t>
+        <div class="mx-1">
+            <t t-set="colorList"
+               t-value="['#c7ffff','#FFDF00','#007F00','#2FDF2F','#FF7F00','#FF0000','#BF00FF','#00BFFF','#0000FF']"/>
+            <t t-foreach="colorList" t-as="_color" t-key="_color">
+                <button class="btn p-2 me-1"
+                        t-att-style="'background-color: ' + _color +';'"
+                        t-on-click="() => this.setCurrentColor(_color)"
+                        t-att-class="state.currentColor == _color? 'w_cc-btn-active': ''">
+                </button>
+            </t>
+        </div>
     </div>
 </div>
