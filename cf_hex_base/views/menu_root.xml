@@ -13,7 +13,7 @@
 
     <record id="action_menu_macro" model="ir.actions.client">
         <field name="name">Macro Area</field>
-        <field name="tag">view_macro</field>
+        <field name="tag">ViewMacro</field>
     </record>
 
     <record id="action_menu_asset_tile" model="ir.actions.act_window">

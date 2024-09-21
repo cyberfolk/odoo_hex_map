@@ -1,4 +1,4 @@
-<div t-name="WidgetZoom" id="w_cz" class="mt-2 w-min widget-container d-flex align-items-center">
+<div t-name="CurrentZoom" id="w_cz" class="mt-2 w-min widget-container d-flex align-items-center">
     <div class="widget-title"><span>Zoom:</span></div>
 
     <t t-set="zoomLevels" t-value="[100, 150, 175, 200, 300, 500]"/>

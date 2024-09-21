@@ -28,9 +28,11 @@
     'post_init_hook': 'post_init_hook_cf_hex_base',
     'assets': {
         'web.assets_backend': [
+            '/cf_hex_base/static/src/store.js',
             '/cf_hex_base/static/src/scss/style.scss',
             '/cf_hex_base/static/src/widget_quad/*',
-            '/cf_hex_base/static/src/view_macro/*',
+            '/cf_hex_base/static/src/ViewMacro/ViewMacro.js',
+            '/cf_hex_base/static/src/ViewMacro/ViewMacro.xml',
             '/cf_hex_base/static/src/utility/utils.js',
         ],
         'web.assets_frontend': [

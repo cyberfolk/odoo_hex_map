@@ -1,0 +1,20 @@
+/********************************
+*  WidgetCurrentColor           *
+********************************/
+.w_cc-btn-active {
+    outline: 3px solid #000 !important;
+    opacity: 0.5;
+}
+#w_cc {
+    #w_cc-hide-part {
+        display: none;
+    }
+    &:hover {
+        #w_cc-hide-part {
+            display: block;
+        }
+        #w_cc-title-1 {
+            display: none;
+        }
+    }
+}

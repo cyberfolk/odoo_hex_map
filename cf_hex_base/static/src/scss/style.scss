@@ -56,104 +56,14 @@ $MF-MW: $MF-HW_INIZIALE * 16; // Macro Width
 $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 
 /********************************
-*  WidgetCurrentColor           *
-********************************/
-.w_cc-btn-active {
-    outline: 3px solid #000 !important;
-    opacity: 0.5;
-}
-#w_cc {
-    #w_cc-hide-part {
-        display: none;
-    }
-    &:hover {
-        #w_cc-hide-part {
-            display: block;
-        }
-        #w_cc-title-1 {
-            display: none;
-        }
-    }
-}
-
-/********************************
-*  WidgetCurrentTiles           *
-********************************/
-.w_ct-btn-active{
-    @extend .rounded-circle;
-    background: #edd6d6;
-}
-#w_ct{
-    overflow-y: none;
-    &:hover {
-        #w_ct-title-1{
-            display: none;
-        }
-        #w_ct-hide-part{
-            display: block;
-        }
-    }
-
-    #w_ct-hide-part{
-        display: none;
-        #tiles_kit_0{
-            overflow-y: scroll;
-            height: 500px;
-            .dir_1-box{
-                .dir_1-name{
-                    @extend .fw-bold;
-                    text-transform: capitalize;
-                }
-                .dir_1-tiles{
-    //                 display: none;
-                    @extend .row;
-                    @extend .mx-1;
-
-                    .dir_1-tile{
-                        @extend .col-2;
-                        &:hover{
-                            cursor: pointer;
-                            transform: scale(1.30);
-                        }
-                        .dir_1-tile-img{
-                            width: 100%;
-                        }
-                    }
-                }
-
-                &:hover{
-                    .dir_1-tiles{
-                        display: flex;
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-/********************************
-*  WidgetZoom                   *
-********************************/
-#w_cz {
-    &:hover {
-        button {
-            display: inline !important;
-        }
-  }
-}
-
-/********************************
 *  MACRO FORM - CLASSI          *
 ********************************/
 .macro_form {
-    .macro_dim {
-        height: $MF-MH;
-        width: $MF-MW;
-        position: relative;
-    }
+    height: $MF-MH;
+    width: $MF-MW;
+    position: relative;
 
-    .quad_dim {
+    .quad {
         width: $MF-QW;
         height: $MF-QH;
         position: absolute;
@@ -164,7 +74,7 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
         filter: brightness(40%) !important;
     }
 
-    .hex_dim {
+    .hex {
         width: $MF-HW;
         height: $MF-HH;
     }

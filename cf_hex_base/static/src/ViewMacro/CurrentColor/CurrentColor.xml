@@ -1,4 +1,4 @@
-<div t-name="WidgetCurrentColor" id="w_cc" class="mt-2 widget-container">
+<div t-name="CurrentColor" id="w_cc" class="mt-2 widget-container">
     <div id="w_cc-title-1" class="widget-title"
          t-att-class="state.currentColor? 'd-none': ''">
         <span>Dipingi Hex</span>

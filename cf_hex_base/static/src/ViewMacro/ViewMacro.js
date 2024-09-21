@@ -1,4 +1,8 @@
 /** @odoo-module **/
+//import { ClearCurrent } from '@cf_hex_base/ViewMacro/ClearCurrent/ClearCurrent';
+//import { CurrentColor } from '@cf_hex_base/ViewMacro/CurrentColor/CurrentColor';
+//import { CurrentTiles } from '@cf_hex_base/ViewMacro/CurrentTiles/CurrentTiles';
+//import { CurrentZoom } from '@cf_hex_base/ViewMacro/CurrentZoom/CurrentZoom';
 import { registry } from "@web/core/registry";
 import { Component, onWillStart, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
@@ -7,7 +11,9 @@ const actionRegistry = registry.category("actions");
 
 class ViewMacro extends Component {
     static template = "ViewMacro"
-    static components = {};
+    static props = ["*"]
+//    static components = { ClearCurrent, CurrentColor, CurrentTiles, CurrentZoom };
+//    static components = { CurrentColor };
 
     setup() {
         super.setup();
@@ -23,9 +29,9 @@ class ViewMacro extends Component {
 
         onWillStart(async () => {
             this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
-            .then((result) => { return JSON.parse(result) })
+                .then((result) => { return JSON.parse(result) })
             this.tilesKit = await this.orm.call("asset.tile", "get_json_tiles_kit", [], {})
-            .then((result) => { return JSON.parse(result) })
+                .then((result) => { return JSON.parse(result) })
         })
     }
     setZoom(percentage){
@@ -51,17 +57,17 @@ class ViewMacro extends Component {
         const hex_id = hex.id;
 
         if (this.state.currentColor)
-            this.changeColorHex(hex_id)
+        this.changeColorHex(hex_id)
         else if (this.state.currentTile)
-            this.setAssetTiles(hex_id)
+        this.setAssetTiles(hex_id)
         else {
             this.goToViewForm(hex_id)
         }
     }
 
-     /**
-     * Apre la view-form del hex_id passato.
-     */
+    /**
+    * Apre la view-form del hex_id passato.
+    */
     goToViewForm(hex_id){
         this.action.doAction({
             type: 'ir.actions.act_window',
@@ -114,4 +120,4 @@ class ViewMacro extends Component {
     }
 }
 
-actionRegistry.add('view_macro', ViewMacro);
+actionRegistry.add('ViewMacro', ViewMacro);

@@ -1,4 +1,4 @@
-<div t-name="WidgetCurrentTiles" id="w_ct" class="mt-2 widget-container">
+<div t-name="CurrentTiles" id="w_ct" class="mt-2 widget-container">
     <div id="w_ct-title-1" class="widget-title"
          t-att-class="state.currentTiles? 'd-none': ''">
         <span>Colloca Tiles</span>
