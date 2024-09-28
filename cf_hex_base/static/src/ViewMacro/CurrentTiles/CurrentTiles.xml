@@ -1,65 +1,39 @@
-<div t-name="CurrentTiles" id="w_ct" class="mt-2 widget-container">
-    <div id="w_ct-title-1" class="widget-title"
-         t-att-class="state.currentTiles? 'd-none': ''">
+<div t-name="CurrentTiles" class="mt-2 current-tiles">
+    <div class="current-tiles__title-1" t-att-class="store.currentTiles? 'd-none': ''">
         <span>Colloca Tiles</span>
     </div>
 
-    <div id="w_ct-hide-part" t-att-class="state.currentTile? 'd-block': ''">
-        <div class="widget-title">
+    <div class="current-tiles__hide-part" t-att-class="store.currentTile? 'd-block': ''">
+        <div class="current-tiles__title-2">
             <span>Scegli un Tiles e collocalo negli Esagoni:</span>
         </div>
-        <div id="tiles_kit_0" class="m-1">
-            <t t-foreach="tilesKit" t-as="dir_1" t-key="dir_1">
-                <div class="dir_1-box">
-                    <div class="dir_1-name" t-esc="dir_1"/>
-                    <t t-if="tilesKit[dir_1].tiles">
-                        <div class="dir_1-tiles">
-                            <t t-foreach="tilesKit[dir_1].tiles" t-as="tile_1" t-key="tile_1.id">
-                                <div class="dir_1-tile">
-                                    <img class="dir_1-tile-img" t-att-src="'/web/image/asset.tile/' + tile_1.id + '/image'"
-                                         t-on-click="() => this.setCurrentTile(tile_1.id)"
-                                         t-att-class="state.currentTile == tile_1.id? 'w_ct-btn-active': ''"/>
-                                </div>
+        <div class="current-tiles__tiles-kit m-1">
+            <t t-foreach="store.tilesKit" t-as="dir_1" t-key="dir_1">
+                <t t-if="store.tilesKit[dir_1].tiles">
+                    <DirTiles tiles="store.tilesKit[dir_1]"/>
+                </t>
+                <t t-else="">
+                    <t t-foreach="store.tilesKit[dir_1]" t-as="dir_2" t-key="dir_2">
+                        <t t-if="store.tilesKit[dir_1][dir_2].tiles">
+                            <DirTiles tiles="store.tilesKit[dir_1][dir_2]"/>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="store.tilesKit[dir_1][dir_2]" t-as="dir_3" t-key="dir_3">
+                                <t t-if="store.tilesKit[dir_1][dir_2][dir_3].tiles">
+                                    <DirTiles tiles="store.tilesKit[dir_1][dir_2][dir_3]"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-foreach="store.tilesKit[dir_1][dir_2][dir_3]" t-as="dir_4" t-key="dir_4">
+                                        <t t-if="store.tilesKit[dir_1][dir_2][dir_3][dir_4].tiles">
+                                            <DirTiles tiles="store.tilesKit[dir_1][dir_2][dir_3][dir_4]"/>
+                                        </t>
+                                    </t>
+                                </t>
                             </t>
-                        </div>
+                        </t>
                     </t>
-
-                </div>
-                <!--                <t t-else="">-->
-                <!--                    <t t-foreach="tilesKit[dir_1]" t-as="dir_2" t-key="dir_2">-->
-                <!--                        <div class="fw-bold" t-esc="' > ' + dir_2"/>-->
-                <!--                        <t t-set="tiles_2" t-value="tilesKit[dir_1][dir_2].tiles"/>-->
-                <!--                        <t t-if="tiles_2">-->
-                <!--                            <t t-foreach="tiles_2" t-as="tile2" t-key="tile2.id">-->
-                <!--                                <div t-esc="tile2.name"/>-->
-                <!--                            </t>-->
-                <!--                        </t>-->
-                <!--                        <t t-else="">-->
-                <!--                            <t t-foreach="tilesKit[dir_1][dir_2]" t-as="dir_3" t-key="dir_3">-->
-                <!--                                <div class="fw-bold" t-esc="' >> ' + dir_3"/>-->
-                <!--                                <t t-set="tiles_3" t-value="tilesKit[dir_1][dir_2][dir_3].tiles"/>-->
-                <!--                                <t t-if="tiles_3">-->
-                <!--                                    <t t-foreach="tiles_3" t-as="tile_3" t-key="tile_3.id">-->
-                <!--                                        <div t-esc="tile_3.name"/>-->
-                <!--                                    </t>-->
-                <!--                                </t>-->
-                <!--                                <t t-else="">-->
-                <!--                                    <t t-foreach="tilesKit[dir_1][dir_2][dir_3]" t-as="dir_4" t-key="dir_4">-->
-                <!--                                        <div class="fw-bold" t-esc="' >>> ' + dir_4"/>-->
-                <!--                                        <t t-set="tiles_4" t-value="tilesKit[dir_1][dir_2][dir_3][dir_4].tiles"/>-->
-                <!--                                        <t t-if="tiles_4">-->
-                <!--                                            <t t-foreach="tiles_4" t-as="tile_4" t-key="tile_4.id">-->
-                <!--                                                <div t-esc="tile_4.name"/>-->
-                <!--                                            </t>-->
-                <!--                                        </t>-->
-                <!--                                    </t>-->
-                <!--                                </t>-->
-                <!--                            </t>-->
-                <!--                        </t>-->
-                <!--                    </t>-->
-                <!--                </t>-->
+                </t>
             </t>
         </div>
-
     </div>
 </div>

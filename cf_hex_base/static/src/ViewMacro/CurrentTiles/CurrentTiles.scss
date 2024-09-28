@@ -1,54 +1,37 @@
 /********************************
-*  WidgetCurrentTiles           *
+*  CurrentTiles Component       *
 ********************************/
-.w_ct-btn-active{
+.current-tiles-btn-active{
     @extend .rounded-circle;
     background: #edd6d6;
 }
-#w_ct{
+.current-tiles{
+    $self: &;
+    @extend .view-macro-controller;
     overflow-y: none;
+
+    &__title-1{
+        @extend .view-macro-controller__title;
+    }
+    &__title-2{
+        @extend .view-macro-controller__title;
+    }
+
     &:hover {
-        #w_ct-title-1{
+        #{$self}__title-1{
             display: none;
         }
-        #w_ct-hide-part{
+        #{$self}__hide-part{
             display: block;
         }
     }
 
-    #w_ct-hide-part{
+    &__hide-part{
         display: none;
-        #tiles_kit_0{
+        #{$self}__tiles-kit{
             overflow-y: scroll;
-            height: 500px;
-            .dir_1-box{
-                .dir_1-name{
-                    @extend .fw-bold;
-                    text-transform: capitalize;
-                }
-                .dir_1-tiles{
-    //                 display: none;
-                    @extend .row;
-                    @extend .mx-1;
-
-                    .dir_1-tile{
-                        @extend .col-2;
-                        &:hover{
-                            cursor: pointer;
-                            transform: scale(1.30);
-                        }
-                        .dir_1-tile-img{
-                            width: 100%;
-                        }
-                    }
-                }
-
-                &:hover{
-                    .dir_1-tiles{
-                        display: flex;
-                    }
-                }
-            }
+            overflow-x: hidden;
+            height: 60vh;
         }
     }
 }

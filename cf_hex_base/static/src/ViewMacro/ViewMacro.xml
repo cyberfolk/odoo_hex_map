@@ -3,7 +3,7 @@
         <!--        <t t-call="WidgetClearCurrentSelection"/>-->
         <CurrentZoom/>
         <CurrentColor/>
-        <!--        <t t-call="WidgetCurrentTiles"/>-->
+        <CurrentTiles/>
     </div>
 
     <div class="p-3 bg-white" t-attf-style="zoom: {{store.zoom}}"

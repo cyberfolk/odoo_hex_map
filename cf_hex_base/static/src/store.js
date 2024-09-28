@@ -3,6 +3,8 @@ import { reactive, useState } from  "@odoo/owl";
 
 export const store = reactive({
     currentColor: "",
+    currentTile: "",
+    tilesKit: null,
     zoom: '100%',
     add: add
 });

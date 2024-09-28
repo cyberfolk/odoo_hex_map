@@ -1,0 +1,15 @@
+<div t-name="DirTiles" class="dir-tiles">
+    <div class="dir-tiles__name" t-on-click="toggleCollapse">
+        <i class="fa" t-att-class="state.collapse ? 'fa-caret-up': 'fa-caret-down'"/>
+        <span class="ps-2" t-esc="tiles.name"/>
+    </div>
+    <div class="dir-tiles__tiles" t-att-class="state.collapse ? 'd-none': ''">
+        <t t-foreach="tiles.tiles" t-as="tile" t-key="tile.id">
+            <div class="dir-tiles__tile">
+                <img class="dir-tiles__img" t-att-src="'/web/image/asset.tile/' + tile.id + '/image'"
+                     t-on-click="() => this.setCurrentTile(tile.id)"
+                     t-att-class="store.currentTile == tile.id? 'current-tiles-btn-active': ''"/>
+            </div>
+        </t>
+    </div>
+</div>

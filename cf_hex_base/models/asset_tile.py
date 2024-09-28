@@ -22,6 +22,7 @@ class AssetTile(models.Model):
         asset_tiles = list(self.env['asset.tile'].search([]))
         asset_tiles_dikt = [{'name': x.name, 'sub_dir': x.sub_dir, 'id': x.id} for x in asset_tiles]
         tiles_kit = {}
+        name = ''
         for tile in asset_tiles_dikt:
             sub_dirs = tile.pop('sub_dir').split('/')
             current_level = tiles_kit
@@ -36,6 +37,7 @@ class AssetTile(models.Model):
             if 'tiles' not in current_level:
                 current_level['tiles'] = []
             current_level['tiles'].append(tile)
+            current_level['name'] = ' > '.join(sub_dirs)
 
         json_tiles_kit = json.dumps(tiles_kit)
         return json_tiles_kit

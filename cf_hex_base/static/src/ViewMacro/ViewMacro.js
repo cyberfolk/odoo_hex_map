@@ -1,7 +1,7 @@
 /** @odoo-module **/
 //import { ClearCurrent } from '@cf_hex_base/ViewMacro/ClearCurrent/ClearCurrent';
 import { CurrentColor } from '@cf_hex_base/ViewMacro/CurrentColor/CurrentColor';
-//import { CurrentTiles } from '@cf_hex_base/ViewMacro/CurrentTiles/CurrentTiles';
+import { CurrentTiles } from '@cf_hex_base/ViewMacro/CurrentTiles/CurrentTiles';
 import { CurrentZoom } from '@cf_hex_base/ViewMacro/CurrentZoom/CurrentZoom';
 import { registry } from "@web/core/registry";
 import { Component, onWillStart, useState } from "@odoo/owl";
@@ -13,17 +13,15 @@ const actionRegistry = registry.category("actions");
 class ViewMacro extends Component {
     static template = "ViewMacro"
     static props = ["*"]
-//    static components = { ClearCurrent, CurrentTiles };
-    static components = { CurrentColor, CurrentZoom };
+//    static components = { ClearCurrent };
+    static components = { CurrentColor, CurrentZoom, CurrentTiles };
 
     setup() {
         super.setup();
         this.action = useService("action");
         this.orm = useService("orm");
-        this.tilesKit = null
         this.state = useState({
             macro: null,
-            currentTile: ""
         })
         this.store = useStore()
 
@@ -31,14 +29,7 @@ class ViewMacro extends Component {
         onWillStart(async () => {
             this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
                 .then((result) => { return JSON.parse(result) })
-            this.tilesKit = await this.orm.call("asset.tile", "get_json_tiles_kit", [], {})
-                .then((result) => { return JSON.parse(result) })
         })
-    }
-
-    setCurrentTile(tile_id){
-        this.state.currentTile = tile_id
-        this.store.currentColor = ''
     }
 
     /**
@@ -51,7 +42,7 @@ class ViewMacro extends Component {
 
         if (this.store.currentColor)
         this.changeColorHex(hex_id)
-        else if (this.state.currentTile)
+        else if (this.store.currentTile)
         this.setAssetTiles(hex_id)
         else {
             this.goToViewForm(hex_id)
@@ -86,7 +77,7 @@ class ViewMacro extends Component {
      * Cambia il tales selezionato settandolo con il currentTile, poi aggiorna la macroarea.
      */
     async setAssetTiles(hex_id){
-        await this.orm.call("hex.hex", "set_asset_tiles", [hex_id, this.state.currentTile], {});
+        await this.orm.call("hex.hex", "set_asset_tiles", [hex_id, this.store.currentTile], {});
         console.log("Asset Set successfully");
         this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
@@ -100,7 +91,7 @@ class ViewMacro extends Component {
     }
 
     resetCurrentSelections(){
-        this.state.currentTile = ''
+        this.store.currentTile = ''
         this.store.currentColor = ''
     }
 

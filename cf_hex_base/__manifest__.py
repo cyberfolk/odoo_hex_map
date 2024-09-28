@@ -35,6 +35,8 @@
             '/cf_hex_base/static/src/ViewMacro/ViewMacro.xml',
             '/cf_hex_base/static/src/ViewMacro/CurrentColor/*',
             '/cf_hex_base/static/src/ViewMacro/CurrentZoom/*',
+            '/cf_hex_base/static/src/ViewMacro/CurrentTiles/*',
+            '/cf_hex_base/static/src/ViewMacro/DirTiles/*',
             '/cf_hex_base/static/src/utility/utils.js',
         ],
         'web.assets_frontend': [
