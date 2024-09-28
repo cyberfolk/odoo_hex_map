@@ -2,7 +2,8 @@
 import { reactive, useState } from  "@odoo/owl";
 
 export const store = reactive({
-    name: 'marco',
+    currentColor: "",
+    zoom: '100%',
     add: add
 });
 

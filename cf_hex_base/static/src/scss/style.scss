@@ -126,30 +126,16 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 .z-100          { z-index: 100; }
 .bg-widget      { background-color: #7f00655c; }
 
-.widget-container{
+.view-macro-controller{
     background-color: #cda1c4;
     @extend .p-2;
     @extend .rounded;
     width: fit-content;
 
-    .widget-title{
+    .view-macro-controller__title{
         @extend .m-1;
         @extend .fw-bold;
     }
-}
-
-.hv-center {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hv-center-fix {
-    text-align: center;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
 }
 
 .hex {

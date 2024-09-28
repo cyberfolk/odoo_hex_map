@@ -33,6 +33,8 @@
             '/cf_hex_base/static/src/widget_quad/*',
             '/cf_hex_base/static/src/ViewMacro/ViewMacro.js',
             '/cf_hex_base/static/src/ViewMacro/ViewMacro.xml',
+            '/cf_hex_base/static/src/ViewMacro/CurrentColor/*',
+            '/cf_hex_base/static/src/ViewMacro/CurrentZoom/*',
             '/cf_hex_base/static/src/utility/utils.js',
         ],
         'web.assets_frontend': [

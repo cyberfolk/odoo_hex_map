@@ -1,19 +1,20 @@
 /** @odoo-module **/
 //import { ClearCurrent } from '@cf_hex_base/ViewMacro/ClearCurrent/ClearCurrent';
-//import { CurrentColor } from '@cf_hex_base/ViewMacro/CurrentColor/CurrentColor';
+import { CurrentColor } from '@cf_hex_base/ViewMacro/CurrentColor/CurrentColor';
 //import { CurrentTiles } from '@cf_hex_base/ViewMacro/CurrentTiles/CurrentTiles';
-//import { CurrentZoom } from '@cf_hex_base/ViewMacro/CurrentZoom/CurrentZoom';
+import { CurrentZoom } from '@cf_hex_base/ViewMacro/CurrentZoom/CurrentZoom';
 import { registry } from "@web/core/registry";
 import { Component, onWillStart, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { getAxes } from '../utility/utils.js';
+import { store, useStore } from "../store";
 const actionRegistry = registry.category("actions");
 
 class ViewMacro extends Component {
     static template = "ViewMacro"
     static props = ["*"]
-//    static components = { ClearCurrent, CurrentColor, CurrentTiles, CurrentZoom };
-//    static components = { CurrentColor };
+//    static components = { ClearCurrent, CurrentTiles };
+    static components = { CurrentColor, CurrentZoom };
 
     setup() {
         super.setup();
@@ -22,10 +23,10 @@ class ViewMacro extends Component {
         this.tilesKit = null
         this.state = useState({
             macro: null,
-            zoom: '100%',
-            currentColor: "",
             currentTile: ""
         })
+        this.store = useStore()
+
 
         onWillStart(async () => {
             this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
@@ -34,18 +35,10 @@ class ViewMacro extends Component {
                 .then((result) => { return JSON.parse(result) })
         })
     }
-    setZoom(percentage){
-        this.state.zoom = percentage
-    }
-
-    setCurrentColor(color){
-        this.state.currentColor = color
-        this.state.currentTile = ''
-    }
 
     setCurrentTile(tile_id){
         this.state.currentTile = tile_id
-        this.state.currentColor = ''
+        this.store.currentColor = ''
     }
 
     /**
@@ -56,7 +49,7 @@ class ViewMacro extends Component {
     async onClick(hex){
         const hex_id = hex.id;
 
-        if (this.state.currentColor)
+        if (this.store.currentColor)
         this.changeColorHex(hex_id)
         else if (this.state.currentTile)
         this.setAssetTiles(hex_id)
@@ -83,7 +76,7 @@ class ViewMacro extends Component {
      * Cambia il colore di hex_id settandolo con il currentColor, poi aggiorna la macroarea.
      */
     async changeColorHex(hex_id){
-        await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.state.currentColor], {});
+        await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.store.currentColor], {});
         console.log("Color changed successfully");
         this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
@@ -108,7 +101,7 @@ class ViewMacro extends Component {
 
     resetCurrentSelections(){
         this.state.currentTile = ''
-        this.state.currentColor = ''
+        this.store.currentColor = ''
     }
 
     getHexStyle(hex) {

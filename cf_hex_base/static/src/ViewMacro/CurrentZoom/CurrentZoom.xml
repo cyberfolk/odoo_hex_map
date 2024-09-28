@@ -1,11 +1,11 @@
-<div t-name="CurrentZoom" id="w_cz" class="mt-2 w-min widget-container d-flex align-items-center">
-    <div class="widget-title"><span>Zoom:</span></div>
+<div t-name="CurrentZoom" class="current-zoom mt-2">
+    <div class="current-zoom__title"><span>Zoom:</span></div>
 
     <t t-set="zoomLevels" t-value="[100, 150, 175, 200, 300, 500]"/>
     <t t-foreach="zoomLevels" t-as="_zoom" t-key="_zoom">
         <button class="btn me-1 px-2 py-1"
                 t-on-click="() => this.setZoom(_zoom + '%')"
-                t-att-class="state.zoom == _zoom + '%' ? 'btn-primary': 'btn-secondary d-none'">
+                t-att-class="store.zoom == _zoom + '%' ? 'btn-primary': 'btn-secondary d-none'">
             <span t-esc="'x' + _zoom/100"/>
         </button>
     </t>

@@ -1,23 +1,19 @@
-<div t-name="CurrentColor" id="w_cc" class="mt-2 widget-container">
-    <div id="w_cc-title-1" class="widget-title"
-         t-att-class="state.currentColor? 'd-none': ''">
+<div t-name="CurrentColor" class="current-color mt-2">
+    <div class="current-color__title" t-att-class="store.currentColor ? 'd-none' : ''">
         <span>Dipingi Hex</span>
     </div>
 
-    <div id="w_cc-hide-part" t-att-class="state.currentColor? 'd-block': ''">
-        <div class="widget-title">
-            <span>Scegli un Colore e dipingi gli Esagoni:</span>
-        </div>
-        <div class="mx-1">
-            <t t-set="colorList"
-               t-value="['#c7ffff','#FFDF00','#007F00','#2FDF2F','#FF7F00','#FF0000','#BF00FF','#00BFFF','#0000FF']"/>
-            <t t-foreach="colorList" t-as="_color" t-key="_color">
-                <button class="btn p-2 me-1"
-                        t-att-style="'background-color: ' + _color +';'"
-                        t-on-click="() => this.setCurrentColor(_color)"
-                        t-att-class="state.currentColor == _color? 'w_cc-btn-active': ''">
-                </button>
-            </t>
-        </div>
+    <div class="current-color__hide-title" t-att-class="store.currentColor ? 'd-block' : ''">
+        <span>Scegli un Colore e dipingi gli Esagoni:</span>
+    </div>
+    <div class="current-color__color-list mx-1" t-att-class="store.currentColor ? 'd-flex' : ''">
+        <t t-set="colorList" t-value="['#c7ffff','#FFDF00','#007F00','#2FDF2F','#FF7F00','#FF0000','#BF00FF','#00BFFF','#0000FF']"/>
+        <t t-foreach="colorList" t-as="_color" t-key="_color">
+            <button class="current-color__btn btn p-2 me-1"
+                    t-att-style="'background-color: ' + _color + ';'"
+                    t-on-click="() => this.setCurrentColor(_color)"
+                    t-att-class="store.currentColor == _color ? 'current-color__btn--active' : ''">
+            </button>
+        </t>
     </div>
 </div>

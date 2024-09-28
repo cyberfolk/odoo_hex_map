@@ -1,7 +1,16 @@
 /********************************
-*  WidgetZoom                   *
+*  CurrentZoom Component        *
 ********************************/
-#w_cz {
+.current-zoom {
+    @extend .view-macro-controller;
+    width: min-content;
+    display: flex;
+    align-items: center;
+
+    &__title{
+        @extend .view-macro-controller__title;
+    }
+
     &:hover {
         button {
             display: inline !important;

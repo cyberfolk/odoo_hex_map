@@ -1,19 +1,40 @@
 /********************************
-*  WidgetCurrentColor           *
+*  CurrentColor Component       *
 ********************************/
-.w_cc-btn-active {
-    outline: 3px solid #000 !important;
-    opacity: 0.5;
-}
-#w_cc {
-    #w_cc-hide-part {
+
+$current-outline: 3px solid #000;
+$current-opacity: 0.5;
+
+.current-color {
+    $self: &;
+    @extend .view-macro-controller;
+
+    &__title{
+        @extend .view-macro-controller__title;
+    }
+
+    &__hide-title{
+        display: none;
+        @extend .view-macro-controller__title;
+    }
+
+    &__btn--active {
+        outline: $current-outline !important;
+        opacity: $current-opacity;
+    }
+
+    &__color-list {
         display: none;
     }
+
     &:hover {
-        #w_cc-hide-part {
+        #{$self}__hide-title {
             display: block;
         }
-        #w_cc-title-1 {
+        #{$self}__color-list {
+            display: flex;
+        }
+        #{$self}__title {
             display: none;
         }
     }
