@@ -1,0 +1,9 @@
+<div t-name="HexHex" class="hex"
+     t-att-style="getHexStyle()"
+     t-att-class="store.isCurrentSelectEmpty() ? 'pointer': 'crosshair'"
+     t-on-click="onClick">
+    <t t-if="state.hex_asset_id">
+        <img class="w-100" t-attf-class="rotate-{{state.hex_asset_id.rotation}}"
+             t-att-src="'/web/image/asset.tile/' + state.hex_asset_id.tile_id + '/image'"/>
+    </t>
+</div>

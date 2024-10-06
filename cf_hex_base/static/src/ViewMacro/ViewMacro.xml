@@ -12,15 +12,7 @@
             <t t-foreach="state.macro.quad_ids" t-as="quad" t-key="quad.id">
                 <div class="quad bg-dark " t-att-style="getQuadStyle(quad)">
                     <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">
-                        <div class="hex hv-center"
-                             t-att-style="getHexStyle(hex)"
-                             t-att-class="store.isCurrentSelectEmpty() ? 'pointer': 'crosshair'"
-                             t-on-click="() => this.onClick(hex)">
-                            <t t-if="hex.hex_asset_id">
-                                <img class="w-100" t-attf-class="rotate-{{hex.hex_asset_id.rotation}}"
-                                     t-att-src="'/web/image/asset.tile/' + hex.hex_asset_id.tile_id + '/image'"/>
-                            </t>
-                        </div>
+                        <HexHex id="hex.id" index="hex.index" color="hex.color" hex_asset_id="hex.hex_asset_id" />
                     </t>
                 </div>
             </t>

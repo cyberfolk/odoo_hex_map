@@ -1,3 +1,4 @@
+import json
 from odoo import api, fields, models, Command
 
 
@@ -99,3 +100,21 @@ class Hex(models.Model):
             _hex.hex_asset_id = hex_asset.id
         else:
             _hex.hex_asset_id.write(hex_asset_vals)
+
+    @api.model
+    def get_json_hex(self):
+        """Metodo richiamato dal orm di HexHex.js
+            :return: Json del hex."""
+        dict_hex = {
+            'id': self.id,
+            'index': self.index,
+            'color': self.color,
+            'hex_asset_id': {
+                'rotation': self.hex_asset_id.rotation,
+                'tile_id': self.hex_asset_id.asset_id.id,
+            },
+        }
+
+        json_hex = json.dumps(dict_hex)
+        return json_hex
+

@@ -28,6 +28,7 @@
     'post_init_hook': 'post_init_hook_cf_hex_base',
     'assets': {
         'web.assets_backend': [
+            '/cf_hex_base/static/src/utility/utils.js',
             '/cf_hex_base/static/src/store.js',
             '/cf_hex_base/static/src/scss/style.scss',
             '/cf_hex_base/static/src/widget_quad/*',
@@ -38,7 +39,7 @@
             '/cf_hex_base/static/src/ViewMacro/CurrentTiles/*',
             '/cf_hex_base/static/src/ViewMacro/ClearCurrent/*',
             '/cf_hex_base/static/src/ViewMacro/DirTiles/*',
-            '/cf_hex_base/static/src/utility/utils.js',
+            '/cf_hex_base/static/src/ViewMacro/HexHex/*',
         ],
         'web.assets_frontend': [
             '/cf_hex_base/static/src/scss/style.scss',
