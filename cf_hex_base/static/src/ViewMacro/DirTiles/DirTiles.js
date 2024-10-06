@@ -18,11 +18,10 @@ export class DirTiles extends Component {
     }
 
     setCurrentTile(tile_id){
+    store.currentColor = ''
         if (this.store.currentTile.tile_id == tile_id){
-            if (this.store.currentTile.rotation >= 300)
-                this.store.currentTile.rotation = 0
-            else
-                this.store.currentTile.rotation += 60
+            this.store.currentTile.rotation += 60
+            this.store.currentTile.rotation %= 360
         }
         else{
             this.store.currentTile.tile_id = tile_id

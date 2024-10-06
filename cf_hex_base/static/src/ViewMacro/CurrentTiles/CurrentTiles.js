@@ -24,8 +24,4 @@ export class CurrentTiles extends Component {
                 .then((result) => { return JSON.parse(result) })
         })
     }
-
-    setCurrentTile(tile_id){
-        this.store.currentTile.tile_id = tile_id
-    }
 }

@@ -4,7 +4,7 @@
 
 .clear-current {
     $self: &;
-    @extend .view-macro-controller;
+//     @extend .view-macro-controller;
 
     &__title{
         @extend .view-macro-controller__title;

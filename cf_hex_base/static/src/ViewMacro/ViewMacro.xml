@@ -1,14 +1,14 @@
 <t t-name="ViewMacro">
     <div class="view-macro__sideboard position-fixed w-25 p-3" style="z-index: 100;">
-        <ClearCurrent/>
         <CurrentZoom/>
         <CurrentColor/>
         <CurrentTiles/>
+        <ClearCurrent/>
     </div>
 
     <div class="p-3 bg-white" t-attf-style="zoom: {{store.zoom}}"
          t-on-click="resetCurrentSelect_ClickOutside">
-        <div class="macro_form m-auto" >
+        <div class="macro_form m-auto">
             <t t-foreach="state.macro.quad_ids" t-as="quad" t-key="quad.id">
                 <div class="quad bg-dark " t-att-style="getQuadStyle(quad)">
                     <t t-foreach="quad.hex_ids" t-as="hex" t-key="hex.id">

@@ -1,8 +1,14 @@
 <div t-name="ClearCurrent" class="clear-current mt-2"
-     t-att-class="(store.currentColor || store.currentTile.tile_id)? '': 'd-none'">
+     t-att-class="store.isCurrentSelectEmpty()? 'd-none': ''">
+    <!--    <span class="clear-current__title">Current Select</span>-->
+    <!--    <button class="btn me-1 px-2 py-1 btn-primary"-->
+    <!--            t-on-click="resetCurrentSelect">-->
+    <!--        <span>Reset</span>-->
+    <!--    </button>-->
 
-    <button class="btn me-1 px-2 py-1 btn-primary"
-            t-on-click="resetCurrentSelect">
-        <span>Reset</span>
-    </button>
+    <div class="text-muted">
+        Clicca fuori dalla Mappa per
+        <br/>
+        annullare la selezione corrente.
+    </div>
 </div>

@@ -17,6 +17,7 @@ export class CurrentColor extends Component {
     }
 
     setCurrentColor(color){
+        this.store.resetCurrentSelect()
         this.store.currentColor = color
     }
 }
