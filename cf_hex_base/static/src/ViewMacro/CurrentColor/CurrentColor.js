@@ -11,6 +11,9 @@ export class CurrentColor extends Component {
     setup() {
         super.setup();
         this.store = useStore()
+        this.store.add({
+            currentColor: "",
+        })
     }
 
     setCurrentColor(color){

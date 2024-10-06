@@ -2,10 +2,6 @@
 import { reactive, useState } from  "@odoo/owl";
 
 export const store = reactive({
-    currentColor: "",
-    currentTile: {tile_id: "", rotation: 0},
-    tilesKit: null,
-    zoom: '100%',
     add: add
 });
 

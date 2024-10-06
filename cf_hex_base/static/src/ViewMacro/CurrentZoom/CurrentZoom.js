@@ -11,6 +11,9 @@ export class CurrentZoom extends Component {
     setup() {
         super.setup();
         this.store = useStore()
+        this.store.add({
+            zoom: '100%',
+        })
     }
 
     setZoom(percentage){

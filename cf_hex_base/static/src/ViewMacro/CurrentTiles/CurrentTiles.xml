@@ -1,9 +1,9 @@
 <div t-name="CurrentTiles" class="mt-2 current-tiles">
-    <div class="current-tiles__title-1" t-att-class="store.currentTiles? 'd-none': ''">
+    <div class="current-tiles__title-1" t-att-class="store.currentTile.tile_id? 'd-none': ''">
         <span>Colloca Tiles</span>
     </div>
 
-    <div class="current-tiles__hide-part" t-att-class="store.currentTile? 'd-block': ''">
+    <div class="current-tiles__hide-part" t-att-class="store.currentTile.tile_id? 'd-block': ''">
         <div class="current-tiles__title-2">
             <span>Scegli un Tiles e collocalo negli Esagoni:</span>
         </div>

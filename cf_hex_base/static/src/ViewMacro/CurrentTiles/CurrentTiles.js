@@ -13,6 +13,10 @@ export class CurrentTiles extends Component {
     setup() {
         super.setup();
         this.store = useStore()
+        this.store.add({
+            tilesKit: null,
+            currentTile: {tile_id: "", rotation: 0},
+        })
         this.orm = useService("orm");
 
         onWillStart(async () => {
