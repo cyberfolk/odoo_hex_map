@@ -17,7 +17,6 @@ export class QuadField extends Component {
 
         onWillStart(async () => {
             this.quad = await this.get_json_quad(quad_id)
-            console.log(quad_id)
             this.external_hexs = await this.get_json_external_hexs(quad_id)
         });
 

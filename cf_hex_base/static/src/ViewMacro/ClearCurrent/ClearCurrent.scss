@@ -1,0 +1,38 @@
+/********************************
+*  ClearCurrent Component       *
+********************************/
+
+.clear-current {
+    $self: &;
+    @extend .view-macro-controller;
+
+    &__title{
+        @extend .view-macro-controller__title;
+    }
+
+    &__hide-title{
+        display: none;
+        @extend .view-macro-controller__title;
+    }
+
+    &__btn--active {
+        outline: $current-outline !important;
+        opacity: $current-opacity;
+    }
+
+    &__color-list {
+        display: none;
+    }
+
+    &:hover {
+        #{$self}__hide-title {
+            display: block;
+        }
+        #{$self}__color-list {
+            display: flex;
+        }
+        #{$self}__title {
+            display: none;
+        }
+    }
+}

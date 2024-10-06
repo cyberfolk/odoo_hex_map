@@ -10,5 +10,10 @@ export class ClearCurrent extends Component {
 
     setup() {
         super.setup();
+        this.store = useStore()
+    }
+
+    resetCurrentSelect(){
+        this.store.resetCurrentSelect()
     }
 }

@@ -1,5 +1,5 @@
 /** @odoo-module **/
-//import { ClearCurrent } from '@cf_hex_base/ViewMacro/ClearCurrent/ClearCurrent';
+import { ClearCurrent } from '@cf_hex_base/ViewMacro/ClearCurrent/ClearCurrent';
 import { CurrentColor } from '@cf_hex_base/ViewMacro/CurrentColor/CurrentColor';
 import { CurrentTiles } from '@cf_hex_base/ViewMacro/CurrentTiles/CurrentTiles';
 import { CurrentZoom } from '@cf_hex_base/ViewMacro/CurrentZoom/CurrentZoom';
@@ -13,8 +13,7 @@ const actionRegistry = registry.category("actions");
 class ViewMacro extends Component {
     static template = "ViewMacro"
     static props = ["*"]
-//    static components = { ClearCurrent };
-    static components = { CurrentColor, CurrentZoom, CurrentTiles };
+    static components = { CurrentColor, CurrentZoom, CurrentTiles, ClearCurrent };
 
     setup() {
         super.setup();
@@ -24,7 +23,6 @@ class ViewMacro extends Component {
             macro: null,
         })
         this.store = useStore()
-
 
         onWillStart(async () => {
             this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
@@ -68,7 +66,6 @@ class ViewMacro extends Component {
      */
     async changeColorHex(hex_id){
         await this.orm.call("hex.hex", "change_hex_color", [hex_id, this.store.currentColor], {});
-        console.log("Color changed successfully");
         this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
     }
@@ -82,24 +79,18 @@ class ViewMacro extends Component {
             .then((result) => { return JSON.parse(result) })
     }
 
-    resetCurrentSelections_ClickOutside(event) {
-        // Verifica se l'elemento cliccato non appartiene alla macro_form o ai suoi figli
-        if (!event.target.closest('.hex')) {
-            this.resetCurrentSelections();
-        }
-    }
-
-    resetCurrentSelections(){
-        this.store.currentTile = ''
-        this.store.currentColor = ''
-    }
-
     getHexStyle(hex) {
         return `${getAxes(hex.index, 0.95)}; background-color: ${hex.color}; filter: brightness(${120 - 3 * hex.index}%);`
     }
 
     getQuadStyle(quad) {
         return `${getAxes(quad.index, 0.97)}; z-index: ${20 - quad.index}; clip-path: ${quad.polygon};`
+    }
+
+    resetCurrentSelect_ClickOutside(event) {
+        if (!event.target.closest('.hex')) {  // Check elemento cliccato non appartenga alla macro_form o ai suoi figli
+            this.store.resetCurrentSelect();
+        }
     }
 }
 
