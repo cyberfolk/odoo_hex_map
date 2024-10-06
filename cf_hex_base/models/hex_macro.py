@@ -28,11 +28,21 @@ class MacroArea(models.Model):
         self_macro = self.env['hex.macro'].browse(1)
 
         quad_fields = ['id', 'code', 'index', 'polygon', 'hex_ids']
-        hex_fields = ['id', 'code', 'index', 'color', 'asset_ids']
+        hex_fields = ['id', 'code', 'index', 'color', 'hex_asset_id']
 
         # Otteniamo tutti i quad e i relativi hex in una singola query
         quads = self_macro.quad_ids.read(quad_fields)
         hex_map = {quad['id']: self.env['hex.hex'].browse(quad['hex_ids']).read(hex_fields) for quad in quads}
+
+        # Aggiungo le info relative a gli hex_asset negli hex
+        hex_asset_fields = ['asset_id', 'rotation']
+        hex_assets = self.env['hex.asset.tile'].search([]).read(hex_asset_fields)
+        hex_assets_map = {x['id']: {'tile_id': x['asset_id'][0], 'rotation': x['rotation']} for x in hex_assets}
+        for k, v in hex_map.items():
+            for _hex in v:
+                if _hex['hex_asset_id']:
+                    _id = _hex['hex_asset_id'][0]
+                    _hex['hex_asset_id'] = hex_assets_map[_id]
 
         dict_macro = {
             'quad_ids': [{

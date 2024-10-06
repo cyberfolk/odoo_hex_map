@@ -8,7 +8,8 @@
             <div class="dir-tiles__tile">
                 <img class="dir-tiles__img" t-att-src="'/web/image/asset.tile/' + tile.id + '/image'"
                      t-on-click="() => this.setCurrentTile(tile.id)"
-                     t-att-class="store.currentTile == tile.id? 'current-tiles-btn-active': ''"/>
+                     t-att-class="store.currentTile.tile_id == tile.id?
+                     `current-tiles-btn-active rotate-${store.currentTile.rotation}` : ''"/>
             </div>
         </t>
     </div>

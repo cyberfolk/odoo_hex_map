@@ -3,7 +3,7 @@ import { reactive, useState } from  "@odoo/owl";
 
 export const store = reactive({
     currentColor: "",
-    currentTile: "",
+    currentTile: {tile_id: "", rotation: 0},
     tilesKit: null,
     zoom: '100%',
     add: add
@@ -23,7 +23,3 @@ function add(item) {
 export function useStore() {
     return useState(store);
 }
-
-// Essentially equivalent to the previous code
-// Which can be useful to unit test the class separately.
-// export const store = reactive(new Store());

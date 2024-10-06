@@ -3,3 +3,4 @@ access_hex_hex,access_hex_hex,model_hex_hex,base.group_user,1,1,1,1
 access_hex_quad,access_hex_quad,model_hex_quad,base.group_user,1,1,1,1
 access_hex_macro,access_hex_macro,model_hex_macro,base.group_user,1,1,1,1
 access_asset_tile,access_asset_tile,model_asset_tile,base.group_user,1,1,1,1
+access_hex_asset_tile,access_hex_asset_tile,model_hex_asset_tile,base.group_user,1,1,1,1

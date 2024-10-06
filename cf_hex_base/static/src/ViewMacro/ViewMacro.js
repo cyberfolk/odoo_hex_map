@@ -41,9 +41,9 @@ class ViewMacro extends Component {
         const hex_id = hex.id;
 
         if (this.store.currentColor)
-        this.changeColorHex(hex_id)
-        else if (this.store.currentTile)
-        this.setAssetTiles(hex_id)
+            this.changeColorHex(hex_id)
+        else if (this.store.currentTile.tile_id){
+            this.setAssetTiles(hex_id)}
         else {
             this.goToViewForm(hex_id)
         }
@@ -78,7 +78,6 @@ class ViewMacro extends Component {
      */
     async setAssetTiles(hex_id){
         await this.orm.call("hex.hex", "set_asset_tiles", [hex_id, this.store.currentTile], {});
-        console.log("Asset Set successfully");
         this.state.macro = await this.orm.call("hex.macro", "get_json_macro", [], {})
             .then((result) => { return JSON.parse(result) })
     }

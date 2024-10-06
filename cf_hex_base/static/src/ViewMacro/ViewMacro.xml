@@ -16,8 +16,9 @@
                              t-att-style="getHexStyle(hex)"
                              t-att-class="currentColor == '' ? 'pointer': 'crosshair'"
                              t-on-click="() => this.onClick(hex)">
-                            <t t-if="hex.asset_ids[0]">
-                                <img class="w-100" t-att-src="'/web/image/asset.tile/' + hex.asset_ids[0] + '/image'"/>
+                            <t t-if="hex.hex_asset_id">
+                                <img class="w-100" t-attf-class="rotate-{{hex.hex_asset_id.rotation}}"
+                                     t-att-src="'/web/image/asset.tile/' + hex.hex_asset_id.tile_id + '/image'"/>
                             </t>
                         </div>
                     </t>

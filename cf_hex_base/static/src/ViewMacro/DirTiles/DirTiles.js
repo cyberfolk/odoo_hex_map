@@ -18,7 +18,16 @@ export class DirTiles extends Component {
     }
 
     setCurrentTile(tile_id){
-        this.store.currentTile = tile_id
+        if (this.store.currentTile.tile_id == tile_id){
+            if (this.store.currentTile.rotation >= 300)
+                this.store.currentTile.rotation = 0
+            else
+                this.store.currentTile.rotation += 60
+        }
+        else{
+            this.store.currentTile.tile_id = tile_id
+            this.store.currentTile.rotation = 0
+        }
     }
     toggleCollapse(){
         this.state.collapse = !this.state.collapse

@@ -17,14 +17,11 @@ export class CurrentTiles extends Component {
 
         onWillStart(async () => {
             store.tilesKit = await this.orm.call("asset.tile", "get_json_tiles_kit", [], {})
-                .then((result) => {
-                console.log(JSON.parse(result))
-                 return JSON.parse(result)
-                 })
+                .then((result) => { return JSON.parse(result) })
         })
     }
 
     setCurrentTile(tile_id){
-        this.store.currentTile = tile_id
+        this.store.currentTile.tile_id = tile_id
     }
 }

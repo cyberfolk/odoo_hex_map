@@ -1,4 +1,16 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, Command
+
+
+class HexAssetTile(models.Model):
+    _name = "hex.asset.tile"
+    _description = "Hexagonal Asset Tiles"
+
+    rotation = fields.Integer(string="Rotazione")
+    asset_id = fields.Many2one(
+        comodel_name='asset.tile',
+        string="Asset",
+        help="Assets contained in this hex"
+    )
 
 
 class Hex(models.Model):
@@ -6,10 +18,10 @@ class Hex(models.Model):
     _inherit = ['hex.mixin']
     _description = "Hexagonal cell"
 
-    asset_ids = fields.Many2many(
-        comodel_name='asset.tile',
-        string="Assets",
-        help="Assets contained in this hex"
+    hex_asset_id = fields.Many2one(
+        comodel_name='hex.asset.tile',
+        string="Hex Asset",
+        help="Hex Assets contained in this hex"
     )
 
     quad_id = fields.Many2one(
@@ -75,7 +87,15 @@ class Hex(models.Model):
     @api.model
     def set_asset_tiles(self, hex_id, current_tile):
         """Metodo richiamato dal orm di view_macro.js
-           Setta un AssetTiles su un hex_id con current_tile"""
+           Setta i parametri di hex_asset su hex_id"""
 
         _hex = self.env['hex.hex'].browse(hex_id)
-        _hex.asset_ids = [(4, current_tile)]
+        hex_asset_vals = {
+            'asset_id': current_tile['tile_id'],
+            'rotation': current_tile['rotation']
+        }
+        if not _hex.hex_asset_id:
+            hex_asset = self.env['hex.asset.tile'].create(hex_asset_vals)
+            _hex.hex_asset_id = hex_asset.id
+        else:
+            _hex.hex_asset_id.write(hex_asset_vals)

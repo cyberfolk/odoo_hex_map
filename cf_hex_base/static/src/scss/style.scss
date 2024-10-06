@@ -121,10 +121,16 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
 /********************************
 *  CLASSI - UTILITY             *
 ********************************/
-.pointer        { cursor: pointer; }
-.crosshair      { cursor: crosshair; }
-.z-100          { z-index: 100; }
-.bg-widget      { background-color: #7f00655c; }
+.rotate-60  { transform: rotate(60deg);  }
+.rotate-120 { transform: rotate(120deg); }
+.rotate-180 { transform: rotate(180deg); }
+.rotate-240 { transform: rotate(240deg); }
+.rotate-300 { transform: rotate(300deg); }
+
+.pointer    { cursor: pointer; }
+.crosshair  { cursor: crosshair; }
+.z-100      { z-index: 100; }
+.bg-widget  { background-color: #7f00655c; }
 
 .view-macro-controller{
     background-color: #cda1c4;
