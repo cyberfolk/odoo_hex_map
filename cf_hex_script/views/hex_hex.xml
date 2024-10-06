@@ -1,0 +1,23 @@
+<odoo>
+    <record id="hex_hex_view_tree_inherited_script" model="ir.ui.view">
+        <field name="name">hex.hex.tree</field>
+        <field name="model">hex.hex</field>
+        <field name="inherit_id" ref="cf_hex_base.hex_hex_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='id']" position="after">
+                <field name="hex_script_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hex_hex_view_form_inherited_script" model="ir.ui.view">
+        <field name="name">hex.hex.form</field>
+        <field name="model">hex.hex</field>
+        <field name="inherit_id" ref="cf_hex_base.hex_hex_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quad_id']" position="after">
+                <field name="hex_script_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

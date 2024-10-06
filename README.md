@@ -10,5 +10,7 @@
   Esagoni e AssetTiles.
 - **cf_hex_biome** In questo modulo vengono introdotti i Biomi, Le Creature, Le Fazioni e gli Scontri.
 - **cf_hex_data** In questo modulo vengono caricati i dati dei modelli introdotti negli altri moduli.
+- **cf_hex_script** In questo modulo vengono introdotti gli Hex-Script, ovvero i modelli che descrivono la lore del
+  singolo esagoni, e li collegano ai relativi biomi e alle creature che lo popolano.
 
 <img src="cf_hex_base/static/description/icon.png" width="250"/>

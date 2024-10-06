@@ -1,0 +1,10 @@
+<odoo>
+    <record id="action_menu_hex_script" model="ir.actions.act_window">
+        <field name="name">Elenco Hex-Script</field>
+        <field name="res_model">hex.script</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem sequence="6" id="menu_hex_script" name="Hex Script"
+              parent="cf_hex_base.menu_root" action="action_menu_hex_script"/>
+</odoo>

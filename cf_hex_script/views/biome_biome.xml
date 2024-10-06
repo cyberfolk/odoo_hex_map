@@ -1,0 +1,15 @@
+<odoo>
+    <record id="biome_biome_view_form_inherited_script" model="ir.ui.view">
+        <field name="name">biome.biome.form</field>
+        <field name="model">biome.biome</field>
+        <field name="inherit_id" ref="cf_hex_biome.biome_biome_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_structure']" position="after">
+                <group name="group_hex_script" string="Esagoni Scriptati con questo Bioma" colspan="2">
+                    <field name="hex_script_ids" nolabel="1" colspan="2" widget='many2many_tags'/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
