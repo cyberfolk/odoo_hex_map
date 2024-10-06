@@ -49,8 +49,6 @@ asset_tile_dicts = [
     {'name': 'fiveway1', 'image_path': 'static/asset/tile/roads/fiveway1.png'},
     {'name': 'sixway', 'image_path': 'static/asset/tile/roads/sixway.png'},
     {'name': 'straight1', 'image_path': 'static/asset/tile/roads/straight1.png'},
-    {'name': 'straight2', 'image_path': 'static/asset/tile/roads/straight2.png'},
-    {'name': 'straight3', 'image_path': 'static/asset/tile/roads/straight3.png'},
     {'name': 'triple1', 'image_path': 'static/asset/tile/roads/triple1.png'},
     {'name': 'triple2', 'image_path': 'static/asset/tile/roads/triple2.png'},
     {'name': 'triple3', 'image_path': 'static/asset/tile/roads/triple3.png'},
