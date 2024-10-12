@@ -109,7 +109,6 @@ class Quadrant(models.Model):
                 'color': quad.color,
             }
             hex_id = self.env['hex.hex'].create(hex_vals)
-            hex_id.name = hex_id.code
             quad.hex_ids = [(4, hex_id.id)]
         return quad
 

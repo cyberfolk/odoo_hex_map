@@ -80,8 +80,7 @@ class MacroArea(models.Model):
         for quad_dict in QUAD_LIST:
             quad = self.env['hex.quad'].create(quad_dict)
             macro.quad_ids = [(4, quad.id)]
-            stop = 0
-        stop = 0
+
         macro.set_quads_borders()
         for quad in macro.quad_ids:
             quad.set_hexs_borders()

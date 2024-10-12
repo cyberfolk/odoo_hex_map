@@ -19,6 +19,11 @@ class Hex(models.Model):
     _inherit = ['hex.mixin']
     _description = "Hexagonal cell"
 
+    name = fields.Char(
+        string="Name",
+        default=lambda self: self.code
+    )
+
     hex_asset_id = fields.Many2one(
         comodel_name='hex.asset.tile',
         string="Hex Asset",
