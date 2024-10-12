@@ -11,9 +11,15 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="action_menu_macro" model="ir.actions.client">
-        <field name="name">Macro Area</field>
+    <record id="action_menu_macro_client" model="ir.actions.client">
+        <field name="name">Macro Area Client</field>
         <field name="tag">ViewMacro</field>
+    </record>
+
+    <record id="action_menu_macro" model="ir.actions.act_window">
+        <field name="name">Macro Area</field>
+        <field name="res_model">hex.macro</field>
+        <field name="view_mode">tree,form</field>
     </record>
 
     <record id="action_menu_asset_tile" model="ir.actions.act_window">
@@ -25,8 +31,9 @@
     <menuitem sequence="0" id="menu_root" name="Hex Map" web_icon="cf_hex_base,static/description/icon.png">
         <menuitem sequence="0" id="menu_hex_map" name="Mappa">
             <menuitem sequence="0" id="menu_macro" name="Macro Area" action="action_menu_macro"/>
-            <menuitem sequence="1" id="menu_quad" name="Quadranti" action="action_menu_quad"/>
-            <menuitem sequence="2" id="menu_hex" name="Esagoni" action="action_menu_hex"/>
+            <menuitem sequence="1" id="menu_macro_client" name="Macro Area Client" action="action_menu_macro_client"/>
+            <menuitem sequence="2" id="menu_quad" name="Quadranti" action="action_menu_quad"/>
+            <menuitem sequence="3" id="menu_hex" name="Esagoni" action="action_menu_hex"/>
         </menuitem>
         <menuitem sequence="0" id="menu_asset_tile" name="Asset" action="action_menu_asset_tile"/>
     </menuitem>

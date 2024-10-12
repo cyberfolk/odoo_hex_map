@@ -16,6 +16,8 @@ def obj_odoo_to_json(obj_odoo):
 
 def process_obj(obj):
     """Riceve un oggetto di Odoo e lo trasforma in un dizionario."""
+    if not obj:
+        return None
     # read() ritorna un dizionario da un oggetto di odoo.
     obj_dict = obj.read()[0]  # Uso [0] perché assumo che obj_odoo sia singolo.
     filter_metadata(obj_dict)

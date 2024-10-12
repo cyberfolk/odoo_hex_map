@@ -4,7 +4,7 @@ from ..utility.constant import EXTERNAL_BORDERS_MAP
 from ..utility.constant import HEX_MISSING_INDEX
 from ..utility.constant import SPECULAR_BORDERS_MAP
 from ..utility.odoo_to_json import obj_odoo_to_json
-
+import json
 
 class Quadrant(models.Model):
     _name = "hex.quad"
@@ -16,7 +16,7 @@ class Quadrant(models.Model):
         string="Macro Area",
     )
 
-    hex_list = fields.Char(
+    hex_list = fields.Json(
         string="Hex list",
     )
 
@@ -100,20 +100,17 @@ class Quadrant(models.Model):
         quad.name = f"Quadrante {quad.code}"
         if quad.code == 'void':
             return quad
-        else:
-            hex_list = eval(vals[0].get('hex_list'))
-            for index in hex_list:
-                hex_vals = {
-                    'quad_id': quad.id,
-                    'index': index,
-                    'color': quad.color,
-                }
-                hex_id = self.env['hex.hex'].create(hex_vals)
-                hex_id.name = hex_id.code
-                quad.hex_ids = [(4, hex_id.id)]
-            hex_macro = self.env.ref('cf_hex_base.hex_macro_1')
-            hex_macro.quad_ids = [(4, quad.id)]
-            quad.macro_id = hex_macro
+        if not quad.hex_list:
+            return quad
+        for index in quad.hex_list:
+            hex_vals = {
+                'quad_id': quad.id,
+                'index': index,
+                'color': quad.color,
+            }
+            hex_id = self.env['hex.hex'].create(hex_vals)
+            hex_id.name = hex_id.code
+            quad.hex_ids = [(4, hex_id.id)]
         return quad
 
     def set_hexs_borders(self):
@@ -179,4 +176,3 @@ class Quadrant(models.Model):
                 missing_hex[border_key] = target_hex
                 specular_borders_key = SPECULAR_BORDERS_MAP[border_key]
                 target_hex[specular_borders_key] = missing_hex
-
