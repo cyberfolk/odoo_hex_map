@@ -18,7 +18,6 @@ class ViewMacro extends Component {
 
     setup() {
         super.setup();
-        this.action = useService("action");
         this.orm = useService("orm");
         this.state = useState({
             macro: null,

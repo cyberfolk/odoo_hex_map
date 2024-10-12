@@ -12,6 +12,7 @@ export class HexHex extends Component {
     setup() {
         super.setup();
         this.orm = useService("orm")
+        this.action = useService("action");
         this.store = useStore()
         this.state = useState({
             id: this.props.id,
