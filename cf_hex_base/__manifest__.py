@@ -17,6 +17,7 @@
         "views/menu_root.xml",
         "views/hex_hex.xml",
         "views/hex_quad.xml",
+        "views/hex_macro.xml",
         "views/filter_apps.xml",
         "views/asset_tile.xml",
         "data/hex.xml",

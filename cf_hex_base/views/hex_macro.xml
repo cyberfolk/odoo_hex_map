@@ -1,0 +1,40 @@
+<odoo>
+    <record id="hex_macro_view_tree" model="ir.ui.view">
+        <field name="name">hex.macro.tree</field>
+        <field name="model">hex.macro</field>
+        <field name="arch" type="xml">
+            <tree edit="0" delete="0" create="0">
+                <field name="name"/>
+                <!--                <field name="code"/>-->
+                <!--                <field name="color" readonly="1"/>-->
+                <!--                <field name="quad_id"/>-->
+                <!--                <field name="index" readonly="1"/>-->
+                <!--                <field name="circle_order"/>-->
+                <!--                <field name="circle_number"/>-->
+                <!--                <field name="id"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="hex_macro_view_form" model="ir.ui.view">
+        <field name="name">hex.macro.form</field>
+        <field name="model">hex.macro</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="Quadranti" name="page_quad_ids">
+                            <field name="quad_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

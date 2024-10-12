@@ -167,6 +167,12 @@ $MF-MH: $MF-HH_INIZIALE * 20; // Macro Height
     filter: drop-shadow(2px 4px 6px black);
 }
 
+.hv-center {
+    display: flex;
+    justify-content: center; /* Per centrare orizzontalmente */
+    align-items: center;     /* Per centrare verticalmente */
+}
+
 /********************************
 *  FIX SCROLL ACTION.CLIENT      *
 ********************************/
